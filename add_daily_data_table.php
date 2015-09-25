@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
+$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,project,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE();");
@@ -17,7 +17,7 @@ WHERE date = CURDATE();");
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Bootstrap 3 Admin</title>
+		<title>Let LLC Time Sheet App</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
@@ -34,10 +34,11 @@ WHERE date = CURDATE();");
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
                     $(document).ready(function()
                   {             
-                    $( "#delete" ).submit(function( event ) {
+                    $( ".delete" ).submit(function( event ) {
                     if(!confirm( "This will delete selected daily data. Are you sure?" ))
                         event.preventDefault();
                     });
@@ -88,44 +89,34 @@ WHERE date = CURDATE();");
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="#">Add employee</a></li>
-                        <li class="active"> <a href="#">Edit/modify employee</a></li>
-                        <li class="active"> <a href="#">Delete employee</a></li>
+                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
+                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
+                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="#">Add job function</a>
+                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
                         </li>
-                        <li><a href="#">Edit/modify job function</a>
-                        </li>
-                        <li><a href="#">Delete job function</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="#">Add status</a>
-                        </li>
-                        <li><a href="#">Edit/modify status</a>
-                        </li>
-                        <li><a href="#">Delete status</a>
+                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="#">Add union trade</a>
+                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
                         </li>
-                        <li><a href="#">Edit/modify union trade</a>
-                        </li>
-                        <li><a href="#">Delete union trade</a>
-                        </li>
+
                     </ul>
                 </li>
                 
@@ -140,35 +131,46 @@ WHERE date = CURDATE();");
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="#">Add pay rate</a></li>
-                        <li class="active"> <a href="#">Edit/modify pay rate</a></li>
-                        <li class="active"> <a href="#">Delete pay rate</a></li>
+                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="#">Add premiun rate</a>
+                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
                         </li>
-                        <li><a href="#">Edit/modify premium rate</a>
-                        </li>
-                        <li><a href="#">Delete premium rate</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lumps payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                       <li><a href="#">Add lump payment</a>
+                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump payment</a>
                         </li>
-                        <li><a href="#">Edit/modify lump payment</a>
-                        </li>
-                        <li><a href="#">Delete lump payment</a>
-                        </li>
+
                     </ul>
                 </li>
+                                
+            </ul>
+
+           <hr>
+
+            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu5">
+                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+
+
+                    </ul>
+                </li>
+                
                                 
             </ul>
 
@@ -179,7 +181,7 @@ WHERE date = CURDATE();");
         <div class="col-sm-9">
 
 
-            <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
+            <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
             <hr>
 
                         <!--
@@ -195,11 +197,21 @@ WHERE date = CURDATE();");
                         <h4>Date: <?php echo date("F j, Y");?></h4><br />
                                 
                     </div>
+ <form action="add_daily_data_form.php" method="post" name="daily_data">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Add new register
+                                </button>
 
+                            </div>
+                        </div>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Employee Name</th>
+                                    <th>Project</th>
                                     <th>Union Trade</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
@@ -222,6 +234,9 @@ WHERE date = CURDATE();");
                                 <tr>
                                     <td>
                                         <?php echo "{$row['employee_name']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['project']}"; ?>
                                     </td>
                                     
                                     <td>
@@ -262,7 +277,7 @@ WHERE date = CURDATE();");
                                             <input type="submit" name="modify" value="Modify">
                                         </form>
                                         <br />
-                                        <form id="delete" action="delete_daily_data_form.php" method="post">
+                                        <form class="delete" id="delete" action="delete_daily_data_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                             <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
                                             <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
@@ -279,13 +294,16 @@ WHERE date = CURDATE();");
                                 ?>
                             </tbody>
                         </table>
-                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
+                   
+                    </form>
+                    <form action="daily_complete_report.php" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
-                                    Add new register
+                                    Show complete report
                                 </button>
+
                             </div>
                         </div>
                     </form>
@@ -312,7 +330,7 @@ WHERE date = CURDATE();");
 </div>
 <!-- /Main -->
 
-<footer class="text-center">This Bootstrap 3 dashboard layout is compliments of <a href="http://www.bootply.com/85850"><strong>Bootply.com</strong></a></footer>
+<footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -358,8 +376,9 @@ WHERE date = CURDATE();");
                 col_7: 'select',
                 col_8: 'select',
                 col_9: 'select',
-                col_10: 'none',
+                col_10: 'select',
                 col_11: 'none',
+                col_12: 'none',
         
                 extensions:[
                     {

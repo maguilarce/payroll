@@ -1,15 +1,8 @@
 <?php
 require_once('connection.php');
 
-    $pay_rate_id = $_POST['id'];
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_amount = $_POST['new_pay_rate_amount'];
-  
-    
-    $query = "UPDATE pay_rate
-              SET pay_rate_type='$new_pay_rate_name',pay_rate_hourly_amount='$new_pay_rate_amount'
-              WHERE pay_rate_id='$pay_rate_id'";
-    
+    $project_id = $_POST['id'];
+    $query = "DELETE FROM project WHERE project_id = '$project_id' ";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -184,14 +177,10 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Group pay rate modified successfully</h4>
+                                <h4>Project deleted successfully</h4>
                             </div>
-                            <form action="add_pay_rate_table.php">
-                               <div class="controls">
-                                        <button type="submit" class="btn btn-primary">
-                                            Back
-                                        </button>
-                                    </div>
+                            <form name="delete_form" action="add_project_table.php">
+                                <input type="submit" value="Back">
                             </form>
                            
                         </div>

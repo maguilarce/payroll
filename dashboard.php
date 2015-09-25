@@ -1,5 +1,17 @@
 <?php
 require_once('connection.php');
+
+$result = mysql_query("SELECT project, sum(total_day_hours) as men_hours_worked
+FROM daily_timesheet 
+GROUP BY project");
+
+$employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
+FROM employee
+WHERE hired = 'y';");
+//$row = mysql_fetch_array($result, MYSQL_ASSOC);
+
+      
+
 ?>
 
 <!DOCTYPE html>
@@ -7,14 +19,34 @@ require_once('connection.php');
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Bootstrap 3 Admin</title>
+		<title>Let LLC Time Sheet App</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+		
 		<link href="css/styles.css" rel="stylesheet">
+                <link href="css/bootstrap.min.css" rel="stylesheet">
+                <!-- date picker css -->
+                <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+                <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+                 <!-- date picker bootstrap -->
+                <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+                 <!-- filter and pagination -->
+                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
+                <link href="css/style/tablefilter.css" rel="stylesheet">
+                <link href="css/style/colsVisibility.css" rel="stylesheet">
+                <link href="css/style/filtersVisibility.css" rel="stylesheet">
+                <!--end filter and pagination -->
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                 <script language="JavaScript"> 
+                    $(document).ready(function()
+                  {             
+                    $( ".delete" ).submit(function( event ) {
+                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
+
 	</head>
 	<body>
 <!-- header -->
@@ -47,7 +79,7 @@ require_once('connection.php');
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <!-- Left column -->
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
@@ -59,44 +91,34 @@ require_once('connection.php');
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="#">Add employee</a></li>
-                        <li class="active"> <a href="#">Edit/modify employee</a></li>
-                        <li class="active"> <a href="#">Delete employee</a></li>
+                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
+                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
+                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="#">Add job function</a>
+                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
                         </li>
-                        <li><a href="#">Edit/modify job function</a>
-                        </li>
-                        <li><a href="#">Delete job function</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="#">Add status</a>
-                        </li>
-                        <li><a href="#">Edit/modify status</a>
-                        </li>
-                        <li><a href="#">Delete status</a>
+                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="#">Add union trade</a>
+                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
                         </li>
-                        <li><a href="#">Edit/modify union trade</a>
-                        </li>
-                        <li><a href="#">Delete union trade</a>
-                        </li>
+
                     </ul>
                 </li>
                 
@@ -111,46 +133,55 @@ require_once('connection.php');
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="#">Add pay rate</a></li>
-                        <li class="active"> <a href="#">Edit/modify pay rate</a></li>
-                        <li class="active"> <a href="#">Delete pay rate</a></li>
+                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="#">Add premiun rate</a>
+                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
                         </li>
-                        <li><a href="#">Edit/modify premium rate</a>
-                        </li>
-                        <li><a href="#">Delete premium rate</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lumps payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                       <li><a href="#">Add lump payment</a>
+                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump payment</a>
                         </li>
-                        <li><a href="#">Edit/modify lump payment</a>
-                        </li>
-                        <li><a href="#">Delete lump payment</a>
-                        </li>
+
                     </ul>
                 </li>
                                 
             </ul>
 
-           
+           <hr>
+
+            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu5">
+                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+
+
+                    </ul>
+                </li>
+                
+                                
+            </ul>
             
         </div>
         <!-- /col-3 -->
         <div class="col-sm-9">
 
 
-            <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
+            <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
             <hr>
 
                         <!--
@@ -159,196 +190,124 @@ require_once('connection.php');
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
-
-
-                   
-                    <!--/panel-->
-
-                    <hr>
-
-                    <!--tabs-->
-                    <div class="panel">
-                        <ul class="nav nav-tabs" id="myTab">
-                            <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
-                            <li><a href="#messages" data-toggle="tab">Messages</a></li>
-                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active well" id="profile">
-                                <div class="table-responsive">
-                        <table class="table table-striped">
+                <div class="col-md-10">
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <h2>Dashboard</h2><br />
+                        <h4>Today's Date: <?php echo date("F j, Y");?></h4><br />
+                                
+                    </div>
+            <form action="" method="post" name="daily_data">   
+                    <h4>Men Hours Worked by Active Projects</h4>
+                    <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Visits</th>
-                                    <th>ROI</th>
-                                    <th>Source</th>
+                                    <th>Project</th>
+                                    <th>Men Hours Worked</th>
+                                             
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                                                
-                                $counter = 0;
-                                            while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+                                while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
-                                                ++$counter;
-                              
                                 ?>
                                 <tr>
-                                    <td><?php echo "{$row['name']} <br>"; ?></td>
-                                    <td><?php echo "{$row['license_number']} <br>"; ?></td>
-                                    <td><?php echo "{$row['social_security_number']} <br>"; ?></td>      
-                                    <td><?php echo "{$row['address']} <br>"; ?></td>      
-                                    <td><?php echo "{$row['phone_number']} <br>"; ?></td> 
-                                    <td><?php echo "{$row['email']} <br>"; ?></td> 
-                                
+                                    <td>
+                                        <?php echo "{$row['project']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['men_hours_worked']}"; ?>
+                                    </td>
+                                    
+                                                                    
                                 </tr>
-                                   <?php
-                                            }
-                                        ?>
+                                <?php                               
+                                   }
+                                ?>
                             </tbody>
                         </table>
-                    </div>
-                            </div>
-                            <div class="tab-pane well" id="messages">
-                                <h4><i class="glyphicon glyphicon-comment"></i></h4> Message ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                                <p>Quisque mauris augu.</p>
-                            </div>
-                            <div class="tab-pane well" id="settings">
-                                <h4><i class="glyphicon glyphicon-cog"></i></h4> Lorem settings dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                                <p>Quisque mauris augue, molestie.</p>
-                            </div>
-                        </div>
+     
+                     <h4>Active employees</h4>
+                    <table id="demo1" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Hiring Date</th>
+                                    <th>Union Trade</th>
+                                    <th>Crew</th>
+                                             
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while($row = mysql_fetch_array($employees, MYSQL_ASSOC))
+                                            { 
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo "{$row['name']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['address']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['phone_number']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['email']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['hiring_date']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['union_trade']}"; ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['crew']}"; ?>
+                                    </td>
+                                    
+                                                                    
+                                </tr>
+                                <?php                               
+                                   }
+                                ?>
+                            </tbody>
+                        </table>
+                        
+                        
+                   
+                    </form>
 
                     </div>
-                    <!--/tabs-->
-
-                    <hr>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>New Requests</h4></div>
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item active">Hosting virtual mailbox serv..</a>
-                                <a href="#" class="list-group-item">Dedicated server doesn't..</a>
-                                <a href="#" class="list-group-item">RHEL 6 install on new..</a>
-                            </div>
+                <div class="col-md-2">
+                    <form action="hired_employees.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Import Hired Employees List
+                            </button>
                         </div>
-                    </div>
+                    </form>
+                    <br /><br />
+                    <form>
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Import Fired Employees List
+                            </button>
+                        </div>
+                    </form>
+                </div>
+              
                 </div>
                 <!--/col-->
                 
                             <!--
 			right MENU
 		<!-->
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Notices</h4></div>
-                        <div class="panel-body">
-                            <div class="alert alert-info">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                This is a dismissable alert.. just sayin'.
-                            </div>
-                            <p>This is a dashboard-style layout that uses Bootstrap 3. You can use this template as a starting point to create something more unique.</p>
-                            <p>Visit the Bootstrap Playground at <a href="http://bootply.com">Bootply</a> to tweak this layout or discover more useful code snippets.</p>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Visits</th>
-                                    <th>ROI</th>
-                                    <th>Source</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>45</td>
-                                    <td>2.45%</td>
-                                    <td>Direct</td>
-                                </tr>
-                                <tr>
-                                    <td>289</td>
-                                    <td>56.2%</td>
-                                    <td>Referral</td>
-                                </tr>
-                                <tr>
-                                    <td>98</td>
-                                    <td>25%</td>
-                                    <td>Type</td>
-                                </tr>
-                                <tr>
-                                    <td>..</td>
-                                    <td>..</td>
-                                    <td>..</td>
-                                </tr>
-                                <tr>
-                                    <td>..</td>
-                                    <td>..</td>
-                                    <td>..</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Post Request</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <form class="form form-vertical">
-                                <div class="control-group">
-                                    <label>Name</label>
-                                    <div class="controls">
-                                        <input type="text" class="form-control" placeholder="Enter Name">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label>Message</label>
-                                    <div class="controls">
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label>Category</label>
-                                    <div class="controls">
-                                        <select class="form-control">
-                                            <option>options</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label></label>
-                                    <div class="controls">
-                                        <button type="submit" class="btn btn-primary">
-                                            Post
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!--/panel content-->
-                    </div>
-                    <!--/panel-->
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <h4>Engagement</h4></div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-xs-4 text-center"><img src="http://placehold.it/80/BBBBBB/FFF" class="img-circle img-responsive"></div>
-                            <div class="col-xs-4 text-center"><img src="http://placehold.it/80/EFEFEF/555" class="img-circle img-responsive"></div>
-                            <div class="col-xs-4 text-center"><img src="http://placehold.it/80/EEEEEE/222" class="img-circle img-responsive"></div>
-                        </div>
-                    </div>
-                    <!--/panel-->
-
-                </div>
+               
                 <!--/col-span-6-->
 
             </div>
@@ -363,7 +322,7 @@ require_once('connection.php');
 </div>
 <!-- /Main -->
 
-<footer class="text-center">This Bootstrap 3 dashboard layout is compliments of <a href="http://www.bootply.com/85850"><strong>Bootply.com</strong></a></footer>
+<footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -389,5 +348,53 @@ require_once('connection.php');
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
+                <!-- filter and pagination -->
+                <script data-config>
+                var filtersConfig = {          
+                paging: true,  
+                paging_length: 20,  
+                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
+                rows_counter: true,  
+                rows_counter_text: "Rows:",  
+                display_all_text: " [ Show all ] ",
+                loader: true, 
+                col_0: 'select',
+                col_1: 'select',
+                col_2: 'select',
+                col_3: 'select',
+                col_4: 'select',
+                col_5: 'select',
+                col_6: 'select',
+                col_7: 'select',
+                col_8: 'select',
+                col_9: 'select',
+                col_10: 'select',
+                col_11: 'none',
+                col_12: 'none',
+        
+                extensions:[
+                    {
+
+                        editable: false,
+                        selection: false
+
+                    }, {
+                        name: 'sort',
+                        types: [
+                            'string', 'string', 'number',
+                            'number', 'number', 'number',
+                            'number', 'number', 'number'
+                        ]
+                    }
+                ]
+            };
+
+            var tf = new TableFilter('demo', filtersConfig);
+            tf.init();
+            var tf1 = new TableFilter('demo1', filtersConfig);
+            tf1.init();
+            
+</script>
+<!-- end filter and pagination -->
 	</body>
 </html>

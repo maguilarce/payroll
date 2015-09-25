@@ -2,6 +2,7 @@
 require_once('connection.php');
 ////////////////retrieving data from controls
     $employee = $_POST['employee'];
+    $project = $_POST['project'];
     $job_function = $_POST['job_function'];
     $pay_rate = $_POST['pay_rate'];
     $premium_rate = $_POST['premium_rate'];
@@ -13,7 +14,7 @@ require_once('connection.php');
     $total_hours = $straight+$overtime;
     
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$job_function','$straight','$overtime','$total_hours','$status','$pay_rate','$premium_rate','$daily_lump_payment','$notes')";
+    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$project','$job_function','$straight','$overtime','$total_hours','$status','$pay_rate','$premium_rate','$daily_lump_payment','$notes')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -59,7 +60,7 @@ require_once('connection.php');
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Bootstrap 3 Admin</title>
+		<title>Let LLC Time Sheet App</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
@@ -112,47 +113,37 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                        <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="#">Add employee</a></li>
-                        <li class="active"> <a href="#">Edit/modify employee</a></li>
-                        <li class="active"> <a href="#">Delete employee</a></li>
+                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
+                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
+                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="#">Add job function</a>
+                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
                         </li>
-                        <li><a href="#">Edit/modify job function</a>
-                        </li>
-                        <li><a href="#">Delete job function</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="#">Add status</a>
-                        </li>
-                        <li><a href="#">Edit/modify status</a>
-                        </li>
-                        <li><a href="#">Delete status</a>
+                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="#">Add union trade</a>
+                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
                         </li>
-                        <li><a href="#">Edit/modify union trade</a>
-                        </li>
-                        <li><a href="#">Delete union trade</a>
-                        </li>
+
                     </ul>
                 </li>
                 
@@ -167,38 +158,48 @@ require_once('connection.php');
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="#">Add pay rate</a></li>
-                        <li class="active"> <a href="#">Edit/modify pay rate</a></li>
-                        <li class="active"> <a href="#">Delete pay rate</a></li>
+                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="#">Add premiun rate</a>
+                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
                         </li>
-                        <li><a href="#">Edit/modify premium rate</a>
-                        </li>
-                        <li><a href="#">Delete premium rate</a>
-                        </li>
+
 
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lumps payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                       <li><a href="#">Add lump payment</a>
+                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump payment</a>
                         </li>
-                        <li><a href="#">Edit/modify lump payment</a>
-                        </li>
-                        <li><a href="#">Delete lump payment</a>
-                        </li>
+
                     </ul>
                 </li>
                                 
             </ul>
 
+           <hr>
+
+            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu5">
+                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+
+
+                    </ul>
+                </li>
+                
+                                
+            </ul>
            
             
         </div>
@@ -206,7 +207,7 @@ require_once('connection.php');
         <div class="col-sm-9">
 
 
-            <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
+            <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
             <hr>
 
                         <!--
@@ -249,8 +250,7 @@ require_once('connection.php');
 </div>
 <!-- /Main -->
 
-<footer class="text-center">This Bootstrap 3 dashboard layout is compliments of <a href="http://www.bootply.com/85850"><strong>Bootply.com</strong></a></footer>
-
+<footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">

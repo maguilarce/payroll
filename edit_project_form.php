@@ -1,16 +1,9 @@
 <?php
 require_once('connection.php');
-
-    $pay_rate_id = $_POST['id'];
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_amount = $_POST['new_pay_rate_amount'];
-  
-    
-    $query = "UPDATE pay_rate
-              SET pay_rate_type='$new_pay_rate_name',pay_rate_hourly_amount='$new_pay_rate_amount'
-              WHERE pay_rate_id='$pay_rate_id'";
-    
+    $project_id = $_POST['id'];
+    $query = "SELECT * FROM project WHERE project_id = '$project_id'";
     $retval = mysql_query( $query, $dbh );
+    $row = mysql_fetch_array($retval);
     if(! $retval )
     {
      die('Could not get data: ' . mysql_error());
@@ -33,7 +26,17 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
+                <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+                <script language="JavaScript"> 
+                    $(document).ready(function()
+                  {             
+                    $( "#delete" ).submit(function( event ) {
+                    if(!confirm( "Delete job function?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
 	</head>
 	<body>
 <!-- header -->
@@ -162,7 +165,6 @@ require_once('connection.php');
                 
                                 
             </ul>
-
            
             
         </div>
@@ -180,29 +182,39 @@ require_once('connection.php');
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Group pay rate modified successfully</h4>
-                            </div>
-                            <form action="add_pay_rate_table.php">
-                               <div class="controls">
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Active projects</h4>
+                    </div>
+          
+                                     
+                         <div class="panel-body">
+                             <form action="add_project_form1.php" class="form form-vertical" method="post">
+                                <div class="control-group">
+                                    <label>Edit project name:</label>
+                                    <div class="controls">
+                                        <input name="new_project" value="<?php echo $row[1]; ?>" type="text" class="form-control" >
+                                        <input name="id" type="hidden" value="<?php echo $row[0]; ?>">
+                                        
+                                    </div>
+                                    <br />
+                                    <div class="controls">
                                         <button type="submit" class="btn btn-primary">
-                                            Back
+                                            Modify
                                         </button>
                                     </div>
+                                </div>
                             </form>
-                           
-                        </div>
-                        
-                        <!--/panel content-->
+                         </div>
                     </div>
-                    <!--/panel-->                
+              
+                </div>
+                <!--/col-->
+                
                             <!--
 			right MENU
 		<!-->
-          
+               
                 <!--/col-span-6-->
 
             </div>

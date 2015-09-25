@@ -1,20 +1,5 @@
 <?php
 require_once('connection.php');
-
-    $pay_rate_id = $_POST['id'];
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_amount = $_POST['new_pay_rate_amount'];
-  
-    
-    $query = "UPDATE pay_rate
-              SET pay_rate_type='$new_pay_rate_name',pay_rate_hourly_amount='$new_pay_rate_amount'
-              WHERE pay_rate_id='$pay_rate_id'";
-    
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-    }
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +18,21 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+                <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+                <script language="JavaScript"> 
+                    $(document).ready(function()
+                  {             
+                    $( ".delete" ).submit(function( event ) {
+                    if(!confirm( "This will delete selected project. Are you sure?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
 	</head>
 	<body>
 <!-- header -->
@@ -75,7 +74,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-           <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -162,7 +161,7 @@ require_once('connection.php');
                 
                                 
             </ul>
-
+            
            
             
         </div>
@@ -180,29 +179,81 @@ require_once('connection.php');
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Group pay rate modified successfully</h4>
-                            </div>
-                            <form action="add_pay_rate_table.php">
-                               <div class="controls">
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Active projects</h4>
+                    </div>
+          
+                    <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Project</th>
+                                    <th  colspan="2">Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                
+                                $result = mysql_query("SELECT *
+                                                       FROM project");
+                                $counter = 0;
+                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+                                            { 
+                                                ++$counter;
+                              
+                                ?>
+                                <tr>
+                                    <td><?php echo $counter; ?></td>
+                                    <td><?php echo "{$row['project_name']} <br>"; ?></td>
+                                    <td>
+                                        <form id="modify" action="edit_project_form.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo "{$row['project_id']}"; ?>">
+                                            <input name="modify_job_function" type="submit" value="Modify">
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form class="delete" action="delete_project_form.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo "{$row['project_id']}"; ?>">
+                                            <input  type="submit" value="Delete">
+                                        </form>
+                                    </td>
+                                    
+                                
+                                </tr>
+                                   <?php
+                                            }
+                                        ?>
+                            </tbody>
+                        </table>
+                    
+                         <div class="panel-body">
+                             <form action="add_project_form.php" class="form form-vertical" method="post">
+                                <div class="control-group">
+                                    <label>New project name:</label>
+                                    <div class="controls">
+                                        <input name="new_project" type="text" class="form-control" placeholder="Enter new project">
+                                        
+                                    </div>
+                                    <br />
+                                    <div class="controls">
                                         <button type="submit" class="btn btn-primary">
-                                            Back
+                                            Add new project
                                         </button>
                                     </div>
+                                </div>
                             </form>
-                           
-                        </div>
-                        
-                        <!--/panel content-->
+                         </div>
                     </div>
-                    <!--/panel-->                
+              
+                </div>
+                <!--/col-->
+                
                             <!--
 			right MENU
 		<!-->
-          
+               
                 <!--/col-span-6-->
 
             </div>

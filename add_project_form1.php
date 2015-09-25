@@ -1,14 +1,13 @@
 <?php
 require_once('connection.php');
 
-    $pay_rate_id = $_POST['id'];
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_amount = $_POST['new_pay_rate_amount'];
+    $project_id = $_POST['id'];
+    $new_project_name = $_POST['new_project'];
   
     
-    $query = "UPDATE pay_rate
-              SET pay_rate_type='$new_pay_rate_name',pay_rate_hourly_amount='$new_pay_rate_amount'
-              WHERE pay_rate_id='$pay_rate_id'";
+    $query = "UPDATE project
+              SET project_name='$new_project_name'
+              WHERE project_id=' $project_id'";
     
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
@@ -75,7 +74,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-           <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -162,7 +161,6 @@ require_once('connection.php');
                 
                                 
             </ul>
-
            
             
         </div>
@@ -184,9 +182,9 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Group pay rate modified successfully</h4>
+                                <h4>Project name modified satisfactorily</h4>
                             </div>
-                            <form action="add_pay_rate_table.php">
+                            <form action="add_project_table.php">
                                <div class="controls">
                                         <button type="submit" class="btn btn-primary">
                                             Back
