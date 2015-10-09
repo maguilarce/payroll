@@ -12,7 +12,7 @@ INNER JOIN daily_lump_sum_rate ON daily_timesheet.daily_lump_sum_rate = daily_lu
 INNER JOIN weekly_lump_payments ON daily_timesheet.weekly_lump_sum_rate = weekly_lump_payments.weekly_lump_payment_type
 INNER JOIN employee ON daily_timesheet.employee_name = employee.name
 WHERE week_number = week(now())
-ORDER BY date,employee_name,pay_rate DESC
+ORDER BY date,employee_name,pay_rate 
 ");
 
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
