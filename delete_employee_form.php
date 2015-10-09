@@ -182,7 +182,19 @@
                             <form name="dismissal" action="employee_dismissed.php" method="post">
                                 <input name="employee_id" type="hidden" value="<?php echo $_POST['id'];?>">
                                 <label>Reason: </label>
-                                <textarea class="form-control" name="reason"></textarea><br/>
+                              
+                                <div class="controls">
+                                        <select name="reason" class="form-control">
+                                                                                      
+                                             <option>Laid off</option>
+                                             <option>Voluntary quit</option>
+                                             <option>Discharged</option>
+                                             <option>Terminated</option>
+                                                    
+
+                                        </select>
+                                    </div>
+                                <br />
                                 <button type="submit" class="btn btn-primary">
                                             Dismiss employee
                                 </button>

@@ -5,6 +5,7 @@ $result = mysql_query("SELECT *
                        FROM daily_timesheet
                        WHERE daily_timesheet_id = '$id'");
 
+
                 
 
 ?>
@@ -182,13 +183,12 @@ $result = mysql_query("SELECT *
                             <thead>
                                 <tr>
                                     <th>Employee Name</th>
-                                    <th>Project</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
+                                    <th>Pay Rate Type</th>
                                     <th>Premium Rate</th>
                                     <th>Daily Lum Sum Rates</th>
-                                    <th>Straight Hours</th>
-                                    <th>Overtime Hours</th>
+                                    <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
                                    
@@ -196,7 +196,7 @@ $result = mysql_query("SELECT *
                             </thead>
                             <tbody>
                                 
-                                <tr>
+                               <tr>
                                     <td>
                                         <select readonly="readonly" name="employee" class="form-control"> 
                                         <?php
@@ -207,27 +207,7 @@ $result = mysql_query("SELECT *
                                     
                                     </td>
                                     
-                                   <td>
-                                        <select name="project" class="form-control"> 
-                                      
-                                        <?php
-                                            $query = "SELECT project_name from project;";
-                                            $result = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                                if($row['project']==$row1['project_name'])
-                                                {
-                                                    echo "<option selected>{$row1['project_name']}</option>";
-                                                }
-                                                else echo "<option>{$row1['project_name']}</option>";                           
-                                             
-                     
-                                            }  
-                                   
-                                        ?>
-                                        </select>
-                                    </td>     
-                                    
+                                                                     
                                     <td>
                                         <select name="job_function" class="form-control"> 
                                       
@@ -268,7 +248,17 @@ $result = mysql_query("SELECT *
                                    
                                         ?>
                                          </select>
-                                    </td>      
+                                    </td>  
+                                      <td>
+                                         <select name="pay_rate_type" class="form-control"> 
+                                        
+                                   
+                                            <option>ST</option>
+                                            <option>OT</option>
+
+                                         
+                                         </select>
+                                    </td>    
                                     
                                     <td>
                                          <select name="premium_rate" class="form-control"> 
@@ -301,20 +291,24 @@ $result = mysql_query("SELECT *
                                                 {
                                                     echo "<option selected>{$row1['daily_lump_sum_type']}</option>";
                                                 }
-                                                else echo "<option>{$row1['daily_lump_sum_type']}</option>";                           
+                                                else 
+                                                    echo "<option>{$row1['daily_lump_sum_type']}</option>";                           
                                              
                      
                                             }  
                                         ?> 
                                      </select> 
                                     </td> 
+                                         <?php
+                                         $hours = 0;
+                                         if($row['straight_hours']==0)
+                                            $hours=$row['overtime_hours']; 
+                                         else
+                                             $hours=$row['straight_hours']; 
                                          
+                                         ?>
                                     <td>
-                                        <input value="<?php echo "{$row['straight_hours']}"; ?>" name="straight" type="text" class="form-control">
-                                    </td> 
-                                    
-                                    <td>
-                                        <input value="<?php echo "{$row['overtime_hours']}"; ?>" name="overtime" type="text" class="form-control">
+                                        <input value="<?php echo $hours; ?>" name="worked_hours" type="text" class="form-control">
                                     </td> 
                                     
                                                                       

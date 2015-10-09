@@ -173,7 +173,7 @@ require_once('connection.php');
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Delete Employee</h4>
@@ -183,7 +183,6 @@ require_once('connection.php');
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>License #</th>
                                     <th>SSN</th>
                                     <th>Address</th>
                                     <th>Phone #</th>
@@ -207,7 +206,6 @@ require_once('connection.php');
                                 ?>
                                 <tr>
                                     <td><?php echo "{$row['name']} <br>"; ?></td>
-                                    <td><?php echo "{$row['license_number']} <br>"; ?></td>
                                     <td><?php echo "{$row['social_security_number']} <br>"; ?></td>      
                                     <td><?php echo "{$row['address']} <br>"; ?></td>      
                                     <td><?php echo "{$row['phone_number']} <br>"; ?></td> 

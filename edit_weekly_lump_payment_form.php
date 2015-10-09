@@ -1,11 +1,9 @@
 <?php
 require_once('connection.php');
-
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_type = $_POST['new_pay_rate_type'];
-    $new_pay_rate = $_POST['new_pay_rate'];
-    $query = "INSERT INTO pay_rate values ('','$new_pay_rate_name','$new_pay_rate','$new_pay_rate_type')";
+    $weekly_lump_sum_rate_id = $_POST['id'];
+    $query = "SELECT * FROM weekly_lump_payments WHERE weekly_lump_payments_id = '$weekly_lump_sum_rate_id'";
     $retval = mysql_query( $query, $dbh );
+    $row = mysql_fetch_array($retval);
     if(! $retval )
     {
      die('Could not get data: ' . mysql_error());
@@ -28,7 +26,17 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-
+                <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+                <script language="JavaScript"> 
+                    $(document).ready(function()
+                  {             
+                    $( "#delete" ).submit(function( event ) {
+                    if(!confirm( "Delete job function?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
 	</head>
 	<body>
 <!-- header -->
@@ -157,6 +165,7 @@ require_once('connection.php');
                 
                                 
             </ul>
+           
 
            
             
@@ -175,25 +184,45 @@ require_once('connection.php');
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New pay rate group created successfully</h4>
-                            </div>
-                            <form action="add_pay_rate_table.php">
-                                <input type="submit" value="Back">
-                            </form>
-                           
-                        </div>
-                        
-                        <!--/panel content-->
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Modify weekly lump payment</h4>
                     </div>
-                    <!--/panel-->                
+          
+                                     
+                         <div class="panel-body">
+                             <form action="add_weekly_lump_payment_form1.php" class="form form-vertical" method="post">
+                                 <input name="id" type="hidden" value="<?php echo $row[0]; ?>">
+                                <div class="control-group">
+                                    <label>Edit weekly lump payment name:</label>
+                                    <div class="controls">
+                                        <input name="new_weekly_lump_payment_name" value="<?php echo $row[1]; ?>" type="text" class="form-control" >                                         
+                                    </div>
+                                    <br/>
+                                    <label>Edit weekly lump payment amount:</label>
+                                    <div class="controls">
+                                        <input name="new_weekly_lump_payment_amount" value="<?php echo $row[2]; ?>" type="text" class="form-control" >
+                                 
+                                        
+                                    </div>
+                                    <br />
+                                    <div class="controls">
+                                        <button type="submit" class="btn btn-primary">
+                                            Modify
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                         </div>
+                    </div>
+              
+                </div>
+                <!--/col-->
+                
                             <!--
 			right MENU
 		<!-->
-          
+               
                 <!--/col-span-6-->
 
             </div>

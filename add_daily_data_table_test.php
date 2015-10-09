@@ -1,24 +1,14 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT 
-daily_timesheet_id,daily_timesheet.date, daily_timesheet.employee_name,employee.union_trade,employee.home_local,daily_timesheet.job_function,daily_timesheet.pay_rate,pay_rate.pay_rate_hourly_amount,daily_timesheet.premium_rate,premium_rate.premium_rate_amount,daily_timesheet.daily_lump_sum_rate,
-daily_lump_sum_rate.daily_lump_sum_amount,daily_timesheet.total_day_hours,daily_timesheet.pay_rate_type,weekly_lump_payments.weekly_lump_payment_type,weekly_lump_payments.weekly_lump_payment_amount
-FROM
-daily_timesheet
-INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
-INNER JOIN premium_rate ON daily_timesheet.premium_rate = premium_rate_type
-INNER JOIN daily_lump_sum_rate ON daily_timesheet.daily_lump_sum_rate = daily_lump_sum_rate.daily_lump_sum_type
-INNER JOIN weekly_lump_payments ON daily_timesheet.weekly_lump_sum_rate = weekly_lump_payments.weekly_lump_payment_type
-INNER JOIN employee ON daily_timesheet.employee_name = employee.name
-WHERE week_number = week(now())
-ORDER BY date,employee_name,pay_rate DESC
-");
+$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
+FROM employee INNER JOIN daily_timesheet
+ON employee.name=daily_timesheet.employee_name
+WHERE date = CURDATE();");
 
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
-      $query = mysql_query("SELECT total_week_hours FROM week_hours");
-      $row1 = mysql_fetch_array($query, MYSQL_ASSOC);
+      
 
 ?>
 
@@ -39,32 +29,21 @@ ORDER BY date,employee_name,pay_rate DESC
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
                  <!-- filter and pagination -->
-                 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                 <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
                 <link href="css/style/tablefilter.css" rel="stylesheet">
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
                     $(document).ready(function()
                   {             
-                    $( "#delete" ).submit(function( event ) {
+                    $( ".delete" ).submit(function( event ) {
                     if(!confirm( "This will delete selected daily data. Are you sure?" ))
                         event.preventDefault();
                     });
                    });
                 </script>
-                <script type="text/javascript">
-        $(document).ready(function()
-        {
-            $('.weekly_payment').click(function(event)
-            {
-                //Obtiene valor de el select que activa el usuario
-                //alert($(this).val());
-                $(this).next().val($(this).val());
-            });
-        });
-    </script>
 
 	</head>
 	<body>
@@ -98,7 +77,7 @@ ORDER BY date,employee_name,pay_rate DESC
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <!-- Left column -->
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
@@ -199,7 +178,7 @@ ORDER BY date,employee_name,pay_rate DESC
             
         </div>
         <!-- /col-3 -->
-        <div class="col-sm-10">
+        <div class="col-sm-9">
 
 
             <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
@@ -211,73 +190,55 @@ ORDER BY date,employee_name,pay_rate DESC
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-18">
+                <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Weekly Time Sheet</h2><br />
-                        <h4>Today's Date: <?php echo date("F j, Y");
-                        ?></h4>
-                        <h4> Pay Period: 
-                        <?php 
-                         $date = new DateTime();
-                         $first = $date->setISODate(date('Y'), date('W'), "1")->format('m/d/Y');
-                         $last = $date->setISODate(date('Y'),date('W'), "7")->format('m/d/Y'); 
-                        echo "From ".$first." to ".$last; ?>
-                        </h4>
+                        <h2>Daily Time Sheet</h2><br />
+                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
                                 
                     </div>
+ <form action="add_daily_data_form.php" method="post" name="daily_data">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Add new register
+                                </button>
 
+                            </div>
+                        </div>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                  
                                     <th>Employee Name</th>
+
                                     <th>Union Trade</th>
-                                    <th>Home Local #</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
-                                    <th>Pay Rate Amount</th>
                                     <th>Premium Rate</th>
-                                     <th>Premium Rate Amount</th>
-                                    <th>Daily Lum Sum Rate</th>
-                                    <th>Daily Lum Sum Rate Amount</th>
-                                    <th>Weekly Lum Sum Rate</th>
-
-                                    <th>Monday</th>
-                                    <th>Tuesday</th>
-                                    <th>Wednesday</th>
-                                    <th>Thursday</th>
-                                    <th>Friday</th>
-                                    <th>Saturday</th>
-                                    <th>Sunday</th>
-                                    <th>Total Week Hours</th>
+                                    <th>Daily Lum Sum Rates</th>
+                                    <th>Straight Hours</th>
+                                    <th>Overtime Hours</th>
+                                    <th>Total Hours</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
                                     <th>Action</th>
                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                $menweeklyhours=0;
                                 while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
-                                    $job_function = $row['job_function'];
-                                        $employee_name = $row['employee_name'];
-                                        $pay_rate_type = $row['pay_rate_type'];
-                                    $id = $row['daily_timesheet_id'];
-                                    $totalh = 0;
-                                    
                                 ?>
                                 <tr>
-                                 
                                     <td>
                                         <?php echo "{$row['employee_name']}"; ?>
                                     </td>
-                                                                   
+
+                                    
                                     <td>
                                         <?php echo "{$row['union_trade']}"; ?>                        
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['home_local']}"; ?>                        
                                     </td>
                                     <td>
                                         <?php echo "{$row['job_function']}"; ?>
@@ -285,160 +246,27 @@ ORDER BY date,employee_name,pay_rate DESC
                                     <td>
                                         <?php echo "{$row['pay_rate']}"; ?>      
                                     </td>
-                                    <td>
-                                        <?php echo "{$row['pay_rate_hourly_amount']}"; ?>      
-                                    </td>
                                     <td>       
                                         <?php echo "{$row['premium_rate']}"; ?>
-                                    </td>
-                                    <td>       
-                                        <?php echo "{$row['premium_rate_amount']}"; ?>
                                     </td>
                                     <td>
                                         <?php echo "{$row['daily_lump_sum_rate']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['daily_lump_sum_amount']}"; ?>
-                                    </td>
-                                     <td>
-                                       <select name="weekly_payment1" class="form-control weekly_payment"> 
-                                           <option value="0$">None</option>
-                                        <?php
-                                        $result1 = mysql_query("SELECT * FROM weekly_lump_payments");
-                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {   
-                                                $value = $row1['weekly_lump_payment_amount'];
-                                                
-                                                echo "<option value='$$value'>{$row1['weekly_lump_payment_type']}</option>";                           
-                                            }  
-                                        ?>
-                                        </select>
-
-                                         <input value="0$" name="weekly_payment2" type="text" class="form-control" readonly="">
-                                    </td>
-                                    
-                                    <td>
-                                        <!--
-                                            MONDAY
-                                        <!-->
-                                        <?php
-                                        
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=0 AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
-                                    </td>
-                                     <td>
-                                        <!--
-                                            TUESDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=1 AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
-                                    </td>
-
-                                     <td>
-                                        <!--
-                                            WEDNESDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=2 AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
-                                    </td>
-                                     <td>
-                                        <!--
-                                            THURSDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=3 AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
-                                    </td>
-                                     <td>
-                                        <!--
-                                            FRIDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=4 AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
-                                    </td>
-                                     <td>
-                                        <!--
-                                            SATURDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=5  AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
+                                        <?php echo "{$row['straight_hours']}"; ?>
                                     </td>
                                     <td>
-                                        <!--
-                                            SUNDAY
-                                        <!-->
-                                         <?php
-                                        
-                                        $sql = mysql_query("SELECT employee_name,total_day_hours
-                                                            FROM daily_timesheet
-                                                            WHERE week_number=week(now()) AND weekday(date)=6  AND daily_timesheet_id = '$id' ");
-
-                                        $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
-                                     
-                                        echo "{$monday['total_day_hours']}";
-                                        $totalh+=$monday['total_day_hours'];
-                                        ?>
+                                        <?php echo "{$row['overtime_hours']}"; ?>
                                     </td>
-
-                                    
                                     <td>
-                                        <?php echo $totalh; 
-                                        $menweeklyhours+=$totalh;
-                                        ?>
+                                        <?php echo "{$row['total_day_hours']}"; ?> 
                                     </td>
-
+                                    <td>
+                                        <?php echo "{$row['status']}"; ?>          
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['daily_notes']}"; ?>  
+                                    </td>
 
 
                                     <td>
@@ -447,7 +275,7 @@ ORDER BY date,employee_name,pay_rate DESC
                                             <input type="submit" name="modify" value="Modify">
                                         </form>
                                         <br />
-                                        <form id="delete" action="delete_daily_data_form.php" method="post">
+                                        <form class="delete" id="delete" action="delete_daily_data_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                             <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
                                             <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
@@ -459,25 +287,21 @@ ORDER BY date,employee_name,pay_rate DESC
 
                                 
                                 </tr>
-                                <?php  
-
-                                
+                                <?php                               
                                    }
                                 ?>
                             </tbody>
                         </table>
-                    <?php  
-
-                                
-                                   echo $menweeklyhours;
-                                ?>
-                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
+                   
+                    </form>
+                    <form action="daily_complete_report.php" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
-                                    Add new register
+                                    Show complete report
                                 </button>
+
                             </div>
                         </div>
                     </form>
@@ -527,7 +351,7 @@ ORDER BY date,employee_name,pay_rate DESC
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->
@@ -545,23 +369,15 @@ ORDER BY date,employee_name,pay_rate DESC
                 col_2: 'select',
                 col_3: 'select',
                 col_4: 'select',
-                col_5: 'none',
-                col_6: 'none',
-                col_7: 'none',
-                col_8: 'none',
-                col_9: 'none',
-                col_10: 'none',
+                col_5: 'select',
+                col_6: 'select',
+                col_7: 'select',
+                col_8: 'select',
+                col_9: 'select',
+                col_10: 'select',
                 col_11: 'none',
                 col_12: 'none',
-                col_13: 'none',
-                col_14: 'none',
-                col_15: 'none',
-                col_16: 'none',
-                col_17: 'none',
-                col_18: 'none',
-                col_19: 'none',
-
-
+        
                 extensions:[
                     {
 

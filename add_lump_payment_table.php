@@ -25,7 +25,7 @@ require_once('connection.php');
                     $(document).ready(function()
                   {             
                     $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "Delete status?" ))
+                    if(!confirm( "Delete Lump Payment Rate?" ))
                         event.preventDefault();
                     });
                    });

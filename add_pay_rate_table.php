@@ -187,6 +187,7 @@ require_once('connection.php');
                                 <tr>
                                     <th>#</th>
                                     <th>Pay group</th>
+                                    <th>Type</th>
                                     <th>Rate</th>
                                     <th  colspan="2">Action</th>
                                     
@@ -206,6 +207,7 @@ require_once('connection.php');
                                 <tr>
                                     <td><?php echo $counter; ?></td>
                                     <td><?php echo "{$row['pay_rate_type']} <br>"; ?></td>
+                                    <td><?php echo "{$row['type']} <br>"; ?></td>
                                     <td><?php echo "$"."{$row['pay_rate_hourly_amount']} <br>"; ?></td>
                                     <td>
                                         <form id="modify" action="edit_pay_rate_form.php" method="post">
@@ -236,6 +238,20 @@ require_once('connection.php');
                                     <label>New pay group name:</label>
                                     <div class="controls">
                                         <input name="new_pay_rate_name" type="text" class="form-control" placeholder="Enter new pay group name">
+                                        
+                                    </div>
+                                    <br />
+                                     <label>New pay group type:</label>
+                                    <div class="controls">
+                                        <select name="new_pay_rate_type" class="form-control">
+                                           
+                                                
+                                             <option>ST</option>
+                                             <option>OT</option>
+                     
+                                         
+
+                                        </select>
                                         
                                     </div>
                                     <br />

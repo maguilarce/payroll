@@ -2,19 +2,31 @@
 require_once('connection.php');
 ////////////////retrieving data from controls
     $employee = $_POST['employee'];
-    $project = $_POST['project'];
     $job_function = $_POST['job_function'];
     $pay_rate = $_POST['pay_rate'];
     $premium_rate = $_POST['premium_rate'];
     $daily_lump_payment = $_POST['daily_lump_payment'];
-    $straight = $_POST['straight'];
-    $overtime = $_POST['overtime'];
+    
+    $pay_rate_type = $_POST['pay_rate_type'];
+    
+    if($pay_rate_type == "ST")
+    { 
+        $straight = $_POST['worked_hours'];
+        $overtime = 0;
+    }
+    else
+     { 
+        $overtime = $_POST['worked_hours'];
+        $straight = 0;
+    }       
+    
+    
     $status = $_POST['status'];
     $notes = $_POST['notes'];
     $total_hours = $straight+$overtime;
     
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$project','$job_function','$straight','$overtime','$total_hours','$status','$pay_rate','$premium_rate','$daily_lump_payment','$notes')";
+    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$job_function','$straight','$overtime','$total_hours','$status','$pay_rate','$pay_rate_type','$premium_rate','$daily_lump_payment','$notes','NULL')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {

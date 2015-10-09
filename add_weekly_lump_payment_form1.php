@@ -1,10 +1,15 @@
 <?php
 require_once('connection.php');
 
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_type = $_POST['new_pay_rate_type'];
-    $new_pay_rate = $_POST['new_pay_rate'];
-    $query = "INSERT INTO pay_rate values ('','$new_pay_rate_name','$new_pay_rate','$new_pay_rate_type')";
+    $weekly_lump_payment_id = $_POST['id'];
+    $new_weekly_lump_payment_name = $_POST['new_weekly_lump_payment_name'];
+    $new_weekly_lump_payment_amount = $_POST['new_weekly_lump_payment_amount'];
+  
+    
+    $query = "UPDATE weekly_lump_payments
+              SET weekly_lump_payment_type='$new_weekly_lump_payment_name',weekly_lump_payment_amount='$new_weekly_lump_payment_amount'
+              WHERE weekly_lump_payments_id='$weekly_lump_payment_id'";
+    
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -70,7 +75,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-           <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -179,10 +184,14 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New pay rate group created successfully</h4>
+                                <h4>Weekly Lump Payment modified successfuly</h4>
                             </div>
-                            <form action="add_pay_rate_table.php">
-                                <input type="submit" value="Back">
+                            <form action="add_weekly_lump_payment_table.php">
+                               <div class="controls">
+                                        <button type="submit" class="btn btn-primary">
+                                            Back
+                                        </button>
+                                    </div>
                             </form>
                            
                         </div>

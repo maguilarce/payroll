@@ -2,18 +2,18 @@
 require_once('connection.php');
 
    
-    $name = $_POST['name'];
-    $license_number = $_POST['license_number'];
+    $name = $_POST['lname'].', '.$_POST['fname'];
     $social_security_number = $_POST['social_security_number'];
     $address = $_POST['address'];
     $phone_number = $_POST['phone_number'];
     $email = $_POST['email'];
     $union_trade = $_POST['union_trade'];
+    $home_local = $_POST['home_local'];
     $crew = $_POST['crew'];
     $hiring_date = $_POST['hiring_date'];
     
-    $query = "INSERT INTO employee (name,license_number,social_security_number,address,phone_number,email,union_trade,hiring_date,crew,hired)
-              VALUES ('$name','$license_number','$social_security_number','$address','$phone_number','$email','$union_trade','$hiring_date','$crew','y')";
+    $query = "INSERT INTO employee (name,social_security_number,address,phone_number,email,union_trade,home_local,hiring_date,crew,hired)
+              VALUES ('$name','$social_security_number','$address','$phone_number','$email','$union_trade','$home_local','$hiring_date','$crew','y')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {

@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT daily_timesheet_id,daily_timesheet.date,employee_name,project,employee.union_trade,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
+$result = mysql_query("SELECT daily_timesheet_id,daily_timesheet.date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name;");
 
@@ -202,8 +202,8 @@ ON employee.name=daily_timesheet.employee_name;");
                                 <tr>
                                     <th>Date</th>
                                     <th>Employee Name</th>
-                                    <th>Project</th>
                                     <th>Union Trade</th>
+                                    <th>Home Local #</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
                                     <th>Premium Rate</th>
@@ -229,12 +229,12 @@ ON employee.name=daily_timesheet.employee_name;");
                                     <td>
                                         <?php echo "{$row['employee_name']}"; ?>
                                     </td>
-                                    <td>
-                                        <?php echo "{$row['project']}"; ?>
-                                    </td>
                                     
                                     <td>
                                         <?php echo "{$row['union_trade']}"; ?>                        
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['home_local']}"; ?>                        
                                     </td>
                                     <td>
                                         <?php echo "{$row['job_function']}"; ?>
@@ -371,6 +371,7 @@ ON employee.name=daily_timesheet.employee_name;");
                 col_11: 'select',
                 col_12: 'none',
                 col_13: 'none',
+
         
                 extensions:[
                     {

@@ -1,10 +1,9 @@
 <?php
 require_once('connection.php');
 
-    $new_pay_rate_name = $_POST['new_pay_rate_name'];
-    $new_pay_rate_type = $_POST['new_pay_rate_type'];
-    $new_pay_rate = $_POST['new_pay_rate'];
-    $query = "INSERT INTO pay_rate values ('','$new_pay_rate_name','$new_pay_rate','$new_pay_rate_type')";
+    $new_weekly_lump_payment_name = $_POST['new_weekly_lump_payment_name'];
+    $new_weekly_lump_payment_rate = $_POST['new_weekly_lump_payment_rate'];
+    $query = "INSERT INTO weekly_lump_payments values ('','$new_weekly_lump_payment_name','$new_weekly_lump_payment_rate')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -70,7 +69,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-           <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -179,9 +178,9 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New pay rate group created successfully</h4>
+                                <h4>New weekly lump payment created successfully</h4>
                             </div>
-                            <form action="add_pay_rate_table.php">
+                            <form action="add_weekly_lump_payment_table.php">
                                 <input type="submit" value="Back">
                             </form>
                            

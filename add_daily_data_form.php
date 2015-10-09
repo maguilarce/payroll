@@ -206,13 +206,12 @@ $result7 = mysql_query("SELECT project_name
                             <thead>
                                 <tr>
                                     <th>Employee Name</th>
-                                    <th>Project</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
+                                    <th>Pay Rate Type</th>
                                     <th>Premium Rate</th>
                                     <th>Daily Lum Sum Rates</th>
-                                    <th>Straight Hours</th>
-                                    <th>Overtime Hours</th>
+                                    <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
                                    
@@ -232,18 +231,7 @@ $result7 = mysql_query("SELECT project_name
                                         </select>
                                     
                                     </td>
-                                     <td><?php  ?>
-                                    <select name="project" class="form-control"> 
-                                        <?php
-                                        while($row7 = mysql_fetch_array($result7, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row7['project_name']}</option>";                           
-                                            }  
-                                        ?>
-                                        </select>
-                                    
-                                    </td>
-                                    
+                                                                       
                                   
                                     
                                     <td>
@@ -262,11 +250,23 @@ $result7 = mysql_query("SELECT project_name
                                         <?php
                                         while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
                                             { 
-                                                echo "<option>{$row3['pay_rate_type']}</option>";                           
+                                                echo "<option>{$row3['pay_rate_type']}</option>";
+                                                
                                             }  
                                         ?>
                                          </select>
-                                    </td>      
+                                      
+                                    </td>    
+                                    <td>
+                                         <select name="pay_rate_type" class="form-control"> 
+                                       
+                                                <option>ST</option>
+                                                <option>OT</option>
+                                                
+                                     
+                                         </select>
+                                      
+                                    </td>    
                                     
                                     <td>
                                          <select name="premium_rate" class="form-control"> 
@@ -292,12 +292,9 @@ $result7 = mysql_query("SELECT project_name
                                     </td> 
                                          
                                     <td>
-                                        <input name="straight" type="text" class="form-control">
+                                        <input name="worked_hours" type="text" class="form-control">
                                     </td> 
                                     
-                                    <td>
-                                        <input name="overtime" type="text" class="form-control">
-                                    </td> 
                                     
                                                                       
                                     <td>

@@ -190,40 +190,42 @@ require_once('connection.php');
                         <div class="panel-body">
                             <form method="post" action="add_employee.php" class="form form-vertical">
                                 <div class="control-group">
-                                    <label>Name</label>
+                                    <label>First Name</label>
                                     <div class="controls">
-                                        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name">
+                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="Enter First Name">
                                     </div>
-                                </div>
+                                </div><br />
                                 <div class="control-group">
-                                    <label>License Number</label>
+                                    <label>Last Name</label>
                                     <div class="controls">
-                                        <input name="license_number" type="text" class="form-control" placeholder="Enter License Number">
+                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Enter Last Name">
                                     </div>
-                                 </div>   
+                                </div><br />
+                                
+                               
                                  <div class="control-group">
                                     <label>SSN</label>
                                     <div class="controls">
                                         <input name="social_security_number" type="text" class="form-control" placeholder="Enter SSN">
                                     </div>
-                                </div>
+                                </div><br />
                                  <div class="control-group">
                                     <label>Address</label>
                                     <div class="controls">
                                         <input name="address" type="text" class="form-control" placeholder="Enter Address">
-                                    </div>
+                                    </div><br />
                                 </div> 
                                 <div class="control-group">
                                     <label>Phone Number</label>
                                     <div class="controls">
                                         <input name="phone_number" type="text" class="form-control" placeholder="Enter Phone Number">
-                                    </div>
+                                    </div><br />
                                 </div> 
                                 <div class="control-group">
                                     <label>Email</label>
                                     <div class="controls">
                                         <input name="email" type="text" class="form-control" placeholder="Enter email">
-                                    </div>
+                                    </div><br />
                                 </div>                                  
                                 <div class="control-group">
                                     <label>Union Trade</label>
@@ -240,7 +242,12 @@ require_once('connection.php');
 
                                         </select>
                                     </div>
-                                </div>
+                                </div><br />
+                        <div class="control-group">
+                                    <label>Home local #</label>
+                                    <div class="controls">
+                                        <input id="home_local" name="home_local" type="text" class="form-control" placeholder="Enter Home Local #">
+                                    </div><br />
                                 <div class="control-group">
                                     <label>Crew</label>
                                     <div class="controls">
@@ -257,7 +264,7 @@ require_once('connection.php');
 
                                         </select>
                                     </div>
-                                </div>
+                                </div><br />
                                 <div class="control-group">
                                     <label>Hiring Date: </label>
                                      <div class="controls">
@@ -266,7 +273,7 @@ require_once('connection.php');
                                         
                                      </div>
                                     
-                                </div>
+                                </div><br />
                                 
                                 <div class="control-group">
                                     <label></label>
@@ -276,6 +283,7 @@ require_once('connection.php');
                                         </button>
                                     </div>
                                 </div>
+                                     </div>
                             </form>
                         </div>
                         <!--/panel content-->

@@ -178,7 +178,7 @@ require_once('connection.php');
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Active projects</h4>
@@ -188,7 +188,7 @@ require_once('connection.php');
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Project</th>
+                                    <th>Project Name</th>
                                     <th  colspan="2">Action</th>
                                     
                                 </tr>

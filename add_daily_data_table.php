@@ -1,10 +1,11 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,project,job_function,pay_rate,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
+$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE();");
+
 
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
@@ -207,18 +208,19 @@ WHERE date = CURDATE();");
 
                             </div>
                         </div>
+ </form>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Employee Name</th>
-                                    <th>Project</th>
                                     <th>Union Trade</th>
+                                    <th>Home local #</th>
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
                                     <th>Premium Rate</th>
                                     <th>Daily Lum Sum Rates</th>
-                                    <th>Straight Hours</th>
-                                    <th>Overtime Hours</th>
+                                    <th>Worked Hours</th>
                                     <th>Total Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
@@ -232,15 +234,18 @@ WHERE date = CURDATE();");
                                             { 
                                 ?>
                                 <tr>
+                                     <td>
+                                        <?php echo "{$row['daily_timesheet_id']}"; ?>
+                                    </td>
                                     <td>
                                         <?php echo "{$row['employee_name']}"; ?>
                                     </td>
-                                    <td>
-                                        <?php echo "{$row['project']}"; ?>
-                                    </td>
-                                    
+                                                              
                                     <td>
                                         <?php echo "{$row['union_trade']}"; ?>                        
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['home_local']}"; ?>                        
                                     </td>
                                     <td>
                                         <?php echo "{$row['job_function']}"; ?>
@@ -255,11 +260,18 @@ WHERE date = CURDATE();");
                                         <?php echo "{$row['daily_lump_sum_rate']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['straight_hours']}"; ?>
+                                        <?php 
+                                        
+                                        if($row['pay_rate_type']== "ST")
+                                        
+                                        echo "{$row['straight_hours']}"; 
+                                        
+                                        else
+                                            echo "{$row['overtime_hours']}";
+                                        
+                                        ?>
                                     </td>
-                                    <td>
-                                        <?php echo "{$row['overtime_hours']}"; ?>
-                                    </td>
+
                                     <td>
                                         <?php echo "{$row['total_day_hours']}"; ?> 
                                     </td>
@@ -379,7 +391,7 @@ WHERE date = CURDATE();");
                 col_10: 'select',
                 col_11: 'none',
                 col_12: 'none',
-        
+                       
                 extensions:[
                     {
 
