@@ -226,7 +226,7 @@ ORDER BY date,employee_name,pay_rate
                         </h4>
                                 
                     </div>
-
+<form action="add_weekly_data.php" method="post" name="daily_data">  
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -302,19 +302,28 @@ ORDER BY date,employee_name,pay_rate
                                     </td>
                                      <td>
                                        <select name="weekly_payment1" class="form-control weekly_payment"> 
-                                           <option value="0$">None</option>
+                                           
                                         <?php
-                                        $result1 = mysql_query("SELECT * FROM weekly_lump_payments");
-                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {   
+                                        
+                                        $query = "SELECT * from weekly_lump_payments;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            { 
                                                 $value = $row1['weekly_lump_payment_amount'];
-                                                
-                                                echo "<option value='$$value'>{$row1['weekly_lump_payment_type']}</option>";                           
+                                                if($row['weekly_lump_payment_type']==$row1['weekly_lump_payment_type'])
+                                                {
+                                                    echo "<option value='$$value' selected>{$row1['weekly_lump_payment_type']}</option>";
+                                                }
+                                                else echo "<option value='$$value'>{$row1['weekly_lump_payment_type']}</option>";                           
+                                             
+                     
                                             }  
+                                        
+         
                                         ?>
                                         </select>
 
-                                         <input value="0$" name="weekly_payment2" type="text" class="form-control" readonly="">
+                                         <input value='<?php echo "$"."{$row['weekly_lump_payment_amount']}"; ?>' name="weekly_payment2" type="text" class="form-control" readonly="">
                                     </td>
                                     
                                     <td>
@@ -439,7 +448,7 @@ ORDER BY date,employee_name,pay_rate
                                         ?>
                                     </td>
 
-
+            
 
                                     <td>
                                         <form action="edit_daily_data_form.php" method="post">
@@ -466,21 +475,36 @@ ORDER BY date,employee_name,pay_rate
                                 ?>
                             </tbody>
                         </table>
+   
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Generate Weekly Time Sheet
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                    </form>
+                      <!--
+                                   <form action="add_weekly_data.php" method="post" name="daily_data">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Generate Weekly Time Sheet
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                    </form>
+                      
+                      <!-->
                     <?php  
 
                                 
                                    echo $menweeklyhours;
                                 ?>
-                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+     
                     </div>
               
                 </div>

@@ -1,52 +1,8 @@
 <?php
 require_once('connection.php');
 ////////////////retrieving data from controls
-    $employee = $_POST['employee'];
-    $job_function = $_POST['job_function'];
-    $pay_rate = $_POST['pay_rate'];
-    $status = $_POST['status'];
+    $weekly_payment = $_POST['weekly_payment1'];
 
-    $total_hours = $_POST['worked_hours'];
-    
-    //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,status) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$status') ";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-     
-     
-    }
-    
- ////////acumulating weekly hours for each employee
-    
-    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
-    $row = mysql_query( $query1, $dbh );
-    $num_rows = mysql_num_rows($row);
-    
-
-    if($num_rows==0){
-        //Run an insert query on this table
-            $query1 = "INSERT INTO week_hours VALUES ('',week(now()),'$employee','$total_hours')";
-            $row = mysql_query( $query1, $dbh );
-            if(! $row )
-            {
-             die('Could not get data: ' . mysql_error());
-     
-     
-            }
-    } 
-    else {
-            
-            $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours + '$total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
-            $row = mysql_query( $query1, $dbh );
-            if(! $row )
-            {
-             die('Could not get data: ' . mysql_error());
-     
-     
-            }
-    }
     
 ?>
 
@@ -216,9 +172,10 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New daily data added successfully</h4>
+                                <h4>New weekly data added successfully</h4>
+                                <?php echo $weekly_payment;?>
                             </div>
-                            <form action="add_daily_foreman_data_table.php">
+                            <form action="add_weekly_data_table.php">
                                 <input type="submit" value="Back">
                             </form>
                            

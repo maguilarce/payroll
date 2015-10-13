@@ -252,10 +252,20 @@ $result = mysql_query("SELECT *
                                       <td>
                                          <select name="pay_rate_type" class="form-control"> 
                                         
-                                   
-                                            <option>ST</option>
-                                            <option>OT</option>
-
+                                            <?php
+                                            $query = "SELECT pay_rate_type from daily_timesheet WHERE daily_timesheet_id = '$id';";
+                                            $result = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result, MYSQL_ASSOC))
+                                            { 
+                                                if($row['pay_rate_type']=='ST')
+                                                {
+                                                    echo "<option selected>ST</option><option>OT</option>";
+                                                }
+                                                else echo "<option selected>OT</option><option>ST</option>";
+                     
+                                            }  
+                                        ?>
+                             
                                          
                                          </select>
                                     </td>    
@@ -301,11 +311,10 @@ $result = mysql_query("SELECT *
                                     </td> 
                                          <?php
                                          $hours = 0;
-                                         if($row['straight_hours']==0)
-                                            $hours=$row['overtime_hours']; 
-                                         else
-                                             $hours=$row['straight_hours']; 
-                                         
+                                         $query = "SELECT total_day_hours from daily_timesheet WHERE daily_timesheet_id = '$id';";
+                                         $result = mysql_query($query);
+                                         $row1 = mysql_fetch_array($result, MYSQL_ASSOC);
+                                         $hours = $row1['total_day_hours'];
                                          ?>
                                     <td>
                                         <input value="<?php echo $hours; ?>" name="worked_hours" type="text" class="form-control">
