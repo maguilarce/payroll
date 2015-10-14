@@ -48,6 +48,24 @@ $result7 = mysql_query("SELECT project_name
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+                 <script type="text/javascript"> 
+                    function verificar(){
+                        var suma = 0;
+                        var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                        for (var i = 0, j = los_cboxes.length; i < j; i++) {
+
+                        if(los_cboxes[i].checked === true){
+                        suma++;
+                        }
+                    }
+
+                    if(suma === 0){
+                    alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                    return false;
+                    }
+
+                    }
+                    </script> 
 
 	</head>
 	<body>
@@ -201,7 +219,7 @@ $result7 = mysql_query("SELECT project_name
                         <h4>Date: </h4><br />
                                 
                     </div>
-                    <form action="add_daily_data.php" method="post" name="daily_data">
+                    <form onsubmit='return verificar();' action="add_daily_data.php" method="post" name="daily_data">
                     <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -269,26 +287,31 @@ $result7 = mysql_query("SELECT project_name
                                     </td>    
                                     
                                     <td>
-                                         <select name="premium_rate" class="form-control"> 
-                                         <?php
-                                        while($row4 = mysql_fetch_array($result4, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row4['premium_rate_type']}</option>";                           
-                                            }  
-                                        ?>  
-                                         </select>
+                                        <?php
+   
+                                            $query = "SELECT * from premium_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                $value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value'/> {$row1['premium_rate_type']}<br>";
+
+                                                }
+                                            ?>
                                     </td> 
                                      
                                     <td>
-                                        <select name="daily_lump_payment" class="form-control"> 
                                          <?php
-                                         
-                                        while($row5 = mysql_fetch_array($result5, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row5['daily_lump_sum_type']}</option>";                           
-                                            }  
-                                        ?> 
-                                     </select> 
+   
+                                            $query = "SELECT * from daily_lump_sum_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                $value = $row1['daily_lump_sum_type'];
+                                                echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value'/> {$row1['daily_lump_sum_type']}<br>";
+
+                                                }
+                                            ?>
                                     </td> 
                                          
                                     <td>

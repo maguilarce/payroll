@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,premium_rate,daily_lump_sum_rate,straight_hours,overtime_hours,total_day_hours,status,daily_notes
+$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE();");
@@ -35,7 +35,7 @@ WHERE date = CURDATE();");
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
                     $(document).ready(function()
                   {             
@@ -45,6 +45,24 @@ WHERE date = CURDATE();");
                     });
                    });
                 </script>
+                <script type="text/javascript"> 
+                function verificar(){
+                    var suma = 0;
+                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                    for (var i = 0, j = los_cboxes.length; i < j; i++) {
+
+                    if(los_cboxes[i].checked === true){
+                    suma++;
+                    }
+                }
+
+                if(suma === 0){
+                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                return false;
+                }
+
+                }
+                </script> 
 
 	</head>
 	<body>
@@ -221,7 +239,6 @@ WHERE date = CURDATE();");
                                     <th>Premium Rate</th>
                                     <th>Daily Lum Sum Rates</th>
                                     <th>Worked Hours</th>
-                                    <th>Total Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
                                     <th>Action</th>
@@ -254,27 +271,41 @@ WHERE date = CURDATE();");
                                         <?php echo "{$row['pay_rate']}"; ?>      
                                     </td>
                                     <td>       
-                                        <?php echo "{$row['premium_rate']}"; ?>
+                                        <?php
+   
+                                        $query = "SELECT * from premium_rate;";
+                                        $result1 = mysql_query($query);
+                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                        {
+                                            $value = $row1['premium_rate_type'];
+                                            echo "<input type='checkbox' name='daily_premium_rate[]' value='$value'/> {$row1['premium_rate_type']}<br>";
+
+                                            }
+                                        ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['daily_lump_sum_rate']}"; ?>
+                                        <?php
+   
+                                            $query = "SELECT * from daily_lump_sum_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                $value = $row1['daily_lump_sum_type'];
+                                                echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value'/> {$row1['daily_lump_sum_type']}<br>";
+
+                                                }
+                                            ?>
                                     </td>
                                     <td>
                                         <?php 
                                         
-                                        if($row['pay_rate_type']== "ST")
-                                        
-                                        echo "{$row['straight_hours']}"; 
-                                        
-                                        else
-                                            echo "{$row['overtime_hours']}";
+                          
+                                        echo "{$row['total_day_hours']}"; 
+                                   
                                         
                                         ?>
                                     </td>
 
-                                    <td>
-                                        <?php echo "{$row['total_day_hours']}"; ?> 
-                                    </td>
                                     <td>
                                         <?php echo "{$row['status']}"; ?>          
                                     </td>
@@ -308,12 +339,12 @@ WHERE date = CURDATE();");
                         </table>
                    
                     </form>
-                    <form action="daily_complete_report.php" method="post" name="daily_data">   
+                    <form action="" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
-                                    Show complete report
+                                    Generate Daily Time Sheet
                                 </button>
 
                             </div>

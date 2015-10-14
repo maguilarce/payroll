@@ -4,36 +4,48 @@ require_once('connection.php');
     $employee = $_POST['employee'];
     $job_function = $_POST['job_function'];
     $pay_rate = $_POST['pay_rate'];
-    $premium_rate = $_POST['premium_rate'];
-    $daily_lump_payment = $_POST['daily_lump_payment'];
-    
     $pay_rate_type = $_POST['pay_rate_type'];
-    
-    if($pay_rate_type == "ST")
-    { 
-        $straight = $_POST['worked_hours'];
-        $overtime = 0;
-    }
-    else
-     { 
-        $overtime = $_POST['worked_hours'];
-        $straight = 0;
-    }       
-    
-    
+    $premium_rate = $_POST['daily_premium_rate'];//contar y mandar a la bd - es un arreglo, no una variable
+    $daily_lump_sum_rate = $_POST['daily_lump_sum_rate'];//contar y mandar a la bd - es un arreglo, no una variable
+    $total_hours = $_POST['worked_hours'];
     $status = $_POST['status'];
     $notes = $_POST['notes'];
-    $total_hours = $straight+$overtime;
-    
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$job_function','$straight','$overtime','$total_hours','$status','$pay_rate','$pay_rate_type','$premium_rate','$daily_lump_payment','$notes','NULL')";
+    $query = "INSERT INTO daily_timesheet VALUES ('',now(),week(now()),'$employee','$job_function','$total_hours','$status','$pay_rate','$pay_rate_type','$notes')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
      die('Could not get data: ' . mysql_error());
-     
-     
+
     }
+    
+    //////////inserting data into daily premium rates
+    
+    $count = count($premium_rate);
+    for ($i = 0; $i < $count; $i++)
+    {
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$job_function','$premium_rate[$i]')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not set data: ' . mysql_error());
+        }
+    }
+    
+    //////////inserting data into daily lump sum rates
+    
+    $count = count($daily_lump_sum_rate);
+    for ($i = 0; $i < $count; $i++)
+    {
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$job_function','$daily_lump_sum_rate[$i]')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not set data: ' . mysql_error());
+        }
+    }
+    
+
     
  ////////acumulating weekly hours for each employee
     

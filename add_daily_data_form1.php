@@ -3,30 +3,9 @@ require_once('connection.php');
 
     $id = $_POST['id'];
     $new_job_function = $_POST['job_function'];
-    
-    $new_pay_rate_type = $_POST['pay_rate_type'];
-    $new_premium_rate = $_POST['premium_rate'];
-    $new_daily_lump_payment = $_POST['daily_lump_payment'];
-    
-    
     $new_pay_rate = $_POST['pay_rate'];
-    
-    if($new_pay_rate_type == "ST")
-    { 
-        $new_straight = $_POST['worked_hours'];
-        $new_overtime = 0;
-    }
-    else
-     { 
-        $new_overtime = $_POST['worked_hours'];
-        $new_straight = 0;
-    }       
-    
-    
-    
-    
-    
-    $new_total_hours = $new_straight + $new_overtime;
+    $new_pay_rate_type = $_POST['pay_rate_type'];
+    $new_total_hours = $_POST['worked_hours'];
     $new_status = $_POST['status'];
     $new_notes = $_POST['notes'];
     $preview_hours = $_POST['preview_hours'];
@@ -37,10 +16,6 @@ require_once('connection.php');
               SET job_function='$new_job_function',
                   pay_rate='$new_pay_rate',
                   pay_rate_type='$new_pay_rate_type',
-                  premium_rate='$new_premium_rate',
-                  daily_lump_sum_rate='$new_daily_lump_payment',
-                  straight_hours='$new_straight',
-                  overtime_hours='$new_overtime',
                   total_day_hours = '$new_total_hours',
                   status='$new_status',
                   daily_notes='$new_notes'
