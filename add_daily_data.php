@@ -24,7 +24,7 @@ require_once('connection.php');
     $count = count($premium_rate);
     for ($i = 0; $i < $count; $i++)
     {
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$job_function','$premium_rate[$i]')";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','$premium_rate[$i]')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
@@ -37,7 +37,7 @@ require_once('connection.php');
     $count = count($daily_lump_sum_rate);
     for ($i = 0; $i < $count; $i++)
     {
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$job_function','$daily_lump_sum_rate[$i]')";
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','$daily_lump_sum_rate[$i]')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {

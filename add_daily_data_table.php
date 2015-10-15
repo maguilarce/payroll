@@ -288,11 +288,12 @@ WHERE date = CURDATE();");
    
                                             $query = "SELECT * from daily_lump_sum_rate;";
                                             $result1 = mysql_query($query);
+                                            $val[]="";
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
                                                 $value = $row1['daily_lump_sum_type'];
                                                 echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value'/> {$row1['daily_lump_sum_type']}<br>";
-
+                                                
                                                 }
                                             ?>
                                     </td>
@@ -327,18 +328,23 @@ WHERE date = CURDATE();");
                                             
                                             <input type="submit" name="delete" value="Delete">
                                         </form>
+                                        
+                                        <br />
+                                       
                                     </td> 
                                     
 
                                 
                                 </tr>
-                                <?php                               
+                                <?php 
+                                
+                                
                                    }
                                 ?>
                             </tbody>
                         </table>
                    
-                    </form>
+                    
                     <form action="" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>

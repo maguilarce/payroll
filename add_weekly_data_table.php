@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT 
+/*$result = mysql_query("SELECT 
 daily_timesheet_id,daily_timesheet.date, daily_timesheet.employee_name,employee.union_trade,employee.home_local,daily_timesheet.job_function,daily_timesheet.pay_rate,pay_rate.pay_rate_hourly_amount,daily_timesheet.premium_rate,premium_rate.premium_rate_amount,daily_timesheet.daily_lump_sum_rate,
 daily_lump_sum_rate.daily_lump_sum_amount,daily_timesheet.total_day_hours,daily_timesheet.pay_rate_type,weekly_lump_payments.weekly_lump_payment_type,weekly_lump_payments.weekly_lump_payment_amount
 FROM
@@ -13,7 +13,27 @@ INNER JOIN weekly_lump_payments ON daily_timesheet.weekly_lump_sum_rate = weekly
 INNER JOIN employee ON daily_timesheet.employee_name = employee.name
 WHERE week_number = week(now())
 ORDER BY date,employee_name,pay_rate 
-");
+");*/
+
+$result = mysql_query("SELECT 
+daily_timesheet_id,
+daily_timesheet.date,
+daily_timesheet.employee_name,
+employee.union_trade,
+employee.home_local,
+daily_timesheet.job_function,
+daily_timesheet.pay_rate,
+pay_rate.pay_rate_hourly_amount,
+daily_timesheet.total_day_hours,
+daily_timesheet.pay_rate_type
+
+FROM
+daily_timesheet
+INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
+
+INNER JOIN employee ON daily_timesheet.employee_name = employee.name
+WHERE week_number = week(now())
+ORDER BY date,employee_name,pay_rate");
 
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
@@ -230,7 +250,7 @@ ORDER BY date,employee_name,pay_rate
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                  
+                                    <th>Date</th>
                                     <th>Employee Name</th>
                                     <th>Union Trade</th>
                                     <th>Home Local #</th>
@@ -242,7 +262,6 @@ ORDER BY date,employee_name,pay_rate
                                     <th>Daily Lum Sum Rate</th>
                                     <th>Daily Lum Sum Rate Amount</th>
                                     <th>Weekly Lum Sum Rate</th>
-
                                     <th>Monday</th>
                                     <th>Tuesday</th>
                                     <th>Wednesday</th>
@@ -270,6 +289,9 @@ ORDER BY date,employee_name,pay_rate
                                 <tr>
                                  
                                     <td>
+                                        <?php echo "{$row['date']}"; ?>
+                                    </td>
+                                    <td>
                                         <?php echo "{$row['employee_name']}"; ?>
                                     </td>
                                                                    
@@ -289,16 +311,41 @@ ORDER BY date,employee_name,pay_rate
                                         <?php echo "{$row['pay_rate_hourly_amount']}"; ?>      
                                     </td>
                                     <td>       
-                                        <?php echo "{$row['premium_rate']}"; ?>
+                                        <?php 
+                                        //consulta a la tabla daily_premium_rate
+                                        $job_f = $row['job_function'];
+                                        $emp = $row['employee_name'];
+                                        $dat=$row['date'];
+                                        
+                                      
+                                        $query = mysql_query("SELECT 
+                                            daily_premium_rate.premium_rate AS premium ,premium_rate.premium_rate_amount AS amount
+                                            FROM 
+                                            daily_premium_rate
+                                            INNER JOIN premium_rate ON daily_premium_rate.premium_rate = premium_rate.premium_rate_type
+                                            WHERE
+                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now()) and daily_premium_rate.date = '$dat'");
+                                        while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
+                                        {
+                                            echo "{$row1['premium']}".": $"."{$row1['amount']}"."<br />";
+                                        }
+                                        
+                                        ?>
                                     </td>
                                     <td>       
-                                        <?php echo "{$row['premium_rate_amount']}"; ?>
+                                        <?php 
+                   //
+                                        ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['daily_lump_sum_rate']}"; ?>
+                                        <?php 
+                                        //consulta a la tabla daily_lump_rates
+                                        ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['daily_lump_sum_amount']}"; ?>
+                                        <?php 
+                                        //
+                                        ?>
                                     </td>
                                      <td>
                                        <select name="weekly_payment1" class="form-control weekly_payment"> 

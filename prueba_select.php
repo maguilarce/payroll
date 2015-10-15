@@ -38,4 +38,29 @@ require_once('connection.php');
     ?>
         <button type='submit'>Enviar</button>
 </form>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>col 1</th>
+                <th>col 2</th>
+                <th>col 3</th>
+            </tr>
+        </thead>    
+        <tbody>
+            <tr>
+        <form>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+        </form>        
+            </tr>
+        </tbody>
+    </table>
 </body>
