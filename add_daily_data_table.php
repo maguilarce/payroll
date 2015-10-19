@@ -331,11 +331,14 @@ WHERE date = CURDATE();");
                                     </td>
                                     <td>       
                                         <?php
-                                        if($row['processed']=='yes')
-                                        {   
+                                        
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
+                                            
+                                        if($row['processed']=='yes')
+                                        {   
+
                                             $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))

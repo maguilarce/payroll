@@ -271,15 +271,44 @@ $result = mysql_query("SELECT *
                                     </td>
                                     <td>
                                         
-                                        <?php 
+                                        <?php
+                                        //SHOW THE DAILY PREMIUM RATES SELECTED AND NOT SELECTED
+                                        $employee = $row['employee_name'];
+                                        $date = $row['date'];
+                                        $job_function = $row['job_function'];
+                                        $values = array();
+                                        $selected = array();
+                                        
+                                        $query = "SELECT * FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+                                        $result1 = mysql_query($query);
+                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                $selected[]=$row1['premium_rate'];
+                                            }
+                                        
+                                        
+                                        
                                         $query = "SELECT * from premium_rate;";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
+                                                
+                                                $values[]=$row1['premium_rate_type'];
+                                                /*$value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";*/
 
-                                                $value = $row1['premium_rate_type'];
-                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";
-
+                                            }
+                                            
+                                            for($i=0;$i<count($values);$i++)
+                                            {
+                                                $value = $values[$i];
+                                                if(in_array($values[$i],$selected))
+                                                {
+                                                    
+                                                    echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' checked='checked' / > $value<br>";
+                                                }
+                                                else
+                                                    echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > $value<br>";
                                             }
                                         ?>
                                         
@@ -287,14 +316,39 @@ $result = mysql_query("SELECT *
                                     <td>
                                         
                                         <?php
+                                        //SHOW THE DAILY LUMP SUM RATES SELECTED AND NOT SELECTED
+                                        $values1 = array();
+                                        $selected1 = array();
+                                        $query = "SELECT * FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+                                        $result1 = mysql_query($query);
+                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                $selected1[]=$row1['daily_lump_rate'];
+                                            }
+                                        
+                                        
+                                        
                                         $query = "SELECT * from daily_lump_sum_rate;";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
+                                                
+                                                $values1[]=$row1['daily_lump_sum_type'];
+                                                /*$value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";*/
 
-                                                $value = $row1['daily_lump_sum_type'];
-                                                echo "<input type='checkbox' name='daily_sum_rates[]' value='$value' / > {$row1['daily_lump_sum_type']}<br>";
-
+                                            }
+                                            
+                                            for($i=0;$i<count($values1);$i++)
+                                            {
+                                                $value = $values1[$i];
+                                                if(in_array($values1[$i],$selected1))
+                                                {
+                                                    
+                                                    echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value' checked='checked' / > $value<br>";
+                                                }
+                                                else
+                                                    echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value' / > $value<br>";
                                             }
                                         
                                         ?>
