@@ -1,7 +1,64 @@
 <?php
 require_once('connection.php');
 
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes
+//consulta para agregar los checkbox de premium rates y daily lump sum rates
+//traer por post los datos y los arreglos de los check box
+
+if (isset($_POST['daily_premium_rate'])&&isset($_POST['daily_sum_rates'])&&isset($_POST['job_function'])&&isset($_POST['employee'])&&isset($_POST['date'])&&isset($_POST['id']))
+{
+$daily_premium_rate=$_POST['daily_premium_rate'];
+$daily_sum_rates=$_POST['daily_sum_rates'];
+$employee=$_POST['employee'];
+$job_function=$_POST['job_function'];
+$id=$_POST['id'];
+$date = $_POST['date'];
+
+$query = "UPDATE daily_timesheet
+          SET processed='yes'
+          WHERE daily_timesheet_id='$id'";
+$retval = mysql_query( $query, $dbh );
+    if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
+
+
+$count = count($daily_premium_rate);
+    for ($i = 0; $i < $count; $i++) 
+    {
+        $dpr = $daily_premium_rate[$i];
+     
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$job_function','$dpr')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
+    }
+    
+  $count = count($daily_sum_rates);
+    for ($i = 0; $i < $count; $i++) 
+    {
+        $dsr = $daily_sum_rates[$i];
+       
+       $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$job_function','$dsr')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
+        
+    }
+
+}
+    
+    
+    
+
+$result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE();");
@@ -250,7 +307,9 @@ WHERE date = CURDATE();");
                                 while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
                                 ?>
+                           <form action="" method="post">
                                 <tr>
+                            
                                      <td>
                                         <?php echo "{$row['daily_timesheet_id']}"; ?>
                                     </td>
@@ -272,29 +331,59 @@ WHERE date = CURDATE();");
                                     </td>
                                     <td>       
                                         <?php
-   
-                                        $query = "SELECT * from premium_rate;";
-                                        $result1 = mysql_query($query);
-                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                        if($row['processed']=='yes')
+                                        {   
+                                            $employee = $row['employee_name'];
+                                            $job_function =  $row['job_function'];
+                                            $date = $row['date'];
+                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                echo "{$row1['premium_rate']}"."<br />";
+                                            }
+                                        }    
+                                        else
                                         {
-                                            $value = $row1['premium_rate_type'];
-                                            echo "<input type='checkbox' name='daily_premium_rate[]' value='$value'/> {$row1['premium_rate_type']}<br>";
+                                            $query = "SELECT * from premium_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
+                                                $value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";
 
                                             }
+                                        }
                                         ?>
                                     </td>
                                     <td>
                                         <?php
    
-                                            $query = "SELECT * from daily_lump_sum_rate;";
+                                            if($row['processed']=='yes')
+                                        {   
+                                            $employee = $row['employee_name'];
+                                            $job_function =  $row['job_function'];
+                                            $date = $row['date'];
+                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
                                             $result1 = mysql_query($query);
-                                            $val[]="";
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
+                                                echo "{$row1['daily_lump_rate']}"."<br />";
+                                            }
+                                        }    
+                                        else
+                                        {
+                                            $query = "SELECT * from daily_lump_sum_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
                                                 $value = $row1['daily_lump_sum_type'];
-                                                echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value'/> {$row1['daily_lump_sum_type']}<br>";
-                                                
-                                                }
+                                                echo "<input type='checkbox' name='daily_sum_rates[]' value='$value' / > {$row1['daily_lump_sum_type']}<br>";
+
+                                            }
+                                        }
                                             ?>
                                     </td>
                                     <td>
@@ -316,26 +405,27 @@ WHERE date = CURDATE();");
 
 
                                     <td>
-                                        <form action="edit_daily_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="submit" name="modify" value="Modify">
-                                        </form>
-                                        <br />
-                                        <form class="delete" id="delete" action="delete_daily_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                            <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                            
-                                            <input type="submit" name="delete" value="Delete">
-                                        </form>
+                                        <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
+                                        <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
+                                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                                        <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
+                                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                                         
-                                        <br />
                                        
+                                        
+                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button> <br /><br />
+                                        <button type="submit" formaction="delete_daily_data_form.php">Delete</button> <br /><br />
+                                        <button type="submit" formaction="add_daily_data_table.php" class="btn btn-primary">Process </button> <br />
+
+                            
                                     </td> 
                                     
-
+                                    
                                 
                                 </tr>
+                                </form>
+                                
+                                
                                 <?php 
                                 
                                 

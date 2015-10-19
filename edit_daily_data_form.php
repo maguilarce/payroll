@@ -186,6 +186,8 @@ $result = mysql_query("SELECT *
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
                                     <th>Pay Rate Type</th>
+                                    <th>Premium Rate</th>
+                                    <th>Daily Lump Sum Rate</th>
                                     <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
@@ -266,7 +268,38 @@ $result = mysql_query("SELECT *
                              
                                          
                                          </select>
-                                    </td>    
+                                    </td>
+                                    <td>
+                                        
+                                        <?php 
+                                        $query = "SELECT * from premium_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
+                                                $value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";
+
+                                            }
+                                        ?>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                        <?php
+                                        $query = "SELECT * from daily_lump_sum_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
+                                                $value = $row1['daily_lump_sum_type'];
+                                                echo "<input type='checkbox' name='daily_sum_rates[]' value='$value' / > {$row1['daily_lump_sum_type']}<br>";
+
+                                            }
+                                        
+                                        ?>
+                                        
+                                    </td>
                                     
                                    
                                          <?php
