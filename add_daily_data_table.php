@@ -4,59 +4,10 @@ require_once('connection.php');
 //consulta para agregar los checkbox de premium rates y daily lump sum rates
 //traer por post los datos y los arreglos de los check box
 
-if (isset($_POST['daily_premium_rate'])&&isset($_POST['daily_sum_rates'])&&isset($_POST['job_function'])&&isset($_POST['employee'])&&isset($_POST['date'])&&isset($_POST['id']))
-{
-$daily_premium_rate=$_POST['daily_premium_rate'];
-$daily_sum_rates=$_POST['daily_sum_rates'];
-$employee=$_POST['employee'];
-$job_function=$_POST['job_function'];
-$id=$_POST['id'];
-$date = $_POST['date'];
 
-$query = "UPDATE daily_timesheet
-          SET processed='yes'
-          WHERE daily_timesheet_id='$id'";
-$retval = mysql_query( $query, $dbh );
-    if(! $retval )
-        {
-            die('Could not get data: ' . mysql_error());
-
-        }
-
-
-$count = count($daily_premium_rate);
-    for ($i = 0; $i < $count; $i++) 
-    {
-        $dpr = $daily_premium_rate[$i];
-     
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$job_function','$dpr')";
-        $retval = mysql_query( $query, $dbh );
-        if(! $retval )
-        {
-            die('Could not get data: ' . mysql_error());
-
-        }
-    }
-    
-  $count = count($daily_sum_rates);
-    for ($i = 0; $i < $count; $i++) 
-    {
-        $dsr = $daily_sum_rates[$i];
-       
-       $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$job_function','$dsr')";
-        $retval = mysql_query( $query, $dbh );
-        if(! $retval )
-        {
-            die('Could not get data: ' . mysql_error());
-
-        }
-        
-    }
-
-}
     
     
-    
+
 
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
@@ -418,7 +369,7 @@ WHERE date = CURDATE();");
                                         
                                         <button type="submit" formaction="edit_daily_data_form.php">Modify</button> <br /><br />
                                         <button type="submit" formaction="delete_daily_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="add_daily_data_table.php" class="btn btn-primary">Process </button> <br />
+                                        <button type="submit" formaction="process.php" class="btn btn-primary">Process </button> <br />
 
                             
                                     </td> 

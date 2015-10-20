@@ -8,8 +8,20 @@ require_once('connection.php');
 
     $total_hours = $_POST['worked_hours'];
     
+    //getting pay rate type of given pay rate
+    $query = "SELECT type FROM pay_rate WHERE pay_rate_type = '$pay_rate' ";
+    $retval = mysql_query( $query, $dbh );
+    if(! $retval )
+    {
+     die('Could not get data: ' . mysql_error());
+     
+     
+    }
+    $type = mysql_fetch_array($retval,MYSQL_ASSOC);
+    $t = $type['type'];
+    
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,status) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$status') ";
+    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$t','$status') ";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {

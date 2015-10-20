@@ -3,6 +3,8 @@ require_once('connection.php');
 
     $id = $_POST['id'];
     $new_job_function = $_POST['job_function'];
+    $old_jf = $_POST['old_jf'];
+    $date = $_POST['date'];
     $new_pay_rate = $_POST['pay_rate'];
     $new_pay_rate_type = $_POST['pay_rate_type'];
     $new_total_hours = $_POST['worked_hours'];
@@ -10,8 +12,12 @@ require_once('connection.php');
     $new_notes = $_POST['notes'];
     $preview_hours = $_POST['preview_hours'];
     $employee = $_POST['employee'];
+    $daily_premium_rate = $_POST['daily_premium_rate'];
+    $daily_lump_sum_rate = $_POST['daily_lump_sum_rate'];
     
 
+    
+//update daily worker data
     $query = "UPDATE daily_timesheet
               SET job_function='$new_job_function',
                   pay_rate='$new_pay_rate',
@@ -27,6 +33,53 @@ require_once('connection.php');
     {
      die('Could not get data: ' . mysql_error());
     }
+    
+
+//update daily premium rates*************************************************************************************************************************
+  
+    //deleting previus daily premium rates
+    
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+    
+    //inserting new daily premium rates
+    for($i=0;$i<count($daily_premium_rate);$i++)
+    {
+        $dpr = $daily_premium_rate[$i];
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dpr') ";
+        $result1 = mysql_query($query);
+        if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+    }
+                
+    
+     //deleting previus daily lump rates
+    
+    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+    
+    //inserting new daily lump rates
+    for($i=0;$i<count($daily_lump_sum_rate);$i++)
+    {
+        $dlr = $daily_lump_sum_rate[$i];
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dlr') ";
+        $result1 = mysql_query($query);
+        if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
     //updating accumalated hours
     $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
     $row = mysql_query( $query1, $dbh );

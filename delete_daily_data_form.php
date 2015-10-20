@@ -12,8 +12,29 @@ require_once('connection.php');
     
    $preview_hours = $_POST['preview_hours'];
    $employee = $_POST['employee'];
+   $job_function = $_POST['job_function'];
+   $date = $_POST['date'];
    
+ //******************************************************************************************************************************************************************  
+//deleting daily premium rates
+
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
    
+   //deleting daily lump rates
+   
+   $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+   
+ ////******************************************************************************************************************************************************************  
     ////////acumulating weekly hours for each employee
     
     $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";

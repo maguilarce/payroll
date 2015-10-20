@@ -4,10 +4,6 @@ $id = $_POST['id'];
 $result = mysql_query("SELECT *
                        FROM daily_timesheet
                        WHERE daily_timesheet_id = '$id'");
-
-
-                
-
 ?>
 
 <!DOCTYPE html>
@@ -404,6 +400,9 @@ $result = mysql_query("SELECT *
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
+                        <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
+                        <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
+                        
                     </form>
                     </div>
               
