@@ -1,62 +1,58 @@
 <?php
 require_once('connection.php');
-////////////////retrieving data from controls
-    $employee = $_POST['employee'];
-    $job_function = $_POST['job_function'];
-    $pay_rate = $_POST['pay_rate'];
-    $pay_rate_type = $_POST['pay_rate_type'];
-    $premium_rate = $_POST['daily_premium_rate'];//contar y mandar a la bd - es un arreglo, no una variable
-    $daily_lump_sum_rate = $_POST['daily_lump_sum_rate'];//contar y mandar a la bd - es un arreglo, no una variable
-    $total_hours = $_POST['worked_hours'];
-    $status = $_POST['status'];
-    $notes = $_POST['notes'];
-    //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet(date,week_number,employee_name,job_function,total_day_hours,status,pay_rate,pay_rate_type,daily_notes) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$status','$pay_rate','$pay_rate_type','$notes')";
+
+    $daily_timesheet_id = $_POST['id'];
+    $query = "DELETE FROM daily_timesheet WHERE daily_timesheet_id = '$daily_timesheet_id' ";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
      die('Could not get data: ' . mysql_error());
+    }
+    
+    
+   $preview_hours = $_POST['preview_hours'];
+   $employee = $_POST['employee'];
+   $job_function = $_POST['job_function'];
+   $date = $_POST['date'];
+   
+ //******************************************************************************************************************************************************************  
+//deleting daily premium rates
 
-    }
-    
-    //////////inserting data into daily premium rates
-    
-    $count = count($premium_rate);
-    for ($i = 0; $i < $count; $i++)
-    {
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','$premium_rate[$i]')";
-        $retval = mysql_query( $query, $dbh );
-        if(! $retval )
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
         {
-            die('Could not set data: ' . mysql_error());
+            die('Could not get data: ' . mysql_error());
         }
-    }
-    
-    //////////inserting data into daily lump sum rates
-    
-    $count = count($daily_lump_sum_rate);
-    for ($i = 0; $i < $count; $i++)
-    {
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','$daily_lump_sum_rate[$i]')";
-        $retval = mysql_query( $query, $dbh );
-        if(! $retval )
+   
+   //deleting daily lump rates
+   
+   $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
         {
-            die('Could not set data: ' . mysql_error());
+            die('Could not get data: ' . mysql_error());
         }
-    }
-    
-
-    
- ////////acumulating weekly hours for each employee
+        
+        //deleting weekly lump rates
+   
+   $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date') AND employee = '$employee' AND job_function = '$job_function' ";
+    $result1 = mysql_query($query);
+    if(! $result1 )
+        {
+            die('Could not get data: ' . mysql_error());
+        }
+   
+ ////******************************************************************************************************************************************************************  
+    ////////acumulating weekly hours for each employee
     
     $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
     $row = mysql_query( $query1, $dbh );
     $num_rows = mysql_num_rows($row);
     
 
-    if($num_rows==0){
-        //Run an insert query on this table
-            $query1 = "INSERT INTO week_hours VALUES ('',week(now()),'$employee','$total_hours')";
+    if($num_rows>0){
+        $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours' WHERE employee_name = '$employee' and week_number = week(now());";
             $row = mysql_query( $query1, $dbh );
             if(! $row )
             {
@@ -65,18 +61,7 @@ require_once('connection.php');
      
             }
     } 
-    else {
-            
-            $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours + '$total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
-            $row = mysql_query( $query1, $dbh );
-            if(! $row )
-            {
-             die('Could not get data: ' . mysql_error());
-     
-     
-            }
-    }
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -95,6 +80,7 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+                
 
 	</head>
 	<body>
@@ -137,7 +123,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-                        <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -224,6 +210,7 @@ require_once('connection.php');
                 
                                 
             </ul>
+
            
             
         </div>
@@ -245,9 +232,9 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New daily data added successfully</h4>
+                                <h4>Daily register deleted successfully</h4>
                             </div>
-                            <form action="add_daily_data_table.php">
+                            <form name="delete_form" action="add_weekly_data_table.php">
                                 <input type="submit" value="Back">
                             </form>
                            
@@ -275,6 +262,7 @@ require_once('connection.php');
 <!-- /Main -->
 
 <footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
+
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">

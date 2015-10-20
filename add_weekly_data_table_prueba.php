@@ -19,7 +19,6 @@ $result = mysql_query("SELECT
 daily_timesheet_id,
 daily_timesheet.date,
 daily_timesheet.employee_name,
-daily_timesheet.processed_week,
 employee.union_trade,
 employee.home_local,
 daily_timesheet.job_function,
@@ -250,7 +249,7 @@ ORDER BY employee_name");
   
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
-                                
+                                <form method="post" name="daily_data">
                                 <tr>
                                     <th>Date</th>
                                     <th>Employee Name</th>
@@ -280,16 +279,14 @@ ORDER BY employee_name");
                                 <?php 
                                 $menweeklyhours=0;
                                 while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                    { 
-                                        $job_function = $row['job_function'];
+                                            { 
+                                    $job_function = $row['job_function'];
                                         $employee_name = $row['employee_name'];
                                         $pay_rate_type = $row['pay_rate_type'];
-                                        $id = $row['daily_timesheet_id'];
-                                        $date = $row['date'];
-                                        $totalh = 0;
+                                    $id = $row['daily_timesheet_id'];
+                                    $totalh = 0;
                                     
                                 ?>
-                                <form method="post" name="daily_data">
                                 <tr>
                                  
                                     <td>
@@ -385,39 +382,30 @@ ORDER BY employee_name");
                                         ?>
                                     </td>
                                      <td>
-                                       
+                                       <select name="weekly_payment1" class="form-control weekly_payment"> 
                                            
                                         <?php
                                         
-                                       if($row['processed_week']=='yes')
-                                        {   
-
-                                            $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date');";
+                                        $query = "SELECT * from weekly_lump_payments;";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-                                                echo "-"."{$row1['weekly_lump_payment']}"."<br /><br />";
-                                            }
-                                        }    
-                                        else
-                                        {
-                                            $query = "SELECT * from weekly_lump_payments;";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-
-                                                $value = $row1['weekly_lump_payment_type'];
-                                                echo "<input type='checkbox' name='weekly_lump_payments[]' value='$value' / > {$row1['weekly_lump_payment_type']}<br>";
-
-                                            }
-                                        }                     
+                                            { 
+                                                $value = $row1['weekly_lump_payment_amount'];
+                                                if($row['weekly_lump_payment_type']==$row1['weekly_lump_payment_type'])
+                                                {
+                                                    echo "<option value='$$value' selected>{$row1['weekly_lump_payment_type']}</option>";
+                                                }
+                                                else echo "<option value='$$value'>{$row1['weekly_lump_payment_type']}</option>";                           
                                              
                      
-                                         
+                                            }  
                                         
          
                                         ?>
-                                         </td>
+                                        </select>
+
+                                         <input value='<?php echo "$"."{$row['weekly_lump_payment_amount']}"; ?>' name="weekly_payment2" type="text" class="form-control" readonly="">
+                                    </td>
                                     
                                     <td>
                                         <!--
@@ -546,22 +534,18 @@ ORDER BY employee_name");
                                     <td>
                                     
                                       
-
+                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                                            <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
+                                            <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                                             
-                                        <button type="submit" formaction="edit_weekly_data_form.php">Modify</button> <br /><br />
-                                        <button type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="process_week.php" class="btn btn-primary">Process </button> <br />
+                                        <button type="submit" formaction="">Modify</button> <br /><br />
+                                        <button type="submit" formaction="">Delete</button> <br /><br />
+                                        <button type="submit" formaction="" class="btn btn-primary">Process </button> <br />
                                     </td> 
                                     
 
                                 
                                 </tr>
-                                <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
-                                <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
-                                </form>
                                 <?php  
 
                                 
