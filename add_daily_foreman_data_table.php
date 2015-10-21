@@ -280,12 +280,12 @@ WHERE date = CURDATE();");
                         </table>
                    
                     </form>
-                    <form action="daily_complete_report.php" method="post" name="daily_data">   
+                    <form action="" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
-                                    Show complete report
+                                    Generate Daily Time Sheet
                                 </button>
 
                             </div>

@@ -174,11 +174,11 @@ $result = mysql_query("SELECT *
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet</h2><br />
-                        <h4>Date: </h4><br />
+                        <h2>Edit Daily Time Sheet - Foreman</h2><br />
+                     
                                 
                     </div>
-                    <form action="add_daily_data_form1.php" method="post" name="daily_data">
+                    <form action="add_daily_foreman_data_form1.php" method="post" name="daily_data">
                     <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -186,8 +186,6 @@ $result = mysql_query("SELECT *
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
                                     <th>Pay Rate Type</th>
-                                    <th>Premium Rate</th>
-                                    <th>Daily Lum Sum Rates</th>
                                     <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
@@ -260,55 +258,10 @@ $result = mysql_query("SELECT *
                                          </select>
                                     </td>    
                                     
+                                    
+                                        
                                     <td>
-                                         <select name="premium_rate" class="form-control"> 
-                                         <?php
-                                         $query = "SELECT premium_rate_type from premium_rate;";
-                                         $result = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                                if($row['premium_rate']==$row1['premium_rate_type'])
-                                                {
-                                                    echo "<option selected>{$row1['premium_rate_type']}</option>";
-                                                }
-                                                else echo "<option>{$row1['premium_rate_type']}</option>";                           
-                                             
-                     
-                                            }  
-                                        ?>  
-                                         </select>
-                                    </td> 
-                                     
-                                    <td>
-                                        <select name="daily_lump_payment" class="form-control"> 
-                                         <?php
-                                         
-                                       $query = "SELECT daily_lump_sum_type from daily_lump_sum_rate;";
-                                         $result = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                                if($row['daily_lump_sum_rate']==$row1['daily_lump_sum_type'])
-                                                {
-                                                    echo "<option selected>{$row1['daily_lump_sum_type']}</option>";
-                                                }
-                                                else 
-                                                    echo "<option>{$row1['daily_lump_sum_type']}</option>";                           
-                                             
-                     
-                                            }  
-                                        ?> 
-                                     </select> 
-                                    </td> 
-                                         <?php
-                                         $hours = 0;
-                                         if($row['straight_hours']==0)
-                                            $hours=$row['overtime_hours']; 
-                                         else
-                                             $hours=$row['straight_hours']; 
-                                         
-                                         ?>
-                                    <td>
-                                        <input value="<?php echo $hours; ?>" name="worked_hours" type="text" class="form-control">
+                                        <input value="<?php echo $row['total_day_hours']; ?>" name="worked_hours" type="text" class="form-control">
                                     </td> 
                                     
                                                                       
@@ -347,7 +300,9 @@ $result = mysql_query("SELECT *
                             </div>
                         </div>
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
-                        <input type="hidden" name="preview_hours" value="<?php echo $row['overtime_hours']+$row['straight_hours']; ?>">
+                        <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
+                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
+                        <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                     </form>
                     </div>
               
