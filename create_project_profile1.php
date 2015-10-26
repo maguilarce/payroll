@@ -1,5 +1,7 @@
 <?php
 require_once('connection.php');
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,21 +20,15 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
-                <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-                <script language="JavaScript"> 
-                    $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected project. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });
-                </script>
+                 <!-- filter and pagination -->
+                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
+                <link href="css/style/tablefilter.css" rel="stylesheet">
+                <link href="css/style/colsVisibility.css" rel="stylesheet">
+                <link href="css/style/filtersVisibility.css" rel="stylesheet">
+                <!--end filter and pagination -->
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+
 	</head>
 	<body>
 <!-- header -->
@@ -65,7 +61,7 @@ require_once('connection.php');
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <!-- Left column -->
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
@@ -161,7 +157,7 @@ require_once('connection.php');
                 
                                 
             </ul>
-            
+
            
             
         </div>
@@ -176,84 +172,59 @@ require_once('connection.php');
 			CENTER MENU
 		<!-->
             
-            <div class="row">
+                        <div class="row">
                 <!-- center left-->
-                <div class="col-md-9">
-                    <div class="panel-title">
-                        <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Active projects</h4>
-                    </div>
-          
-                    <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Project Name</th>
-                                    <th  colspan="2">Action</th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                
-                                $result = mysql_query("SELECT *
-                                                       FROM project");
-                                $counter = 0;
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                                ++$counter;
-                              
-                                ?>
-                                <tr>
-                                    <td><?php echo $counter; ?></td>
-                                    <td><?php echo "{$row['project_name']} <br>"; ?></td>
-                                    <td>
-                                        <form id="modify" action="edit_project_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['project_id']}"; ?>">
-                                            <input name="modify_job_function" type="submit" value="Modify">
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form class="delete" action="delete_project_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['project_id']}"; ?>">
-                                            <input  type="submit" value="Delete">
-                                        </form>
-                                    </td>
-                                    
-                                
-                                </tr>
-                                   <?php
-                                            }
-                                        ?>
-                            </tbody>
-                        </table>
-                    
-                         <div class="panel-body">
-                             <form action="add_project_form.php" class="form form-vertical" method="post">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Create Project Profile - Step 1/4</h4>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" action="create_project_profile2.php" class="form form-vertical">
                                 <div class="control-group">
-                                    <label>New project name:</label>
+                                    <label>Project Name:</label>
                                     <div class="controls">
-                                        <input name="new_project" type="text" class="form-control" placeholder="Enter new project">
-                                        
+                                        <input id="pname" name="pname" type="text" class="form-control" placeholder="Enter Project Name">
                                     </div>
-                                    <br />
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Description:</label>
                                     <div class="controls">
-                                        <button type="submit" class="btn btn-primary">
-                                            Add new project
-                                        </button>
+                                        <input id="pdescription" name="pdescription" type="text" class="form-control" placeholder="Describe the project briefly">
                                     </div>
-                                </div>
-                            </form>
-                         </div>
+                                </div><br />
+                                
+                               
+                                 <div class="control-group">
+                                    <label>General Contractor: </label>
+                                    <div class="controls">
+                                        <input id="general_contractor" name="general_contractor" type="text" class="form-control" placeholder="Enter General Contractor of this project">
+                                    </div>
+                                </div><br />
+                                 <div class="control-group">
+                                    <label>Person in charge of this project: </label>
+                                    <div class="controls">
+                                        <input id="in_charge_of" name="in_charge_of" type="text" class="form-control" placeholder="Enter Person in charge of this project">
+                                    </div><br />
+                                </div> 
+                              
+                                
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    Continue to Step 2 >>
+                                </button>
+                        </form>
+                        </div>
+                        <!--/panel content-->
                     </div>
-              
-                </div>
-                <!--/col-->
-                
+                    <!--/panel-->                
                             <!--
 			right MENU
 		<!-->
-               
+          
                 <!--/col-span-6-->
 
             </div>
@@ -294,5 +265,51 @@ require_once('connection.php');
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
+                <!-- filter and pagination -->
+                <script data-config>
+                var filtersConfig = {          
+                paging: true,  
+                paging_length: 20,  
+                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
+                rows_counter: true,  
+                rows_counter_text: "Rows:",  
+                display_all_text: " [ Show all ] ",
+                loader: true, 
+                col_0: 'select',
+                col_1: 'select',
+                col_2: 'select',
+                col_3: 'select',
+                col_4: 'select',
+                col_5: 'select',
+                col_6: 'select',
+                col_7: 'select',
+                col_8: 'select',
+                col_9: 'select',
+                col_10: 'select',
+                col_11: 'none',
+                col_12: 'none',
+                       
+                extensions:[
+                    {
+
+                        editable: false,
+                        selection: false
+
+                    }, {
+                        name: 'sort',
+                        types: [
+                            'string', 'string', 'number',
+                            'number', 'number', 'number',
+                            'number', 'number', 'number'
+                        ]
+                    }
+                ]
+            };
+
+            var tf = new TableFilter('demo', filtersConfig);
+            tf.init();
+            
+</script>
+<!-- end filter and pagination -->
 	</body>
 </html>
