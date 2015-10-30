@@ -8,9 +8,15 @@ $project_description = $_POST['pdescription'];
 $general_contractor = $_POST['general_contractor'];
 $in_charge_of = $_POST['in_charge_of'];
 $states = $_POST['states'];
-
-echo $project_name." ".$project_description." ".$general_contractor." ".$in_charge_of.'<br />';
 print_r($states);
+$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of')";
+$result = mysql_query($query);
+if(! $result )
+    {
+     die('Could not get data: ' . mysql_error());
+
+    }
+
 //*************************************************************************************
 ?>
 <!DOCTYPE html>
@@ -37,7 +43,7 @@ print_r($states);
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                 <script type="text/javascript"> 
-                function verificar(){
+               /* function verificar(){
                     var suma = 0;
                     var los_cboxes = document.getElementsByName('states[]'); 
                     for (var i = 0, j = los_cboxes.length; i < j; i++) {
@@ -52,7 +58,7 @@ print_r($states);
                 return false;
                 }
 
-                }
+                }*/
                 </script> 
 
 
@@ -212,7 +218,7 @@ print_r($states);
                         </div>
          
                         
-                        <form method="post" action="create_project_profile4.php" onsubmit="return verificar(this)">
+                        <form method="GET" action="create_project_profile4.php" >
                                 <div class="control-group">
                                                   
                         <?php
@@ -220,12 +226,19 @@ print_r($states);
                                 {
                                     $state = $states[$i];
                                     echo "<h3>".$state.":</h3><br />";
-                                    $query = "SELECT county FROM counties WHERE state = '$state';";
+                                    $query = "SELECT idcounties,county FROM counties WHERE state = '$state';";
                                     $result = mysql_query($query);
                                     while($row = mysql_fetch_array($result,MYSQL_ASSOC))
                                     {
-                                        echo "<input type = 'checkbox' name = counties[] />".$row['county']."<br />";
+                                        $county = $row['county'];
+                                        $comma = ",";
+                                        $star = "*";
+                                       
+                                        //echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
+                                      echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
+                                       
                                     }
+                                    
 
                                 }
                             ?>
@@ -235,10 +248,17 @@ print_r($states);
                                 <button type="submit" class="btn btn-primary" >
                                     Continue to Step 4 >>
                                 </button>
-                                <input type="hidden" name="pname" value="<?php echo $project_name; ?>">
-                                <input type="hidden" name="pdescription" value="<?php echo $project_description; ?>">
-                                <input type="hidden" name="general_contractor" value="<?php echo $general_contractor; ?>">
-                                <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
+                                
+                                <?php
+                                for($i=0;$i<count($states);$i++)
+                                {
+                                    $state = $states[$i];
+                                    echo "<input type='hidden' name=states[] value='$state' />";
+                                }
+                                    
+                                    ?>
+                                
+                                
                         </form>
                        
                         <!--/panel content-->
