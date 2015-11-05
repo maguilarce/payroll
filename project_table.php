@@ -1,24 +1,10 @@
 <?php
-
 require_once('connection.php');
 
-//this data has to be passed thru hidden inputs to the next page***********************
-$project_name = $_POST['pname'];
-$project_description = $_POST['pdescription'];
-$general_contractor = $_POST['general_contractor'];
-$in_charge_of = $_POST['in_charge_of'];
-$states = $_POST['states'];
-print_r($states);
-$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of')";
-$result = mysql_query($query);
-if(! $result )
-    {
-     die('Could not get data: ' . mysql_error());
+      
 
-    }
-
-//*************************************************************************************
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -42,10 +28,19 @@ if(! $result )
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                 <script language="JavaScript"> 
+                    $(document).ready(function()
+                  {             
+                    $( ".delete" ).submit(function( event ) {
+                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
                 <script type="text/javascript"> 
-               /* function verificar(){
+                function verificar(){
                     var suma = 0;
-                    var los_cboxes = document.getElementsByName('states[]'); 
+                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
                     for (var i = 0, j = los_cboxes.length; i < j; i++) {
 
                     if(los_cboxes[i].checked === true){
@@ -54,13 +49,12 @@ if(! $result )
                 }
 
                 if(suma === 0){
-                alert("Must select at least one state");
+                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
                 return false;
                 }
 
-                }*/
+                }
                 </script> 
-
 
 	</head>
 	<body>
@@ -205,72 +199,200 @@ if(! $result )
 			CENTER MENU
 		<!-->
             
-                        <div class="row">
+            <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Create Project Profile - Step 3/4</h4>
-                                <h6>Select the county or counties where the project will be developed:</h6>
+                <div class="col-md-14">
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <h2>Current Projects</h2><br />
+                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
+                                
+                    </div>
+                    <form action="">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Add new register
+                                </button>
+
                             </div>
                         </div>
-         
-                        
-                        <form method="GET" action="create_project_profile4.php" >
-                                <div class="control-group">
-                                                  
-                        <?php
-                            for($i=0;$i<count($states);$i++)
-                                {
-                                    $state = $states[$i];
-                                    echo "<h3>".$state.":</h3><br />";
-                                    $query = "SELECT idcounties,county FROM counties WHERE state = '$state';";
-                                    $result = mysql_query($query);
-                                    while($row = mysql_fetch_array($result,MYSQL_ASSOC))
-                                    {
-                                        $county = $row['county'];
-                                        $comma = ",";
-                                        $star = "*";
-                                       
-                                        //echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
-                                      echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
-                                       
-                                    }
-                                    
+ </form>
+                    <table id="demo" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Employee Name</th>
+                                    <th>Union Trade</th>
+                                    <th>Home local #</th>
+                                    <th>Job Function</th>
+                                    <th>Pay Rate</th>
+                                    <th>Premium Rate</th>
+                                    <th>Daily Lum Sum Rates</th>
+                                    <th>Worked Hours</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                    <th>Action</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+                                            { 
+                                ?>
+                           <form action="" method="post">
+                                <tr>
+                            
+                                     <td>
+                                        <?php echo "{$row['daily_timesheet_id']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['employee_name']}"; ?>
+                                    </td>
+                                                              
+                                    <td>
+                                        <?php echo "{$row['union_trade']}"; ?>                        
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['home_local']}"; ?>                        
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['job_function']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['pay_rate']}"; ?>      
+                                    </td>
+                                    <td>       
+                                        <?php
+                                        
+                                            $employee = $row['employee_name'];
+                                            $job_function =  $row['job_function'];
+                                            $date = $row['date'];
+                                            
+                                        if($row['processed']=='yes')
+                                        {   
 
-                                }
-                            ?>
-                                </div>
-                                
-                                <br />
-                                <button type="submit" class="btn btn-primary" >
-                                    Continue to Step 4 >>
-                                </button>
-                                
-                                <?php
-                                for($i=0;$i<count($states);$i++)
-                                {
-                                    $state = $states[$i];
-                                    echo "<input type='hidden' name=states[] value='$state' />";
-                                }
+                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                echo "{$row1['premium_rate']}"."<br />";
+                                            }
+                                        }    
+                                        else
+                                        {
+                                            $query = "SELECT * from premium_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
+                                                $value = $row1['premium_rate_type'];
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";
+
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+   
+                                            if($row['processed']=='yes')
+                                        {   
+                                            $employee = $row['employee_name'];
+                                            $job_function =  $row['job_function'];
+                                            $date = $row['date'];
+                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+                                                echo "{$row1['daily_lump_rate']}"."<br />";
+                                            }
+                                        }    
+                                        else
+                                        {
+                                            $query = "SELECT * from daily_lump_sum_rate;";
+                                            $result1 = mysql_query($query);
+                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                            {
+
+                                                $value = $row1['daily_lump_sum_type'];
+                                                echo "<input type='checkbox' name='daily_sum_rates[]' value='$value' / > {$row1['daily_lump_sum_type']}<br>";
+
+                                            }
+                                        }
+                                            ?>
+                                    </td>
+                                    <td>
+                                        <?php 
+                                        
+                          
+                                        echo "{$row['total_day_hours']}"; 
+                                   
+                                        
+                                        ?>
+                                    </td>
+
+                                    <td>
+                                        <?php echo "{$row['status']}"; ?>          
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['daily_notes']}"; ?>  
+                                    </td>
+
+
+                                    <td>
+                                        <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
+                                        <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
+                                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                                        <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
+                                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
+                                        
+                                       
+                                        
+                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button> <br /><br />
+                                        <button type="submit" formaction="delete_daily_data_form.php">Delete</button> <br /><br />
+                                        <button type="submit" formaction="process.php" class="btn btn-primary">Process </button> <br />
+
+                            
+                                    </td> 
                                     
-                                    ?>
+                                    
                                 
-                                <input name='pname' type='hidden' value="<?php echo $project_name; ?>">
-                                <input name='pdescription' type='hidden' value="<?php echo $project_description; ?>">
-                                <input name='general_contractor' type='hidden' value="<?php echo $general_contractor; ?>">
-                                <input name='in_charge_of' type='hidden' value="<?php echo $in_charge_of; ?>">
-                        </form>
-                       
-                        <!--/panel content-->
+                                </tr>
+                                </form>
+                                
+                                
+                                <?php 
+                                
+                                
+                                   }
+                                ?>
+                            </tbody>
+                        </table>
+                   
+                    
+                    <form action="" method="post" name="daily_data">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Generate Daily Time Sheet
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
                     </div>
-                    <!--/panel-->                
+              
+                </div>
+                <!--/col-->
+                
                             <!--
 			right MENU
 		<!-->
-          
+               
                 <!--/col-span-6-->
 
             </div>
@@ -359,7 +481,3 @@ if(! $result )
 <!-- end filter and pagination -->
 	</body>
 </html>
-
-
-
-

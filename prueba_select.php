@@ -1,16 +1,9 @@
 <?php
 require_once('connection.php');
 
-$counties = $_POST['counties'];
-
-   $counties_decode = array();
-    
-    for($i=0;$i<count($counties);$i++)
-    {
-        $counties_decode[$i]=urldecode($counties[$i]);
-    }
-    
-  
-    $serial=urlencode(serialize($counties_decode));
-       //$url=http_build_query($counties);              
-        header("Location: test_datepicker.php?data=$serial");
+print_r($_POST['group0']['teamster']);
+echo "<br />";
+print_r($_POST['group1']['teamster']);
+echo "<br />";
+print_r($_POST['group2']['teamster']);
+echo "<br />";

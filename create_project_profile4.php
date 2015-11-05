@@ -2,16 +2,49 @@
 
 require_once('connection.php');
 
-
 $counties = $_GET['counties'];
-
+$project_name = $_GET['pname'];
+$project_description = $_GET['pdescription'];
+$general_contractor = $_GET['general_contractor'];
+$in_charge_of = $_GET['in_charge_of'];
+/*print_r($counties);
+echo '<br />';
 $decode = array();
 
-for($i=0;$i<count($counties);$i++)
+$referer = $_SERVER['HTTP_REFERER'];
+
+echo $referer;
+echo '<br />';
+
+if(strpos($referer,"create_project_profile4.php"))
 {
-    $decode[$i] = urldecode($counties[$i]);
+    //header("location:$referer");
+    echo "contiene el referer";
+    $decode1 = unserialize(base64_decode($counties));
+    echo '<br />';
+    echo 'Deserializado:';
+    echo '<br />';
+    print_r($decode1);
+   for($i=0;$i<count($decode1);$i++)
+    {
+        $decode[$i] = urldecode($decode1[$i]);
+    }
+     echo '<br />';
+    echo 'Decodificado por segunda vez:';
+    echo '<br />';
+    print_r($decode);
+    echo '<br />';
+    
 }
 
+
+else
+{*/
+    for($i=0;$i<count($counties);$i++)
+    {
+        $decode[$i] = urldecode($counties[$i]);
+    }
+//}
 
 $combined1 = implode("",$decode); //array to string
 $combined2 = explode("*", $combined1); //string to array
@@ -34,7 +67,7 @@ for($i=0;$i<(count($combined4)/2);$i++)
 }
 
 
-
+/*
 print_r($decode);
 echo '<br />';
 
@@ -42,7 +75,7 @@ print_r($array1);
 echo '<br />';
 print_r($array2);
 echo '<br />';
-
+*/
 ?>
 
 
@@ -243,7 +276,7 @@ echo '<br />';
                                 <h6>Please input local union # that has jurisdiction in each county:</h6>
                             </div>
                         </div>
-         
+                        <form method="post" action="" >
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -252,97 +285,64 @@ echo '<br />';
                                     <th>Operator Local Union #</th>
                                     <th>Teamster Local Union #</th>
                                     <th>Laborer Local Union #</th>
-                                    <th>Action</th>
+                                    
                                 </tr>
                             </thead>
-                            <tbody>
+                            
+                            
+                                <tbody>
                                 <?php 
-                                    for ($i=0;$i<count($counties);$i++)
+                                    for ($i=0;$i<count($array1);$i++)
                                     {
+                                        
                                         $county = $array1[$i];
                                         $state = $array2[$i];
                                         
                                         ?>
-                                        
+
+                                    <tr>
                                     
-                                
-                                <tr>
-                                    <form method="GET" action="" >
                                         <td>
-                                             <?php
-                                                echo $state;
-                                              ?>
-                                        </td>
-                                        <td>
-                                             <?php
-                                                echo $county;
-                                              ?>
-                                        </td>
-                                         <?php
-                                             
-                                                $query = "SELECT * FROM jurisdiction WHERE county = '$county' AND state = '$state'";
-                                                $result = mysql_query($query);
-                                                $row = mysql_fetch_array($result,MYSQL_ASSOC);
-                                                
-                                                if ($row['processed']!='yes')
-                                                {
-                                                    
-                                                    echo "<td><input name='operators' type='text' class='form-control'>
-                                        </td>
-                                        <td>
-                                             <input name='teamster' type='text' class='form-control'>
-                                        </td>
-                                        <td>
-                                             <input name='laborer' type='text' class='form-control'>
-                                        </td>
-                                        <td>
-                                            <button formaction='process_jurisdiction.php' type='submit' class='btn btn-primary' >
-                                                Add Local Union Numbers
-                                            </button>
-                                        </td>";
-                                                }
-                                                else
-                                                {
+                                            <input name='state[]' type='text' value="<?php echo $state; ?>" class='form-control'readonly="readonly">
 
-                                                    echo "<td>".$row['operator_local']."
                                         </td>
                                         <td>
-                                             ".$row['teamster_local']."
+                                             <input name='county[]' type='text' value="<?php echo $county; ?>" class='form-control'readonly="readonly">
                                         </td>
                                         <td>
-                                             ".$row['laborer_local']."
+                                            <input name='group<?php echo $i; ?>[operator]' type='text' class='form-control'>
                                         </td>
                                         <td>
-                                            Processed
-                                        </td>";
-                                                }
-                                         ?>
-                                                                                
+                                            <input name='group<?php echo $i; ?>[teamster]' type='text' class='form-control'>
+                                        </td>
+                                        <td>
+                                            <input name='group<?php echo $i; ?>[laborer]' type='text' class='form-control'>
+                                        </td>
 
-                               
-                                <input type="hidden" name="county" value="<?php echo $county; ?>">
-                                <input type="hidden" name="state" value="<?php echo $state; ?>">
-                               
-                              
-                                <?php
-                                    //send counties array to the processing page
-                                
-                                       for($j=0;$j<count($counties);$j++)
-                                        {
-                                            $value = $counties[$j];
-                                            echo "<input type='hidden' name=counties[] value=".urlencode($value).">";
-                                        }
-                                ?>
-
-                                </form>
-                            </tr>
-                        <?php
-                        }
-                        ?>
+                                    </tr>
+                                    <?php
+                                    }
+                                     ?>
+                                               
                         </tbody>
+                         
+                            
+
+                        
                     </table>
+                            <button formaction="process_jurisdiction.php" type="submit" class="btn btn-primary">
+                                    Create Project Profile
+                                </button>
+                                <input name='pname' type='hidden' value="<?php echo $project_name; ?>">
+                                <input name='pdescription' type='hidden' value="<?php echo $project_description; ?>">
+                                <input name='general_contractor' type='hidden' value="<?php echo $general_contractor; ?>">
+                                <input name='in_charge_of' type='hidden' value="<?php echo $in_charge_of; ?>">
+                            </form>
+                        <br />
+
                         <!--/panel content-->
                     </div>
+                    
                     <!--/panel-->                
                             <!--
 			right MENU
