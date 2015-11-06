@@ -8,8 +8,10 @@ $project_description = $_POST['pdescription'];
 $general_contractor = $_POST['general_contractor'];
 $in_charge_of = $_POST['in_charge_of'];
 $states = $_POST['states'];
-print_r($states);
-$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of')";
+$starting_date = $_POST['starting_date'];
+$completion_date = $_POST['completion_date'];
+
+$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of','$starting_date','$completion_date')";
 $result = mysql_query($query);
 if(! $result )
     {
@@ -258,10 +260,12 @@ if(! $result )
                                     
                                     ?>
                                 
-                                <input name='pname' type='hidden' value="<?php echo $project_name; ?>">
-                                <input name='pdescription' type='hidden' value="<?php echo $project_description; ?>">
-                                <input name='general_contractor' type='hidden' value="<?php echo $general_contractor; ?>">
-                                <input name='in_charge_of' type='hidden' value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="pname" value="<?php echo $project_name; ?>">
+                                <input type="hidden" name="pdescription" value="<?php echo $project_description; ?>">
+                                <input type="hidden" name="general_contractor" value="<?php echo $general_contractor; ?>">
+                                <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
+                                <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
                         </form>
                        
                         <!--/panel content-->

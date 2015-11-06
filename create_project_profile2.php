@@ -6,6 +6,8 @@ $project_name = $_POST['pname'];
 $project_description = $_POST['pdescription'];
 $general_contractor = $_POST['general_contractor'];
 $in_charge_of = $_POST['in_charge_of'];
+$starting_date = $_POST['starting_date'];
+$completion_date = $_POST['completion_date'];
 //*************************************************************************************
 ?>
 
@@ -230,6 +232,8 @@ $in_charge_of = $_POST['in_charge_of'];
                                 <input type="hidden" name="pdescription" value="<?php echo $project_description; ?>">
                                 <input type="hidden" name="general_contractor" value="<?php echo $general_contractor; ?>">
                                 <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
+                                <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
                         </form>
                        
                         <!--/panel content-->

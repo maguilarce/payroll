@@ -20,13 +20,8 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <!-- filter and pagination -->
-                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
-                <link href="css/style/tablefilter.css" rel="stylesheet">
-                <link href="css/style/colsVisibility.css" rel="stylesheet">
-                <link href="css/style/filtersVisibility.css" rel="stylesheet">
-                <!--end filter and pagination -->
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    
 
 
 	</head>
@@ -210,6 +205,24 @@ require_once('connection.php');
                                         <input id="in_charge_of" name="in_charge_of" type="text" class="form-control" placeholder="Enter Person in charge of this project">
                                     </div><br />
                                 </div> 
+                                <div class="control-group">
+                                    <label>Project Starting Date: </label>
+                                     <div class="controls">
+                                         <input name="starting_date" class="datepicker form-control" readonly='true' type="text" placeholder="Click to add starting date">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        
+                                     </div>
+                                    
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Completion Date: </label>
+                                     <div class="controls">
+                                         <input name="completion_date" class="datepicker form-control" readonly='true' type="text" placeholder="Click to add completion date">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        
+                                     </div>
+                                    
+                                </div><br />
                               
                                 
                                 
@@ -310,6 +323,17 @@ require_once('connection.php');
             tf.init();
             
 </script>
-<!-- end filter and pagination -->
+
+                
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+        
+    });
+  });
+  </script>
 	</body>
 </html>

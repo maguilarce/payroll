@@ -7,6 +7,8 @@ $project_name = $_GET['pname'];
 $project_description = $_GET['pdescription'];
 $general_contractor = $_GET['general_contractor'];
 $in_charge_of = $_GET['in_charge_of'];
+$starting_date = $_GET['starting_date'];
+$completion_date = $_GET['completion_date'];
 /*print_r($counties);
 echo '<br />';
 $decode = array();
@@ -333,10 +335,12 @@ echo '<br />';
                             <button formaction="process_jurisdiction.php" type="submit" class="btn btn-primary">
                                     Create Project Profile
                                 </button>
-                                <input name='pname' type='hidden' value="<?php echo $project_name; ?>">
-                                <input name='pdescription' type='hidden' value="<?php echo $project_description; ?>">
-                                <input name='general_contractor' type='hidden' value="<?php echo $general_contractor; ?>">
-                                <input name='in_charge_of' type='hidden' value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="pname" value="<?php echo $project_name; ?>">
+                                <input type="hidden" name="pdescription" value="<?php echo $project_description; ?>">
+                                <input type="hidden" name="general_contractor" value="<?php echo $general_contractor; ?>">
+                                <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
+                                <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
                             </form>
                         <br />
 

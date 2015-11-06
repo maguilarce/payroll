@@ -8,6 +8,8 @@ $project_name = $_POST['pname'];
 $project_description = $_POST['pdescription'];
 $general_contractor = $_POST['general_contractor'];
 $in_charge_of = $_POST['in_charge_of'];
+$starting_date = $_POST['starting_date'];
+$completion_date = $_POST['completion_date'];
 
 $teamster = "teamster";
 $operators = "operators";
@@ -207,6 +209,8 @@ for($i=0;$i<count($state);$i++)
                                 ?>
                                                                 
                                 </h4>
+                                <h4><strong>Starting date: </strong><br /><?php echo $starting_date; ?></h4>
+                                <h4><strong>Completion date: </strong><br /><?php echo $starting_date; ?></h4>
                             </div>
                             
                             <form action="">
