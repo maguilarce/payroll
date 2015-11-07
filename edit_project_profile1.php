@@ -1,7 +1,10 @@
 <?php
 require_once('connection.php');
 
-      
+$id = $_POST['id'];
+$query = "SELECT * FROM project WHERE project_id='$id'";
+$result = mysql_query($query);
+$row = mysql_fetch_array($result,1);
 
 ?>
 
@@ -21,40 +24,9 @@ require_once('connection.php');
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <!-- filter and pagination -->
-                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
-                <link href="css/style/tablefilter.css" rel="stylesheet">
-                <link href="css/style/colsVisibility.css" rel="stylesheet">
-                <link href="css/style/filtersVisibility.css" rel="stylesheet">
-                <!--end filter and pagination -->
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                 <script language="JavaScript"> 
-                    $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected project profile. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });
-                </script>
-                <script type="text/javascript"> 
-                function verificar(){
-                    var suma = 0;
-                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
-                    for (var i = 0, j = los_cboxes.length; i < j; i++) {
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    
 
-                    if(los_cboxes[i].checked === true){
-                    suma++;
-                    }
-                }
-
-                if(suma === 0){
-                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
-                return false;
-                }
-
-                }
-                </script> 
 
 	</head>
 	<body>
@@ -199,75 +171,79 @@ require_once('connection.php');
 			CENTER MENU
 		<!-->
             
-            <div class="row">
+                        <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
-                    <div class="panel-title">
-                        <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Current Projects</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
-                                
-                    </div>
-                   
-
-                   
-                   <?php
-                   
-                   $query = "SELECT * FROM project";
-                   $result = mysql_query($query);
-                   
-                   
-                   while ($row = mysql_fetch_array($result,MYSQL_ASSOC))
-                   {
-                       $id = $row['project_id'];
-                       $pname = $row['project_name'];
-                       $query2 = "SELECT county,state FROM jurisdiction WHERE project_name='$pname'";
-                       $result2 = mysql_query($query2);
-                       
-                       echo "<form method='post'>
-                    <div class='panel panel-default'>       
-                       <div class='panel-heading'>       
-                        <div class='panel-title'>
-                                <h4><strong>Project Name: </strong>".$row['project_name']."<br /></h4>
-                                <h4><strong>Project Description: </strong>".$row['project_description']."<br /></h4>
-                                <h4><strong>General Contractor: </strong>".$row['general_contractor']."<br /></h4>
-                                <h4><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h4>
-                                <h4><strong>Starting date: </strong>".$row['starting_date']."</h4>
-                                <h4><strong>Completion date: </strong>".$row['completion_date']."</h4>
-                                <h4><strong>County(ies) where project has jurisdiction: </strong><br />";
-                       
-                                while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
-                                {
-                                    echo $row2['county']." - ".$row2['state']."<br />";
-                                }
-                                
-                               echo "</h4>
-                                <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'>
-                                    Edit Project Profile
-                                </button>  
-                                <button class='delete' formaction='delete_project.php' type='submit' class='btn btn-primary'>
-                                    Delete Project Profile
-                                </button>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Edit Project Profile - Step 1/4</h4>
+                            </div>
                         </div>
+                        <div class="panel-body">
+                            <form method="post" action="edit_project_profile2.php" class="form form-vertical">
+                                <div class="control-group">
+                                    <label>Project Name:</label>
+                                    <div class="controls">
+                                        <input id="pname" name="pname" type="text" class="form-control" value="<?php echo $row['project_name']; ?>">
+                                    </div>
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Description:</label>
+                                    <div class="controls">
+                                        <input id="pdescription" name="pdescription" type="text" class="form-control" value="<?php echo $row['project_description']; ?>">
+                                    </div>
+                                </div><br />
+                                
+                               
+                                 <div class="control-group">
+                                    <label>General Contractor: </label>
+                                    <div class="controls">
+                                        <input id="general_contractor" name="general_contractor" type="text" class="form-control" value="<?php echo $row['general_contractor']; ?>">
+                                    </div>
+                                </div><br />
+                                 <div class="control-group">
+                                    <label>Person in charge of this project: </label>
+                                    <div class="controls">
+                                        <input id="in_charge_of" name="in_charge_of" type="text" class="form-control" value="<?php echo $row['in_charge_of']; ?>">
+                                    </div><br />
+                                </div> 
+                                <div class="control-group">
+                                    <label>Project Starting Date: </label>
+                                     <div class="controls">
+                                         <input name="starting_date" class="datepicker form-control" readonly='true' type="text" value="<?php echo $row['starting_date']; ?>">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        
+                                     </div>
+                                    
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Completion Date: </label>
+                                     <div class="controls">
+                                         <input name="completion_date" class="datepicker form-control" readonly='true' type="text" value="<?php echo $row['completion_date']; ?>">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        
+                                     </div>
+                                    
+                                </div><br />
+                              
+                                
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    Continue to Step 2 >>
+                                </button>
+                                <input type="hidden" name="project_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="old_project_name" value="<?php echo $row['project_name']; ?>">
+                        </form>
+                        </div>
+                        <!--/panel content-->
                     </div>
-                    </div>
-                     <input type='hidden' name='id' value='$id'>
-                     <input type='hidden' name='project_name' value='$pname'>
-                    </form>   
-                       ";                       
-                   }
-                   
-                   ?>
-
-                    </div>
-              
-                </div>
-                <!--/col-->
-                
+                    <!--/panel-->                
                             <!--
 			right MENU
 		<!-->
-               
+          
                 <!--/col-span-6-->
 
             </div>
@@ -353,6 +329,17 @@ require_once('connection.php');
             tf.init();
             
 </script>
-<!-- end filter and pagination -->
+
+                
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+        
+    });
+  });
+  </script>
 	</body>
 </html>

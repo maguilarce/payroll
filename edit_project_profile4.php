@@ -1,9 +1,44 @@
 <?php
+
 require_once('connection.php');
 
-      
+$counties = $_GET['counties'];
+$project_name = $_GET['pname'];
+$old_project_name = $_GET['old_project_name'];
+$project_description = $_GET['pdescription'];
+$general_contractor = $_GET['general_contractor'];
+$in_charge_of = $_GET['in_charge_of'];
+$starting_date = $_GET['starting_date'];
+$completion_date = $_GET['completion_date'];
+
+    for($i=0;$i<count($counties);$i++)
+    {
+        $decode[$i] = urldecode($counties[$i]);
+    }
+
+
+$combined1 = implode("",$decode); //array to string
+$combined2 = explode("*", $combined1); //string to array
+$combined3 = implode(",",$combined2); //array to string
+$combined4 = explode(",", $combined3); //string to array
+
+unset($combined4[(count($combined4))-1]);
+
+$array1 = array();
+$array2 = array();
+$x=0;
+$y=1;
+
+for($i=0;$i<(count($combined4)/2);$i++)
+{
+    $array1[$i]=$combined4[$x++];//counties
+    $array2[$i]=$combined4[$y++];//states
+    $x++;
+    $y++;
+}
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,19 +63,10 @@ require_once('connection.php');
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                 <script language="JavaScript"> 
-                    $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected project profile. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });
-                </script>
                 <script type="text/javascript"> 
-                function verificar(){
+                /*function verificar(){
                     var suma = 0;
-                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                    var los_cboxes = document.getElementsByName('states[]'); 
                     for (var i = 0, j = los_cboxes.length; i < j; i++) {
 
                     if(los_cboxes[i].checked === true){
@@ -49,12 +75,13 @@ require_once('connection.php');
                 }
 
                 if(suma === 0){
-                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                alert("Must select at least one state");
                 return false;
                 }
 
-                }
+                }*/
                 </script> 
+
 
 	</head>
 	<body>
@@ -199,75 +226,92 @@ require_once('connection.php');
 			CENTER MENU
 		<!-->
             
-            <div class="row">
+                        <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
-                    <div class="panel-title">
-                        <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Current Projects</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
-                                
-                    </div>
-                   
-
-                   
-                   <?php
-                   
-                   $query = "SELECT * FROM project";
-                   $result = mysql_query($query);
-                   
-                   
-                   while ($row = mysql_fetch_array($result,MYSQL_ASSOC))
-                   {
-                       $id = $row['project_id'];
-                       $pname = $row['project_name'];
-                       $query2 = "SELECT county,state FROM jurisdiction WHERE project_name='$pname'";
-                       $result2 = mysql_query($query2);
-                       
-                       echo "<form method='post'>
-                    <div class='panel panel-default'>       
-                       <div class='panel-heading'>       
-                        <div class='panel-title'>
-                                <h4><strong>Project Name: </strong>".$row['project_name']."<br /></h4>
-                                <h4><strong>Project Description: </strong>".$row['project_description']."<br /></h4>
-                                <h4><strong>General Contractor: </strong>".$row['general_contractor']."<br /></h4>
-                                <h4><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h4>
-                                <h4><strong>Starting date: </strong>".$row['starting_date']."</h4>
-                                <h4><strong>Completion date: </strong>".$row['completion_date']."</h4>
-                                <h4><strong>County(ies) where project has jurisdiction: </strong><br />";
-                       
-                                while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
-                                {
-                                    echo $row2['county']." - ".$row2['state']."<br />";
-                                }
-                                
-                               echo "</h4>
-                                <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'>
-                                    Edit Project Profile
-                                </button>  
-                                <button class='delete' formaction='delete_project.php' type='submit' class='btn btn-primary'>
-                                    Delete Project Profile
-                                </button>
+                <div class="col-md-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Edit Project Profile - Step 4/4</h4>
+                                <h6>Please input local union # that has jurisdiction in each county:</h6>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                     <input type='hidden' name='id' value='$id'>
-                     <input type='hidden' name='project_name' value='$pname'>
-                    </form>   
-                       ";                       
-                   }
-                   
-                   ?>
+                        <form method="post" action="" >
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>County</th>
+                                    <th>Operator Local Union #</th>
+                                    <th>Teamster Local Union #</th>
+                                    <th>Laborer Local Union #</th>
+                                    
+                                </tr>
+                            </thead>
+                            
+                            
+                                <tbody>
+                                <?php 
+                                    for ($i=0;$i<count($array1);$i++)
+                                    {
+                                        
+                                        $county = $array1[$i];
+                                        $state = $array2[$i];
+                                        
+                                        ?>
 
+                                    <tr>
+                                    
+                                        <td>
+                                            <input name='state[]' type='text' value="<?php echo $state; ?>" class='form-control'readonly="readonly">
+
+                                        </td>
+                                        <td>
+                                             <input name='county[]' type='text' value="<?php echo $county; ?>" class='form-control'readonly="readonly">
+                                        </td>
+                                        <td>
+                                            <input name='group<?php echo $i; ?>[operator]' type='text' class='form-control'>
+                                        </td>
+                                        <td>
+                                            <input name='group<?php echo $i; ?>[teamster]' type='text' class='form-control'>
+                                        </td>
+                                        <td>
+                                            <input name='group<?php echo $i; ?>[laborer]' type='text' class='form-control'>
+                                        </td>
+
+                                    </tr>
+                                    <?php
+                                    }
+                                     ?>
+                                               
+                        </tbody>
+                         
+                            
+
+                        
+                    </table>
+                            <button formaction="edit_process_jurisdiction.php" type="submit" class="btn btn-primary">
+                                    Edit Project Profile
+                                </button>
+                                <input type="hidden" name="pname" value="<?php echo $project_name; ?>">
+                                <input type="hidden" name="pdescription" value="<?php echo $project_description; ?>">
+                                <input type="hidden" name="general_contractor" value="<?php echo $general_contractor; ?>">
+                                <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
+                                <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
+                                <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
+                                <input type="hidden" name="old_project_name" value="<?php echo $old_project_name; ?>">
+                            </form>
+                        <br />
+
+                        <!--/panel content-->
                     </div>
-              
-                </div>
-                <!--/col-->
-                
+                    
+                    <!--/panel-->                
                             <!--
 			right MENU
 		<!-->
-               
+          
                 <!--/col-span-6-->
 
             </div>
@@ -356,3 +400,6 @@ require_once('connection.php');
 <!-- end filter and pagination -->
 	</body>
 </html>
+
+
+
