@@ -1,16 +1,23 @@
 <?php
 require_once('connection.php');
-
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,total_day_hours,status
-FROM employee INNER JOIN daily_timesheet
-ON employee.name=daily_timesheet.employee_name
-WHERE date = CURDATE();");
-
-
-//$row = mysql_fetch_array($result, MYSQL_ASSOC);
-
-      
-
+$counties="";
+ if(isset($_POST["project"]))
+  {
+   $project=$_POST["project"]; 
+   $query2 = "SELECT * FROM jurisdiction WHERE project_name='$project'";
+   $result2 = mysql_query($query2);
+   while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
+   {
+    
+    $counties .= $row2['county'].' - '.$row2['state']."\n"."Operators Local Union # ".$row2['operator_local']."\n"."Teamster Local Union # ".$row2['teamster_local']."\n"."Laborer Local Union # ".$row2['laborer_local']."\n\n";
+    }
+    echo ltrim($counties);
+  exit;
+  }
+ 
+ $query = "SELECT * FROM project";
+ $result = mysql_query($query);
+ 
 ?>
 
 <!DOCTYPE html>
@@ -29,23 +36,51 @@ WHERE date = CURDATE();");
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <!-- filter and pagination -->
-                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
-                <link href="css/style/tablefilter.css" rel="stylesheet">
-                <link href="css/style/colsVisibility.css" rel="stylesheet">
-                <link href="css/style/filtersVisibility.css" rel="stylesheet">
-                <!--end filter and pagination -->
-                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
+                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <script language="JavaScript">
                     $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
-                        event.preventDefault();
+                    {
+                       $("#project").change(function()
+                        {
+                            changeFunction();
+                        });
                     });
-                   });
-                </script>
 
+                function changeFunction()
+                {
+                $.ajax({
+                   'type':'POST',
+                   'data':$('form').serialize(),
+                   'success':function(data)
+                   { 
+                       $("#project_description").prop("value",data); 
+                   }
+
+                   });
+                }
+                </script>
+                <script type="text/javascript">
+                   
+                $(document).ready(function () {
+                $('.submit').click(function (event) {
+                var count = $('select option:selected').val();
+                if (count == 0) {
+                    alert('select at least 1');
+                    event.preventDefault();
+                    
+                }
+                else {
+
+                    
+                }
+                
+                
+            });
+        });
+                </script>
+                
 	</head>
 	<body>
 <!-- header -->
@@ -78,7 +113,7 @@ WHERE date = CURDATE();");
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <!-- Left column -->
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
@@ -191,115 +226,54 @@ WHERE date = CURDATE();");
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
-                    <div class="panel-title">
-                        <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet - Foreman</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
-                                
-                    </div>
- <form action="add_daily_foreman_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Create Daily Time Sheet</h4>
                             </div>
                         </div>
- </form>
-                    <table id="demo" class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-
-                                    <th>Employee Name</th>
-                                    <th>Union Trade</th>
-                                    <th>Job Function</th>
-                                    <th>Group</th>
-                                    <th>Worked Hours</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+                        <div class="panel-body">
+                            <form id="form" name="form" method="post" action="pondis.php" class="form form-vertical validate">                       
+                                <div class="control-group">
+                                    <label>Associated Project</label>
+                                    <div class="controls">
+                                        <select id="project" name="project" class="form-control">
+                                            <option selected value="0">Select a project...</option>
+                                            <?php
+                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
-                                ?>
-                                <tr>
- 
-                                    <td>
-                                        <?php echo "{$row['employee_name']}"; ?>
-                                    </td>
-                                                              
-                                    <td>
-                                        <?php echo "{$row['union_trade']}"; ?>                        
-                                    </td>
-                                   
-                                    <td>
-                                        <?php echo "{$row['job_function']}"; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['pay_rate']}"; ?>      
-                                    </td>
+                                             $value = $row['project_name']; 
+                                             echo "<option value = '$value'>{$row['project_name']}</option>";
+                                            }  
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Location(s)</label><br/>
+                       
+                                    <textarea rows = '10' disabled name="project_description" id="project_description" class="form-control" name="notes"><?php echo ltrim($counties); ?></textarea>
                                     
-                                                                        
-                                    <td>
-                                        <?php echo "{$row['total_day_hours']}"; ?> 
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['status']}"; ?>          
-                                    </td>
-
-
-
-                                    <td>
-                                        <form action="edit_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="submit" name="modify" value="Modify">
-                                        </form>
-                                        <br />
-                                        <form class="delete" id="delete" action="delete_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                            <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                            
-                                            <input type="submit" name="delete" value="Delete">
-                                        </form>
-                                    </td> 
-                                    
-
-                                
-                                </tr>
-                                <?php                               
-                                   }
-                                ?>
-                            </tbody>
-                        </table>
-                   
-                    </form>
-                    <form action="" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Generate Daily Time Sheet
+                                </div><br />
+    
+                                <div class="controls">
+                                    <button id='create' type="submit" class="submit btn btn-primary">
+                                    Create New Daily Time Sheet
                                 </button>
-
-                            </div>
+                                   
+                                        
+                            </form>
                         </div>
-                    </form>
+                        <!--/panel content-->
                     </div>
-              
-                </div>
-                <!--/col-->
-                
+                    <!--/panel-->                
                             <!--
 			right MENU
 		<!-->
-               
+          
                 <!--/col-span-6-->
 
             </div>
@@ -337,54 +311,19 @@ WHERE date = CURDATE();");
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
-                <!-- filter and pagination -->
-                <script data-config>
-                var filtersConfig = {          
-                paging: true,  
-                paging_length: 20,  
-                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
-                rows_counter: true,  
-                rows_counter_text: "Rows:",  
-                display_all_text: " [ Show all ] ",
-                loader: true, 
-                col_0: 'select',
-                col_1: 'select',
-                col_2: 'select',
-                col_3: 'select',
-                col_4: 'select',
-                col_5: 'select',
-                col_6: 'select',
-                col_7: 'select',
-                col_8: 'select',
-                col_9: 'select',
-                col_10: 'select',
-                col_11: 'none',
-                col_12: 'none',
-                       
-                extensions:[
-                    {
+                
 
-                        editable: false,
-                        selection: false
 
-                    }, {
-                        name: 'sort',
-                        types: [
-                            'string', 'string', 'number',
-                            'number', 'number', 'number',
-                            'number', 'number', 'number'
-                        ]
-                    }
-                ]
-            };
-
-            var tf = new TableFilter('demo', filtersConfig);
-            tf.init();
-            
-</script>
-<!-- end filter and pagination -->
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+        
+    });
+  });
+  </script>
 	</body>
 </html>
