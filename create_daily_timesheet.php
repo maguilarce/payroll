@@ -17,7 +17,6 @@ $counties="";
  
  $query = "SELECT * FROM project";
  $result = mysql_query($query);
- 
 ?>
 
 <!DOCTYPE html>
@@ -36,9 +35,22 @@ $counties="";
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-                <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                 <!-- filter and pagination -->
+                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
+                <link href="css/style/tablefilter.css" rel="stylesheet">
+                <link href="css/style/colsVisibility.css" rel="stylesheet">
+                <link href="css/style/filtersVisibility.css" rel="stylesheet">
+                <!--end filter and pagination -->
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                  <script type="text/javascript"> 
+                    $(document).ready(function()
+                  {             
+                    $( ".delete" ).submit(function( event ) {
+                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
                 <script language="JavaScript">
                     $(document).ready(function()
                     {
@@ -67,7 +79,7 @@ $counties="";
                 $('.submit').click(function (event) {
                 var count = $('select option:selected').val();
                 if (count == 0) {
-                    alert('select at least 1');
+                    alert('Must select at least one project');
                     event.preventDefault();
                     
                 }
@@ -80,7 +92,7 @@ $counties="";
             });
         });
                 </script>
-                
+
 	</head>
 	<body>
 <!-- header -->
@@ -113,7 +125,7 @@ $counties="";
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <!-- Left column -->
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
@@ -227,15 +239,14 @@ $counties="";
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Create Daily Time Sheet</h4>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <form id="form" name="form" method="post" action="pondis.php" class="form form-vertical validate">                       
+                    <div class="panel-title">
+                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                       <h4>Create Daily Time Sheet</h4><br />
+                       
+                                
+                    </div>
+                                    <div class="panel-body">
+                                        <form id="form" name="form" method="post" action="add_daily_foreman_data_table.php" class="form form-vertical validate">                       
                                 <div class="control-group">
                                     <label>Associated Project</label>
                                     <div class="controls">
@@ -264,16 +275,23 @@ $counties="";
                                     Create New Daily Time Sheet
                                 </button>
                                    
-                                        
+                                      
                             </form>
                         </div>
                         <!--/panel content-->
                     </div>
-                    <!--/panel-->                
+ 
+                    
+        
+                    </div>
+              
+                </div>
+                <!--/col-->
+                
                             <!--
 			right MENU
 		<!-->
-          
+               
                 <!--/col-span-6-->
 
             </div>
@@ -311,19 +329,54 @@ $counties="";
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
-                
+                <!-- filter and pagination -->
+                <script data-config>
+                var filtersConfig = {          
+                paging: true,  
+                paging_length: 20,  
+                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
+                rows_counter: true,  
+                rows_counter_text: "Rows:",  
+                display_all_text: " [ Show all ] ",
+                loader: true, 
+                col_0: 'select',
+                col_1: 'select',
+                col_2: 'select',
+                col_3: 'select',
+                col_4: 'select',
+                col_5: 'select',
+                col_6: 'select',
+                col_7: 'select',
+                col_8: 'select',
+                col_9: 'select',
+                col_10: 'select',
+                col_11: 'none',
+                col_12: 'none',
+                       
+                extensions:[
+                    {
 
+                        editable: false,
+                        selection: false
 
-  <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-        dateFormat: 'yy-mm-dd'
-        
-    });
-  });
-  </script>
+                    }, {
+                        name: 'sort',
+                        types: [
+                            'string', 'string', 'number',
+                            'number', 'number', 'number',
+                            'number', 'number', 'number'
+                        ]
+                    }
+                ]
+            };
+
+            var tf = new TableFilter('demo', filtersConfig);
+            tf.init();
+            
+</script>
+<!-- end filter and pagination -->
 	</body>
 </html>

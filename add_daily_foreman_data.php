@@ -7,6 +7,7 @@ require_once('connection.php');
     $status = $_POST['status'];
 
     $total_hours = $_POST['worked_hours'];
+    $project_name = $_POST['project_name'];
     
     //getting pay rate type of given pay rate
     $query = "SELECT type FROM pay_rate WHERE pay_rate_type = '$pay_rate' ";
@@ -21,7 +22,7 @@ require_once('connection.php');
     $t = $type['type'];
     
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$t','$status') ";
+    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status,associated_project) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$t','$status','$project_name') ";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -230,8 +231,9 @@ require_once('connection.php');
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>New daily data added successfully</h4>
                             </div>
-                            <form action="add_daily_foreman_data_table.php">
+                            <form action="add_daily_foreman_data_table.php" method="post">
                                 <input type="submit" value="Back">
+                                <input type="hidden" name="project" value="<?php echo $project_name;?>"
                             </form>
                            
                         </div>

@@ -18,7 +18,7 @@ $result3 = mysql_query("SELECT pay_rate_type
 $result6 = mysql_query("SELECT status_type
                        FROM status");
 
-                
+             
 
 ?>
 
@@ -275,6 +275,7 @@ $result6 = mysql_query("SELECT status_type
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="project_name" value="<?php echo $_POST['project_name'];?>"
                     </form>
                     </div>
               
