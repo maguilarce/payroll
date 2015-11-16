@@ -1,24 +1,3 @@
-<?php
-require_once('connection.php');
-$counties="";
- if(isset($_POST["project"]))
-  {
-   $project=$_POST["project"]; 
-   $query2 = "SELECT * FROM jurisdiction WHERE project_name='$project'";
-   $result2 = mysql_query($query2);
-   while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
-   {
-    
-    $counties .= $row2['county'].' - '.$row2['state']."\n"."Operators Local Union # ".$row2['operator_local']."\n"."Teamster Local Union # ".$row2['teamster_local']."\n"."Laborer Local Union # ".$row2['laborer_local']."\n\n";
-    }
-    echo ltrim($counties);
-  exit;
-  }
- 
- $query = "SELECT * FROM project";
- $result = mysql_query($query);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -42,56 +21,7 @@ $counties="";
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
-                    $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });
-                </script>
-                <script language="JavaScript">
-                    $(document).ready(function()
-                    {
-                       $("#project").change(function()
-                        {
-                            changeFunction();
-                        });
-                    });
-
-                function changeFunction()
-                {
-                $.ajax({
-                   'type':'POST',
-                   'data':$('form').serialize(),
-                   'success':function(data)
-                   { 
-                       $("#project_description").prop("value",data); 
-                   }
-
-                   });
-                }
-                </script>
-                <script type="text/javascript">
-                   
-                $(document).ready(function () {
-                $('.submit').click(function (event) {
-                var count = $('select option:selected').val();
-                if (count == 0) {
-                    alert('Must select at least one project');
-                    event.preventDefault();
-                    
-                }
-                else {
-
-                    
-                }
-                
-                
-            });
-        });
-                </script>
+                 
 
 	</head>
 	<body>
@@ -241,43 +171,27 @@ $counties="";
                 <div class="col-md-6">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                       <h4>Create Daily Time Sheet</h4><br />
-                       
-                                
+                       <h2>Create Daily Time Sheet</h2>
+                       <h4>Daily Superintendent</h4><br />
+   
                     </div>
-                                    <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="add_daily_data_table.php" class="form form-vertical validate">                       
-                                <div class="control-group">
-                                    <label>Associated Project</label>
-                                    <div class="controls">
-                                        <select id="project" name="project" class="form-control">
-                                            <option selected value="0">Select a project...</option>
-                                            <?php
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                             $value = $row['project_name']; 
-                                             echo "<option value = '$value'>{$row['project_name']}</option>";
-                                            }  
-                                            ?>
-
-                                        </select>
-                                    </div>
-                                </div><br />
-                                <div class="control-group">
-                                    <label>Project Location(s)</label><br/>
-                       
-                                    <textarea rows = '10' disabled name="project_description" id="project_description" class="form-control" name="notes"><?php echo ltrim($counties); ?></textarea>
-                                    
-                                </div><br />
-    
-                                <div class="controls">
-                                    <button id='create' type="submit" class="submit btn btn-primary">
+                           
+                             <form id="form" name="form" method="post" class="form form-vertical validate">                       
+                                
+                                 
+                                 <button formaction="" id='view' type="submit" class="submit btn btn-primary">
+                                    View Today's Created Daily Time Sheet
+                                </button>
+                                 <br/> <br/>
+                                - Or -
+                                 <br/> <br/>
+                                 <button formaction="create_daily_timesheet2.php" id='create' type="submit" class="submit btn btn-primary">
                                     Create New Daily Time Sheet
                                 </button>
                                    
                                       
                             </form>
-                        </div>
+                        
                         <!--/panel content-->
                     </div>
  

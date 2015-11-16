@@ -8,14 +8,23 @@ require_once('connection.php');
     
     
 
-
+$project_name = $_POST['project'];
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
-WHERE date = CURDATE();");
+WHERE date = CURDATE() AND associated_project = '$project_name';");
+
+if(mysql_num_rows($result)==0)
+{
+    $message="None daily foreman has charged today's data";
+}
+else
+{
+    $message = "";
+}
 
 
-//$row = mysql_fetch_array($result, MYSQL_ASSOC);
+
 
       
 
@@ -235,10 +244,11 @@ WHERE date = CURDATE();");
                             </div>
                         </div>
  </form>
+                    <h3><strong><?php echo $message;?></strong></h3><br />
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                  
                                     <th>Employee Name</th>
                                     <th>Union Trade</th>
                                     <th>Home local #</th>
@@ -261,9 +271,7 @@ WHERE date = CURDATE();");
                            <form action="" method="post">
                                 <tr>
                             
-                                     <td>
-                                        <?php echo "{$row['daily_timesheet_id']}"; ?>
-                                    </td>
+                                     
                                     <td>
                                         <?php echo "{$row['employee_name']}"; ?>
                                     </td>
