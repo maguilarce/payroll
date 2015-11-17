@@ -18,7 +18,7 @@ $result3 = mysql_query("SELECT pay_rate_type
 $result6 = mysql_query("SELECT status_type
                        FROM status");
 
-             
+$project_name = $_POST['project_name'];     
 
 ?>
 
@@ -187,8 +187,8 @@ $result6 = mysql_query("SELECT status_type
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet</h2><br />
-                        <h4>Date: </h4><br />
+                        <h2>Add New Register - Daily Time Sheet - Foreman</h2>
+                         <h4>Date: <?php echo date("F j, Y");?></h4>
                                 
                     </div>
                     <form action="add_daily_foreman_data.php" method="post" name="daily_data">

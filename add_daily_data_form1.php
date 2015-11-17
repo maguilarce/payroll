@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+    $project_name = $_POST['project'];
     $id = $_POST['id'];
     $new_job_function = $_POST['job_function'];
     $old_jf = $_POST['old_jf'];
@@ -259,12 +259,13 @@ require_once('connection.php');
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Register modified successfully</h4>
                             </div>
-                            <form action="add_daily_data_table.php">
+                            <form action="add_daily_data_table.php" method="post">
                                <div class="controls">
                                         <button type="submit" class="btn btn-primary">
                                             Back
                                         </button>
                                     </div>
+                                 <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                             </form>
                            
                         </div>

@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-
+//$project_name = $_POST['project'];
 $daily_premium_rate=$_POST['daily_premium_rate'];
 $daily_sum_rates=$_POST['daily_sum_rates'];
 $employee=$_POST['employee'];

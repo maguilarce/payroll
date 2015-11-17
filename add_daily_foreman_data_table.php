@@ -7,7 +7,14 @@ FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE() AND associated_project = '$project_name';");
 
-
+if(mysql_num_rows($result)==0)
+{
+    $message="Alert: You have not yet entered any record.";
+}
+else
+{
+    $message = "";
+}
 
 
 $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name = '$project_name'");
@@ -194,30 +201,18 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet - Foreman</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4>
-                        <h4><strong>Project Name: </strong><?php echo $project_name;?></h4>
-                        <h4><strong>Project Location(s): </strong><br /><?php 
-                        while($row2 = mysql_fetch_array($retval2,1))
-                        {
-                           echo $row2['county'].",".$row2['state']."<br />";
-                        }
-                        ?></h4>
+                        <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
+                        <table class="table table-striped table-bordered table-hover">
+                            <h4>
+                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
+                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
+                           
+                            </h4>
+                        </table>
                                 
                     </div>
- <form action="add_daily_foreman_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-
-                            </div>
-                        </div>
- <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
- </form>
-                 
+               
+                 <h4><strong style="color: red"><?php echo  $message;?></strong></h4><br />
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -267,6 +262,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                                     <td>
                                         <form action="edit_daily_foreman_data_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
+                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                             <input type="submit" name="modify" value="Modify">
                                         </form>
                                         <br />
@@ -274,7 +270,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                                             <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                             <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
                                             <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                            
+                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                             
                                             <input type="submit" name="delete" value="Delete">
                                         </form>
@@ -290,7 +286,25 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                         </table>
                    
                     </form>
-                    <form action="" method="post" name="daily_data">   
+                    
+                    <table><tr>
+                            <td><form action="add_daily_foreman_data_form.php" method="post" name="daily_data">   
+                    <div class="control-group">
+                            <label></label>
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">
+                                    Add new register
+                                </button>
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
+                                </form>
+                            
+                            </td>
+                            
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                <td> <form action="" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">
@@ -300,7 +314,8 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 
                             </div>
                         </div>
-                    </form>
+                                    </form></td>
+                        </tr></table>
                     </div>
               
                 </div>

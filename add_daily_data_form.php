@@ -29,7 +29,7 @@ $result7 = mysql_query("SELECT project_name
                        FROM project");
 
                 
-
+$project_name = $_POST['project_name'];
 ?>
 
 <!DOCTYPE html>
@@ -215,8 +215,8 @@ $result7 = mysql_query("SELECT project_name
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet</h2><br />
-                        <h4>Date: </h4><br />
+                        <h2>Add New Register - Daily Time Sheet</h2><br />
+                        <h4>Date: <?php echo date("F j, Y");?> </h4><br />
                                 
                     </div>
                     <form onsubmit='return verificar();' action="add_daily_data.php" method="post" name="daily_data">
@@ -346,6 +346,7 @@ $result7 = mysql_query("SELECT project_name
                                 </button>
                             </div>
                         </div>
+                         <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
                     </form>
                     </div>
               

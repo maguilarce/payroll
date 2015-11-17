@@ -3,12 +3,12 @@ require_once('connection.php');
 
 //consulta para agregar los checkbox de premium rates y daily lump sum rates
 //traer por post los datos y los arreglos de los check box
+//if(strpos(!$_SERVER['HTTP_REFERER'],"add_daily_data_table.php"))/
+//{
+  $project_name = $_POST['project'];  
+//}
 
 
-    
-    
-
-$project_name = $_POST['project'];
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
@@ -16,17 +16,14 @@ WHERE date = CURDATE() AND associated_project = '$project_name';");
 
 if(mysql_num_rows($result)==0)
 {
-    $message="None daily foreman has charged today's data";
+    $message="Alert: None daily foreman has charged today's data";
 }
 else
 {
     $message = "";
 }
 
-
-
-
-      
+$retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$project_name'");
 
 ?>
 
@@ -54,13 +51,19 @@ else
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
-                    $(document).ready(function()
-                  {             
+                   /* $(document).ready(function()
+                  {
+                    
                     $( ".delete" ).submit(function( event ) {
                     if(!confirm( "This will delete selected daily data. Are you sure?" ))
                         event.preventDefault();
                     });
-                   });
+                   });*/
+                    function eliminar(){
+                        
+                        if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                        event.preventDefault();
+                }
                 </script>
                 <script type="text/javascript"> 
                 function verificar(){
@@ -229,22 +232,25 @@ else
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
+                        <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
+                        <table class="table table-striped table-bordered table-hover">
+                            <h4>
+                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
+                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
+                            <tr><td><strong>Project Location(s): </strong></td></tr><?php
+
+                            $i=1;
+                            while($row2 = mysql_fetch_array($retval2,1))
+                            {
+                               echo "<tr><td>".$i++.")".$row2['county'].", ".$row2['state']." ---> <strong>Operators Local Union #:</strong> ".$row2['operator_local']."<strong> / Teamster Local Union #: </strong>".$row2['teamster_local']." <strong> / Laborer Local Union #: </strong>".$row2['laborer_local']."</td></tr>";
+                            }
+                            ?>
+                            </h4>
+                        </table>
                                 
                     </div>
- <form action="add_daily_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-
-                            </div>
-                        </div>
- </form>
-                    <h3><strong><?php echo $message;?></strong></h3><br />
+ 
+                    <h4><strong style="color: red"><?php echo  $message;?></strong></h4><br />
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -255,7 +261,7 @@ else
                                     <th>Job Function</th>
                                     <th>Pay Rate</th>
                                     <th>Premium Rate</th>
-                                    <th>Daily Lum Sum Rates</th>
+                                    <th>Daily Lump Sum Rates</th>
                                     <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
@@ -323,7 +329,7 @@ else
                                         <?php
    
                                             if($row['processed']=='yes')
-                                        {   
+                                        {   $button = "disabled";
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
@@ -336,6 +342,7 @@ else
                                         }    
                                         else
                                         {
+                                            $button = "";
                                             $query = "SELECT * from daily_lump_sum_rate;";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
@@ -372,12 +379,16 @@ else
                                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                         <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
                                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                        
+                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                        
                                         
-                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button> <br /><br />
-                                        <button type="submit" formaction="delete_daily_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="process.php" class="btn btn-primary">Process </button> <br />
+                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button>
+                                        
+                                        
+                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php">Delete</button><br/><br/>
+                                        
+                                        
+                                        <button type="submit" formaction="process2.php" class="btn btn-primary" <?php echo $button;?>>Process </button>
 
                             
                                     </td> 
@@ -396,18 +407,30 @@ else
                             </tbody>
                         </table>
                    
-                    
+                    <table>
+                        <tr><td>
+                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
+                   
+                          
+                                <button type="submit" class="btn btn-primary">
+                                    Add new register
+                                </button>  
+                                <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
+                    </form>
+                            </td>
+                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>
                     <form action="" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
+                  
                                 <button type="submit" class="btn btn-primary">
                                     Generate Daily Time Sheet
                                 </button>
 
-                            </div>
-                        </div>
+                      
+                        
                     </form>
+                            </td></tr>
+                    </table>
                     </div>
               
                 </div>

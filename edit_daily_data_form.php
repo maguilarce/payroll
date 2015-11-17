@@ -1,6 +1,7 @@
 <?php
 require_once('connection.php');
 $id = $_POST['id'];
+$project_name = $_POST['project'];
 $result = mysql_query("SELECT *
                        FROM daily_timesheet
                        WHERE daily_timesheet_id = '$id'");
@@ -398,6 +399,7 @@ $result = mysql_query("SELECT *
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">

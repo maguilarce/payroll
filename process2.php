@@ -1,65 +1,55 @@
 <?php
 require_once('connection.php');
-////////////////retrieving data from controls
-    $employee = $_POST['employee'];
-    $job_function = $_POST['job_function'];
-    $pay_rate = $_POST['pay_rate'];
-    $status = $_POST['status'];
-    $project_name = $_POST['project_name'];  
-    $total_hours = $_POST['worked_hours'];
-    $project_name = $_POST['project_name'];
-    
-    //getting pay rate type of given pay rate
-    $query = "SELECT type FROM pay_rate WHERE pay_rate_type = '$pay_rate' ";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-     
-     
-    }
-    $type = mysql_fetch_array($retval,MYSQL_ASSOC);
-    $t = $type['type'];
-    
-    //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status,associated_project) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$t','$status','$project_name') ";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-     
-     
-    }
-    
- ////////acumulating weekly hours for each employee
-    
-    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
-    $row = mysql_query( $query1, $dbh );
-    $num_rows = mysql_num_rows($row);
-    
+$project_name = $_POST['project'];
+$daily_premium_rate=$_POST['daily_premium_rate'];
+$daily_sum_rates=$_POST['daily_sum_rates'];
+$employee=$_POST['employee'];
+$job_function=$_POST['job_function'];
+$id=$_POST['id'];
+$date = $_POST['date'];
 
-    if($num_rows==0){
-        //Run an insert query on this table
-            $query1 = "INSERT INTO week_hours VALUES ('',week(now()),'$employee','$total_hours')";
-            $row = mysql_query( $query1, $dbh );
-            if(! $row )
-            {
-             die('Could not get data: ' . mysql_error());
+
+$query = "UPDATE daily_timesheet
+          SET processed='yes'
+          WHERE daily_timesheet_id='$id'";
+$retval = mysql_query( $query, $dbh );
+    if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
+
+
+$count = count($daily_premium_rate);
+    for ($i = 0; $i < $count; $i++) 
+    {
+        $dpr = $daily_premium_rate[$i];
      
-     
-            }
-    } 
-    else {
-            
-            $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours + '$total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
-            $row = mysql_query( $query1, $dbh );
-            if(! $row )
-            {
-             die('Could not get data: ' . mysql_error());
-     
-     
-            }
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$job_function','$dpr')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
     }
+    
+  $count = count($daily_sum_rates);
+    for ($i = 0; $i < $count; $i++) 
+    {
+        $dsr = $daily_sum_rates[$i];
+       
+       $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$job_function','$dsr')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not get data: ' . mysql_error());
+
+        }
+        
+    }
+
+    
     
 ?>
 
@@ -229,11 +219,11 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>New daily data added successfully</h4>
+                                <h4>Register processed successfully</h4>
                             </div>
-                            <form action="add_daily_foreman_data_table.php" method="post">
-                                <input type="submit" value="Back">
-                                <input type="hidden" name="project" value="<?php echo $project_name;?>"
+                            <form action="add_daily_data_table.php" method="post">
+                                <input type="submit" value="Back to Time Sheet">
+                                <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                             </form>
                            
                         </div>

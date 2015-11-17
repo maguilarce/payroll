@@ -10,8 +10,9 @@ require_once('connection.php');
     $total_hours = $_POST['worked_hours'];
     $status = $_POST['status'];
     $notes = $_POST['notes'];
+    $project_name = $_POST['project_name'];
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet(date,week_number,employee_name,job_function,total_day_hours,status,pay_rate,pay_rate_type,daily_notes) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$status','$pay_rate','$pay_rate_type','$notes')";
+    $query = "INSERT INTO daily_timesheet(date,week_number,employee_name,job_function,total_day_hours,status,pay_rate,pay_rate_type,daily_notes,associated_project,processed) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$status','$pay_rate','$pay_rate_type','$notes','$project_name','yes')";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -247,8 +248,9 @@ require_once('connection.php');
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>New daily data added successfully</h4>
                             </div>
-                            <form action="add_daily_data_table.php">
+                            <form action="add_daily_data_table.php" method="post">
                                 <input type="submit" value="Back">
+                                <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                             </form>
                            
                         </div>

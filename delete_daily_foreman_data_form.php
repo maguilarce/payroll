@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+    $project_name = $_POST['project'];
     $daily_timesheet_id = $_POST['id'];
     $query = "DELETE FROM daily_timesheet WHERE daily_timesheet_id = '$daily_timesheet_id' ";
     $retval = mysql_query( $query, $dbh );
@@ -204,8 +204,9 @@ require_once('connection.php');
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Daily register deleted successfully</h4>
                             </div>
-                            <form name="delete_form" action="add_daily_data_table.php">
+                            <form name="delete_form" action="add_daily_foreman_data_table.php" method="post">
                                 <input type="submit" value="Back">
+                                <input name="project" type="hidden" value="<?php echo $project_name;?>">
                             </form>
                            
                         </div>
