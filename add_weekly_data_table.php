@@ -1,20 +1,8 @@
 <?php
 require_once('connection.php');
 
-/*$result = mysql_query("SELECT 
-daily_timesheet_id,daily_timesheet.date, daily_timesheet.employee_name,employee.union_trade,employee.home_local,daily_timesheet.job_function,daily_timesheet.pay_rate,pay_rate.pay_rate_hourly_amount,daily_timesheet.premium_rate,premium_rate.premium_rate_amount,daily_timesheet.daily_lump_sum_rate,
-daily_lump_sum_rate.daily_lump_sum_amount,daily_timesheet.total_day_hours,daily_timesheet.pay_rate_type,weekly_lump_payments.weekly_lump_payment_type,weekly_lump_payments.weekly_lump_payment_amount
-FROM
-daily_timesheet
-INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
-INNER JOIN premium_rate ON daily_timesheet.premium_rate = premium_rate_type
-INNER JOIN daily_lump_sum_rate ON daily_timesheet.daily_lump_sum_rate = daily_lump_sum_rate.daily_lump_sum_type
-INNER JOIN weekly_lump_payments ON daily_timesheet.weekly_lump_sum_rate = weekly_lump_payments.weekly_lump_payment_type
-INNER JOIN employee ON daily_timesheet.employee_name = employee.name
-WHERE week_number = week(now())
-ORDER BY date,employee_name,pay_rate 
-");*/
 
+$project_name = $_POST['project']; 
 $result = mysql_query("SELECT 
 daily_timesheet_id,
 daily_timesheet.date,
@@ -33,10 +21,20 @@ daily_timesheet
 INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
 
 INNER JOIN employee ON daily_timesheet.employee_name = employee.name
-WHERE week_number = week(now())
+WHERE week_number = week(now()) AND associated_project = '$project_name'
 ORDER BY employee_name");
 
-//$row = mysql_fetch_array($result, MYSQL_ASSOC);ORDER BY date,employee_name,pay_rate
+
+if(mysql_num_rows($result)==0)
+{
+    $message="Alert: You have not yet entered any record.";
+}
+else
+{
+    $message = "";
+}
+
+$retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$project_name'");
 
       $query = mysql_query("SELECT total_week_hours FROM week_hours");
       $row1 = mysql_fetch_array($query, MYSQL_ASSOC);
@@ -67,13 +65,19 @@ ORDER BY employee_name");
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                  <script language="JavaScript"> 
-                    $(document).ready(function()
-                  {             
-                    $( "#delete" ).submit(function( event ) {
+                   /* $(document).ready(function()
+                  {
+                    
+                    $( ".delete" ).submit(function( event ) {
                     if(!confirm( "This will delete selected daily data. Are you sure?" ))
                         event.preventDefault();
                     });
-                   });
+                   });*/
+                    function eliminar(){
+                        
+                        if(!confirm( "This will delete selected data. Are you sure?" ))
+                        event.preventDefault();
+                }
                 </script>
                 <script type="text/javascript">
         $(document).ready(function()
@@ -232,22 +236,33 @@ ORDER BY employee_name");
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-18">
+                <div class="col-md-12">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Weekly Time Sheet</h2><br />
-                        <h4>Today's Date: <?php echo date("F j, Y");
-                        ?></h4>
-                        <h4> Pay Period: 
-                        <?php 
-                         $date = new DateTime();
-                         $first = $date->setISODate(date('Y'), date('W'), "1")->format('m/d/Y');
-                         $last = $date->setISODate(date('Y'),date('W'), "7")->format('m/d/Y'); 
-                        echo "From ".$first." to ".$last; ?>
-                        </h4>
-                                
+                        <h4><strong>Weekly Time Sheet</strong></h4>
+                        <table class="table table-striped table-bordered table-hover">
+                            <h4>
+                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
+                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
+                            <tr><td><strong>Pay Period: </strong><?php
+                            $date = new DateTime();
+                            $first = $date->setISODate(date('Y'), date('W'), "1")->format('m/d/Y');
+                            $last = $date->setISODate(date('Y'),date('W'), "7")->format('m/d/Y'); 
+                            echo "From ".$first." to ".$last;
+                            ?></td></tr>
+                            <tr><td><strong>Project Location(s): </strong><?php
+                            $i=1;
+                            while($row2 = mysql_fetch_array($retval2,1))
+                            {
+                               echo "<tr><td>".$i++.")".$row2['county'].", ".$row2['state']." ---> <strong>Operators Local Union #:</strong> ".$row2['operator_local']."<strong> / Teamster Local Union #: </strong>".$row2['teamster_local']." <strong> / Laborer Local Union #: </strong>".$row2['laborer_local']."</td></tr>";
+                            }
+                            ?>
+                                    </td></tr>
+                            </h4>
+                        </table>
+                                                        
                     </div>
-  
+                    <h4><strong style="color: red"><?php echo  $message;?></strong></h4><br />
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 
@@ -391,7 +406,7 @@ ORDER BY employee_name");
                                         
                                        if($row['processed_week']=='yes')
                                         {   
-
+                                           $button = "disabled";
                                             $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date');";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
@@ -401,6 +416,7 @@ ORDER BY employee_name");
                                         }    
                                         else
                                         {
+                                            $button = "";
                                             $query = "SELECT * from weekly_lump_payments;";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
@@ -549,8 +565,9 @@ ORDER BY employee_name");
 
                                             
                                         <button type="submit" formaction="edit_weekly_data_form.php">Modify</button> <br /><br />
-                                        <button type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="process_week.php" class="btn btn-primary">Process </button> <br />
+                                        <button onclick="eliminar();" type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
+                                        <button type="submit" formaction="process_week2.php" class="btn btn-primary" <?php echo $button; ?> >Process </button> <br />
+                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                     </td> 
                                     
 
@@ -596,7 +613,7 @@ ORDER BY employee_name");
                     <?php  
 
                                 
-                                   echo $menweeklyhours;
+                                   //echo $menweeklyhours;
                                 ?>
      
                     </div>

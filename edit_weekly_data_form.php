@@ -1,5 +1,6 @@
 <?php
 require_once('connection.php');
+$project_name = $_POST['project']; 
 $id = $_POST['id'];
 $result = mysql_query("SELECT *
                        FROM daily_timesheet
@@ -23,7 +24,59 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+                <script type="text/javascript"> 
+                function verificar(){
+                    var suma = 0;
+                    var suma2 = 0;
+                     var suma3 = 0;
+                    
+                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                    var los_cboxes2 = document.getElementsByName('daily_lump_sum_rate[]'); 
+                    var los_cboxes3 = document.getElementsByName('weekly_lump_payment[]');
+                   
+                    
+                    for (var i = 0, j = los_cboxes.length; i < j; i++) {
 
+                        if(los_cboxes[i].checked === true){
+                        suma++;
+                    }
+                }
+                    
+                    for (var i = 0, j = los_cboxes2.length; i < j; i++) {
+
+                        if(los_cboxes2[i].checked === true){
+                        suma2++;
+                    }
+                }
+                   
+                 for (var i = 0, j = los_cboxes3.length; i < j; i++) {
+
+                        if(los_cboxes3[i].checked === true){
+                        suma3++;
+                    }
+                }
+
+                if(suma === 0)
+                {
+                    alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                    event.preventDefault();
+                }
+                else if(suma2 === 0)
+                {
+                    alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                    event.preventDefault();
+                }
+                else if(suma3 === 0)
+                {
+                    alert("Must select at least one Weekly Lump Rate. You can choose 'None'");
+                    event.preventDefault();
+                }
+                
+                    
+                }
+                
+                </script> 
+               
 	</head>
 	<body>
 <!-- header -->
@@ -174,7 +227,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                         <h2>Edit Weekly Time Sheet</h2><br />
                                
                     </div>
-                    <form action="add_weekly_data_form1.php" method="post" name="daily_data">
+                    <form onsubmit="verificar();" action="add_weekly_data_form1.php" method="post" name="daily_data">
                     <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -440,7 +493,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
-                        
+                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                     </form>
                     </div>
               

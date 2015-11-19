@@ -1,35 +1,22 @@
 <?php
 require_once('connection.php');
-
-$result1 = mysql_query("SELECT *
-                       FROM employee
-                       WHERE hired = 'y'");
-
-
-$result2 = mysql_query("SELECT job_function_type
-                       FROM job_function");
-
-
-$result3 = mysql_query("SELECT pay_rate_type
-                       FROM pay_rate");
-
-
-$result4 = mysql_query("SELECT premium_rate_type
-                       FROM premium_rate");
-
-
-$result5 = mysql_query("SELECT daily_lump_sum_type
-                       FROM daily_lump_sum_rate");
-
-
-$result6 = mysql_query("SELECT status_type
-                       FROM status");
-
-$result7 = mysql_query("SELECT project_name
-                       FROM project");
-
-                
-$project_name = $_POST['project_name'];
+$counties="";
+ if(isset($_POST["project"]))
+  {
+   $project=$_POST["project"]; 
+   $query2 = "SELECT * FROM jurisdiction WHERE project_name='$project'";
+   $result2 = mysql_query($query2);
+   while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
+   {
+    
+    $counties .= $row2['county'].' - '.$row2['state']."\n"."Operators Local Union # ".$row2['operator_local']."\n"."Teamster Local Union # ".$row2['teamster_local']."\n"."Laborer Local Union # ".$row2['laborer_local']."\n\n";
+    }
+    echo ltrim($counties);
+  exit;
+  }
+ 
+ $query = "SELECT * FROM project";
+ $result = mysql_query($query);
 ?>
 
 <!DOCTYPE html>
@@ -48,24 +35,63 @@ $project_name = $_POST['project_name'];
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <script type="text/javascript"> 
-                    function verificar(){
-                        var suma = 0;
-                        var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
-                        for (var i = 0, j = los_cboxes.length; i < j; i++) {
+                 <!-- filter and pagination -->
+                <script type="text/javascript" language="javascript" src="js/tablefilter.js"></script>         
+                <link href="css/style/tablefilter.css" rel="stylesheet">
+                <link href="css/style/colsVisibility.css" rel="stylesheet">
+                <link href="css/style/filtersVisibility.css" rel="stylesheet">
+                <!--end filter and pagination -->
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                  <script type="text/javascript"> 
+                    $(document).ready(function()
+                  {             
+                    $( ".delete" ).submit(function( event ) {
+                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                        event.preventDefault();
+                    });
+                   });
+                </script>
+                <script language="JavaScript">
+                    $(document).ready(function()
+                    {
+                       $("#project").change(function()
+                        {
+                            changeFunction();
+                        });
+                    });
 
-                        if(los_cboxes[i].checked === true){
-                        suma++;
-                        }
-                    }
+                function changeFunction()
+                {
+                $.ajax({
+                   'type':'POST',
+                   'data':$('form').serialize(),
+                   'success':function(data)
+                   { 
+                       $("#project_description").prop("value",data); 
+                   }
 
-                    if(suma === 0){
-                    alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
-                    return false;
-                    }
+                   });
+                }
+                </script>
+                <script type="text/javascript">
+                   
+                $(document).ready(function () {
+                $('.submit').click(function (event) {
+                var count = $('select option:selected').val();
+                if (count == 0) {
+                    alert('Must select at least one project');
+                    event.preventDefault();
+                    
+                }
+                else {
 
-                    }
-                    </script> 
+                    
+                }
+                
+                
+            });
+        });
+                </script>
 
 	</head>
 	<body>
@@ -212,142 +238,51 @@ $project_name = $_POST['project_name'];
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-6">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Add New Register - Daily Time Sheet - Superintendent</h2>
-                        <h4>Date: <?php echo date("F j, Y");?> </h4>
+                       <h4>Create Weekly Time Sheet</h4><br />
+                       
                                 
                     </div>
-                    <form onsubmit='return verificar();' action="add_daily_data.php" method="post" name="daily_data">
-                    <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Employee Name</th>
-                                    <th>Job Function</th>
-                                    <th>Pay Rate</th>
-                                    <th>Pay Rate Type</th>
-                                    <th>Premium Rate</th>
-                                    <th>Daily Lum Sum Rates</th>
-                                    <th>Worked Hours</th>
-                                    <th>Status</th>
-                                    <th>Notes</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                <tr>
-                                    <td><?php  ?>
-                                    <select name="employee" class="form-control"> 
-                                        <?php
-                                        while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
+                                    <div class="panel-body">
+                                        <form id="form" name="form" method="post" action="add_weekly_data_table.php" class="form form-vertical validate">                       
+                                <div class="control-group">
+                                    <label>Associated Project</label>
+                                    <div class="controls">
+                                        <select id="project" name="project" class="form-control">
+                                            <option selected value="0">Select a project...</option>
+                                            <?php
+                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
-                                                echo "<option>{$row1['name']}</option>";                           
+                                             $value = $row['project_name']; 
+                                             echo "<option value = '$value'>{$row['project_name']}</option>";
                                             }  
-                                        ?>
-                                        </select>
-                                    
-                                    </td>
-                                                                       
-                                  
-                                    
-                                    <td>
-                                        <select name="job_function" class="form-control"> 
-                                        <?php
-                                        while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row2['job_function_type']}</option>";                           
-                                            }  
-                                        ?>
-                                        </select>
-                                    </td>      
-                                    
-                                    <td>
-                                         <select name="pay_rate" class="form-control"> 
-                                        <?php
-                                        while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row3['pay_rate_type']}</option>";
-                                                
-                                            }  
-                                        ?>
-                                         </select>
-                                      
-                                    </td>    
-                                    <td>
-                                         <select name="pay_rate_type" class="form-control"> 
-                                       
-                                                <option>ST</option>
-                                                <option>OT</option>
-                                                
-                                     
-                                         </select>
-                                      
-                                    </td>    
-                                    
-                                    <td>
-                                        <?php
-   
-                                            $query = "SELECT * from premium_rate;";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-                                                $value = $row1['premium_rate_type'];
-                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value'/> {$row1['premium_rate_type']}<br>";
-
-                                                }
                                             ?>
-                                    </td> 
-                                     
-                                    <td>
-                                         <?php
-   
-                                            $query = "SELECT * from daily_lump_sum_rate;";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-                                                $value = $row1['daily_lump_sum_type'];
-                                                echo "<input type='checkbox' name='daily_lump_sum_rate[]' value='$value'/> {$row1['daily_lump_sum_type']}<br>";
 
-                                                }
-                                            ?>
-                                    </td> 
-                                         
-                                    <td>
-                                        <input name="worked_hours" type="text" class="form-control">
-                                    </td> 
+                                        </select>
+                                    </div>
+                                </div><br />
+                                <div class="control-group">
+                                    <label>Project Location(s)</label><br/>
+                       
+                                    <textarea rows = '10' disabled name="project_description" id="project_description" class="form-control" name="notes"><?php echo ltrim($counties); ?></textarea>
                                     
-                                    
-                                                                      
-                                    <td>
-                                         <select name="status" class="form-control"> 
-                                         <?php
-                                         
-                                        while($row6 = mysql_fetch_array($result6, MYSQL_ASSOC))
-                                            { 
-                                                echo "<option>{$row6['status_type']}</option>";                           
-                                            }  
-                                        ?> 
-                                    </td> 
-                                    <td>
-                                        <textarea class="form-control" name="notes"></textarea>
-                                    </td>
-                                
-                                </tr>
-          
-                            </tbody>
-                        </table>
-                        <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Save new register
+                                </div><br />
+    
+                                <div class="controls">
+                                    <button id='create' type="submit" class="submit btn btn-primary">
+                                    Create New Weekly Time Sheet
                                 </button>
-                            </div>
+                                   
+                                      
+                            </form>
                         </div>
-                         <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
-                    </form>
+                        <!--/panel content-->
+                    </div>
+ 
+                    
+        
                     </div>
               
                 </div>
@@ -397,5 +332,51 @@ $project_name = $_POST['project_name'];
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
+                <!-- filter and pagination -->
+                <script data-config>
+                var filtersConfig = {          
+                paging: true,  
+                paging_length: 20,  
+                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
+                rows_counter: true,  
+                rows_counter_text: "Rows:",  
+                display_all_text: " [ Show all ] ",
+                loader: true, 
+                col_0: 'select',
+                col_1: 'select',
+                col_2: 'select',
+                col_3: 'select',
+                col_4: 'select',
+                col_5: 'select',
+                col_6: 'select',
+                col_7: 'select',
+                col_8: 'select',
+                col_9: 'select',
+                col_10: 'select',
+                col_11: 'none',
+                col_12: 'none',
+                       
+                extensions:[
+                    {
+
+                        editable: false,
+                        selection: false
+
+                    }, {
+                        name: 'sort',
+                        types: [
+                            'string', 'string', 'number',
+                            'number', 'number', 'number',
+                            'number', 'number', 'number'
+                        ]
+                    }
+                ]
+            };
+
+            var tf = new TableFilter('demo', filtersConfig);
+            tf.init();
+            
+</script>
+<!-- end filter and pagination -->
 	</body>
 </html>

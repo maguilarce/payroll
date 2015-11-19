@@ -16,7 +16,7 @@ WHERE date = CURDATE() AND associated_project = '$project_name';");
 
 if(mysql_num_rows($result)==0)
 {
-    $message="Alert: None daily foreman has charged today's data";
+    $message="Alert: You have not yet entered any record.";
 }
 else
 {

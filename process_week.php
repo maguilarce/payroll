@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 
-
+$project_name = $_POST['project']; 
 $weekly_lump_payments=$_POST['weekly_lump_payments'];
 $employee=$_POST['employee'];
 $job_function=$_POST['job_function'];

@@ -1,25 +1,3 @@
-<?php
-require_once('connection.php');
-
-$project_name = $_POST['project'];
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,total_day_hours,status
-FROM employee INNER JOIN daily_timesheet
-ON employee.name=daily_timesheet.employee_name
-WHERE date = CURDATE() AND associated_project = '$project_name';");
-
-if(mysql_num_rows($result)==0)
-{
-    $message="Alert: You have not yet entered any record.";
-}
-else
-{
-    $message = "";
-}
-
-
-$retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name = '$project_name'");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -43,15 +21,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
-                    $(document).ready(function()
-                  {             
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });
-                </script>
+                 
 
 	</head>
 	<body>
@@ -198,124 +168,35 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-6">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h4><strong>Daily Time Sheet - Foreman</strong></h4>
-                        <table class="table table-striped table-bordered table-hover">
-                            <h4>
-                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
-                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
-                           
-                            </h4>
-                        </table>
-                                
+                       <h2>Weekly Time Sheet</h2>
+                       <h4>Weekly Superintendent</h4><br />
+   
                     </div>
-               
-                 <h4><strong style="color: red"><?php echo  $message;?></strong></h4><br />
-                    <table id="demo" class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-
-                                    <th>Employee Name</th>
-                                    <th>Union Trade</th>
-                                    <th>Job Function</th>
-                                    <th>Group</th>
-                                    <th>Worked Hours</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                   
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                ?>
-                                <tr>
- 
-                                    <td>
-                                        <?php echo "{$row['employee_name']}"; ?>
-                                    </td>
-                                                              
-                                    <td>
-                                        <?php echo "{$row['union_trade']}"; ?>                        
-                                    </td>
-                                   
-                                    <td>
-                                        <?php echo "{$row['job_function']}"; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['pay_rate']}"; ?>      
-                                    </td>
-                                    
-                                                                        
-                                    <td>
-                                        <?php echo "{$row['total_day_hours']}"; ?> 
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['status']}"; ?>          
-                                    </td>
-
-
-
-                                    <td>
-                                        <form action="edit_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                            <input type="submit" name="modify" value="Modify">
-                                        </form>
-                                        <br />
-                                        <form class="delete" id="delete" action="delete_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                            <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                            
-                                            <input type="submit" name="delete" value="Delete">
-                                        </form>
-                                    </td> 
-                                    
-
+                           
+                             <form id="form" name="form" method="post" class="form form-vertical validate">                       
                                 
-                                </tr>
-                                <?php                               
-                                   }
-                                ?>
-                            </tbody>
-                        </table>
-                   
-                    </form>
+                                 
+                                 <button formaction="" id='view' type="submit" class="submit btn btn-primary">
+                                    View Today's Created Daily Time Sheet
+                                </button>
+                                 <br/> <br/>
+                                - Or -
+                                 <br/> <br/>
+                                 <button formaction="create_daily_timesheet3.php" id='create' type="submit" class="submit btn btn-primary">
+                                    Create New Daily Time Sheet
+                                </button>
+                                   
+                                      
+                            </form>
+                        
+                        <!--/panel content-->
+                    </div>
+ 
                     
-                    <table><tr>
-                            <td><form action="add_daily_foreman_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-
-                            </div>
-                        </div>
-                        <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
-                                </form>
-                            
-                            </td>
-                            
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td> <form action="" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Generate Daily Time Sheet
-                                </button>
-
-                            </div>
-                        </div>
-                                    </form></td>
-                        </tr></table>
+        
                     </div>
               
                 </div>

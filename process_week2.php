@@ -1,115 +1,37 @@
 <?php
 require_once('connection.php');
-    $project_name = $_POST['project']; 
-    $id = $_POST['id'];
-    $new_job_function = $_POST['job_function'];
-    $old_jf = $_POST['old_jf'];
-    $date = $_POST['date'];
-    $new_pay_rate = $_POST['pay_rate'];
-    $new_pay_rate_type = $_POST['pay_rate_type'];
-    $new_total_hours = $_POST['worked_hours'];
-    $new_status = $_POST['status'];
-    $preview_hours = $_POST['preview_hours'];
-    $employee = $_POST['employee'];
-    $daily_premium_rate = $_POST['daily_premium_rate'];
-    $daily_lump_sum_rate = $_POST['daily_lump_sum_rate'];
-    $weekly_lump_payment = $_POST['weekly_lump_payment'];
-    
 
-    
-//update daily worker data
-    $query = "UPDATE daily_timesheet
-              SET job_function='$new_job_function',
-                  pay_rate='$new_pay_rate',
-                  pay_rate_type='$new_pay_rate_type',
-                  total_day_hours = '$new_total_hours',
-                  status='$new_status',
-                  daily_notes=''
-              WHERE daily_timesheet_id=' $id'";
-    
-    
-    $retval = mysql_query( $query, $dbh );
+$project_name = $_POST['project']; 
+$weekly_lump_payments=$_POST['weekly_lump_payments'];
+$employee=$_POST['employee'];
+$job_function=$_POST['job_function'];
+$id=$_POST['id'];
+$date = $_POST['date'];
+
+
+$query = "UPDATE daily_timesheet
+          SET processed_week='yes'
+          WHERE daily_timesheet_id='$id'";
+$retval = mysql_query( $query, $dbh );
     if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-    }
-    
+        {
+            die('Could not get data: ' . mysql_error());
 
-//update daily premium rates*************************************************************************************************************************
-  
-    //deleting previus daily premium rates
-    
-    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
-    $result1 = mysql_query($query);
-    if(! $result1 )
-        {
-            die('Could not get data: ' . mysql_error());
         }
-    
-    //inserting new daily premium rates
-    for($i=0;$i<count($daily_premium_rate);$i++)
+
+$count = count($weekly_lump_payments);
+    for ($i = 0; $i < $count; $i++) 
     {
-        $dpr = $daily_premium_rate[$i];
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dpr') ";
-        $result1 = mysql_query($query);
-        if(! $result1 )
+        $wlp = $weekly_lump_payments[$i];
+     
+        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date'),'$employee','$job_function','$wlp')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
         {
             die('Could not get data: ' . mysql_error());
+
         }
     }
-                
-    
-     //deleting previus daily lump rates
-    
-    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
-    $result1 = mysql_query($query);
-    if(! $result1 )
-        {
-            die('Could not get data: ' . mysql_error());
-        }
-    
-    //inserting new daily lump rates
-    for($i=0;$i<count($daily_lump_sum_rate);$i++)
-    {
-        $dlr = $daily_lump_sum_rate[$i];
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dlr') ";
-        $result1 = mysql_query($query);
-        if(! $result1 )
-        {
-            die('Could not get data: ' . mysql_error());
-        }
-    }
-    
- //deleting previous weekly lump payment rates
-       
-    $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date') AND employee = '$employee' AND job_function = '$old_jf' ";
-    $result1 = mysql_query($query);
-    if(! $result1 )
-        {
-            die('Could not get data: ' . mysql_error());
-        }
-    
-    //inserting new weekly lump payment rates
-    for($i=0;$i<count($weekly_lump_payment);$i++)
-    {
-        $wlp = $weekly_lump_payment[$i];
-        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date'),'$employee','$new_job_function','$wlp') ";
-        $result1 = mysql_query($query);
-        if(! $result1 )
-        {
-            die('Could not get data: ' . mysql_error());
-        }
-    }
-    
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
-    //updating accumalated hours
-    $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
-    $row = mysql_query( $query1, $dbh );
-    if(! $row )
-        {
-        die('Could not get data: ' . mysql_error());
-        
-            }
 ?>
 
 <!DOCTYPE html>
@@ -170,7 +92,7 @@ require_once('connection.php');
             <!--
 			LEFT MENU
 		<!-->
-           <ul class="nav nav-stacked">
+                        <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -257,7 +179,6 @@ require_once('connection.php');
                 
                                 
             </ul>
-
            
             
         </div>
@@ -279,14 +200,10 @@ require_once('connection.php');
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Register modified successfully</h4>
+                                <h4>Register processed successfully</h4>
                             </div>
                             <form action="add_weekly_data_table.php" method="post">
-                               <div class="controls">
-                                        <button type="submit" class="btn btn-primary">
-                                            Back
-                                        </button>
-                                    </div>
+                                <input type="submit" value="Back to Time Sheet">
                                 <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                             </form>
                            
@@ -314,7 +231,6 @@ require_once('connection.php');
 <!-- /Main -->
 
 <footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
-
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
