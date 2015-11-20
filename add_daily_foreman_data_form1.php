@@ -36,7 +36,7 @@ require_once('connection.php');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
     //updating accumalated hours
-    $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
+    $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now(),3);";
     $row = mysql_query( $query1, $dbh );
     if(! $row )
         {

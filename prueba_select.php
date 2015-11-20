@@ -1,9 +1,8 @@
 <?php
-require_once('connection.php');
-
-print_r($_POST['group0']['teamster']);
-echo "<br />";
-print_r($_POST['group1']['teamster']);
-echo "<br />";
-print_r($_POST['group2']['teamster']);
-echo "<br />";
+$date = new DateTime();
+                            
+$today = new DateTime(date('m/d/Y'));
+                                            $week = $today->format("W");
+                                            echo $week;
+                                            
+                                            echo date("W");

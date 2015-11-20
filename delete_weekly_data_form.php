@@ -37,7 +37,7 @@ require_once('connection.php');
         
         //deleting weekly lump rates
    
-   $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date') AND employee = '$employee' AND job_function = '$job_function' ";
+   $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date',3) AND employee = '$employee' AND job_function = '$job_function' ";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -47,13 +47,13 @@ require_once('connection.php');
  ////******************************************************************************************************************************************************************  
     ////////acumulating weekly hours for each employee
     
-    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
+    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now(),3);";
     $row = mysql_query( $query1, $dbh );
     $num_rows = mysql_num_rows($row);
     
 
     if($num_rows>0){
-        $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours' WHERE employee_name = '$employee' and week_number = week(now());";
+        $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours' WHERE employee_name = '$employee' and week_number = week(now(),3);";
             $row = mysql_query( $query1, $dbh );
             if(! $row )
             {

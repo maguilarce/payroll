@@ -241,14 +241,14 @@ $counties="";
                 <div class="col-md-6">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                       <h4>Create Weekly Time Sheet</h4><br />
+                       <h4>Current Weekly Time Sheet</h4><br />
                        
                                 
                     </div>
                                     <div class="panel-body">
                                         <form id="form" name="form" method="post" action="add_weekly_data_table.php" class="form form-vertical validate">                       
                                 <div class="control-group">
-                                    <label>Associated Project</label>
+                                    <label>Select Associated Project To Current Weekly Time Sheet</label>
                                     <div class="controls">
                                         <select id="project" name="project" class="form-control">
                                             <option selected value="0">Select a project...</option>
@@ -272,7 +272,7 @@ $counties="";
     
                                 <div class="controls">
                                     <button id='create' type="submit" class="submit btn btn-primary">
-                                    Create New Weekly Time Sheet
+                                    View Current Weekly Time Sheet
                                 </button>
                                    
                                       

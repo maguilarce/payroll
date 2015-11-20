@@ -22,7 +22,7 @@ require_once('connection.php');
     $t = $type['type'];
     
     //////////inserting data into daily timesheet
-    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status,associated_project) VALUES (now(),week(now()),'$employee','$job_function','$total_hours','$pay_rate','$t','$status','$project_name') ";
+    $query = "INSERT INTO daily_timesheet (date,week_number,employee_name,job_function,total_day_hours,pay_rate,pay_rate_type,status,associated_project) VALUES (now(),week(now(),3),'$employee','$job_function','$total_hours','$pay_rate','$t','$status','$project_name') ";
     $retval = mysql_query( $query, $dbh );
     if(! $retval )
     {
@@ -33,14 +33,14 @@ require_once('connection.php');
     
  ////////acumulating weekly hours for each employee
     
-    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
+    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now(),3);";
     $row = mysql_query( $query1, $dbh );
     $num_rows = mysql_num_rows($row);
     
 
     if($num_rows==0){
         //Run an insert query on this table
-            $query1 = "INSERT INTO week_hours VALUES ('',week(now()),'$employee','$total_hours')";
+            $query1 = "INSERT INTO week_hours VALUES ('',week(now(),3),'$employee','$total_hours')";
             $row = mysql_query( $query1, $dbh );
             if(! $row )
             {
@@ -51,7 +51,7 @@ require_once('connection.php');
     } 
     else {
             
-            $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours + '$total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
+            $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours + '$total_hours' WHERE employee_name = '$employee' and week_number = week(now(),3);";
             $row = mysql_query( $query1, $dbh );
             if(! $row )
             {

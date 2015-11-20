@@ -179,14 +179,14 @@
                              <form id="form" name="form" method="post" class="form form-vertical validate">                       
                                 
                                  
-                                 <button formaction="" id='view' type="submit" class="submit btn btn-primary">
-                                    View Today's Created Daily Time Sheet
+                                 <button formaction="create_daily_timesheet3.php" id='view' type="submit" class="submit btn btn-primary">
+                                    View/Modify Current Weekly Time Sheet
                                 </button>
                                  <br/> <br/>
                                 - Or -
                                  <br/> <br/>
-                                 <button formaction="create_daily_timesheet3.php" id='create' type="submit" class="submit btn btn-primary">
-                                    Create New Daily Time Sheet
+                                 <button formaction="create_weekly_superintendent2.php" id='create' type="submit" class="submit btn btn-primary">
+                                    View Previous Weekly Time Sheet(s)
                                 </button>
                                    
                                       

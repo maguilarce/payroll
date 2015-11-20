@@ -1,8 +1,10 @@
 <?php
 require_once('connection.php');
 
-
+$week = $_POST['week']; 
+$union = $_POST['union']; 
 $project_name = $_POST['project']; 
+
 $result = mysql_query("SELECT 
 daily_timesheet_id,
 daily_timesheet.date,
@@ -21,7 +23,7 @@ daily_timesheet
 INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
 
 INNER JOIN employee ON daily_timesheet.employee_name = employee.name
-WHERE week_number = week(now(),3) AND associated_project = '$project_name'
+WHERE week_number = week(now(),3) AND associated_project = '$project_name' AND week_number = '$week'
 ORDER BY employee_name");
 
 
@@ -246,8 +248,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                             <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
                             <tr><td><strong>Pay Period: </strong><?php
                             $date = new DateTime();
-                            $first = $date->setISODate(date('Y'), date('W'), "1")->format('m/d/Y');
-                            $last = $date->setISODate(date('Y'),date('W'), "7")->format('m/d/Y'); 
+                            $first = $date->setISODate(date('Y'), $week, "1")->format('m/d/Y');
+                            $last = $date->setISODate(date('Y'),$week, "7")->format('m/d/Y'); 
                             echo "From ".$first." to ".$last;
                             ?></td></tr>
                             <tr><td><strong>Project Location(s): </strong><?php
@@ -287,7 +289,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     <th>Saturday</th>
                                     <th>Sunday</th>
                                     <th>Total Week Hours</th>
-                                    <th>Action</th>
+                                   
                                    
                                 </tr>
                             </thead>
@@ -343,7 +345,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_premium_rate
                                             INNER JOIN premium_rate ON daily_premium_rate.premium_rate = premium_rate.premium_rate_type
                                             WHERE
-                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat'");
+                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now()) and daily_premium_rate.date = '$dat'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "{$row1['premium']}"."<br /><br />";
@@ -360,7 +362,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_premium_rate
                                             INNER JOIN premium_rate ON daily_premium_rate.premium_rate = premium_rate.premium_rate_type
                                             WHERE
-                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat'");
+                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now()) and daily_premium_rate.date = '$dat'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "$"."{$row1['amount']}"."<br /><br /><br />";
@@ -376,7 +378,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_lump_rates
                                             INNER JOIN daily_lump_sum_rate ON daily_lump_rates.daily_lump_rate = daily_lump_sum_rate.daily_lump_sum_type
                                             WHERE
-                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat'");
+                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now()) and daily_lump_rates.date = '$dat'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "{$row1['lump']}"."<br /><br />";
@@ -392,7 +394,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_lump_rates
                                             INNER JOIN daily_lump_sum_rate ON daily_lump_rates.daily_lump_rate = daily_lump_sum_rate.daily_lump_sum_type
                                             WHERE
-                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat'");
+                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now()) and daily_lump_rates.date = '$dat'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "$"."{$row1['amount']}"."<br /><br /><br />";
@@ -407,7 +409,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                        if($row['processed_week']=='yes')
                                         {   
                                            $button = "disabled";
-                                            $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date',3);";
+                                            $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date');";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -444,7 +446,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=0 AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=0 AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -460,7 +462,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=1 AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=1 AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -477,7 +479,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=2 AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=2 AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -493,7 +495,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=3 AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=3 AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -509,7 +511,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=4 AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=4 AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -525,7 +527,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=5  AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=5  AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -541,7 +543,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         
                                         $sql = mysql_query("SELECT employee_name,total_day_hours
                                                             FROM daily_timesheet
-                                                            WHERE week_number=week(now(),3) AND weekday(date)=6  AND daily_timesheet_id = '$id' ");
+                                                            WHERE week_number=week(now()) AND weekday(date)=6  AND daily_timesheet_id = '$id' ");
 
                                         $monday = mysql_fetch_array($sql, MYSQL_ASSOC);
                                      
@@ -559,17 +561,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
             
 
-                                    <td>
-                                    
-                                      
-
-                                            
-                                        <button type="submit" formaction="edit_weekly_data_form.php">Modify</button> <br /><br />
-                                        <button onclick="eliminar();" type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="process_week2.php" class="btn btn-primary" <?php echo $button; ?> >Process </button> <br />
-                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                    </td> 
-                                    
+                                   
 
                                 
                                 </tr>

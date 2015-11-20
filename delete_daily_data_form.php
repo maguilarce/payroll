@@ -37,13 +37,13 @@ require_once('connection.php');
  ////******************************************************************************************************************************************************************  
     ////////acumulating weekly hours for each employee
     
-    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now());";
+    $query1 = "SELECT * FROM week_hours WHERE employee_name = '$employee' and week_number = week(now(),3);";
     $row = mysql_query( $query1, $dbh );
     $num_rows = mysql_num_rows($row);
     
 
     if($num_rows>0){
-        $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours' WHERE employee_name = '$employee' and week_number = week(now());";
+        $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours' WHERE employee_name = '$employee' and week_number = week(now(),3);";
             $row = mysql_query( $query1, $dbh );
             if(! $row )
             {

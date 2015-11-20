@@ -25,7 +25,7 @@ $count = count($daily_premium_rate);
     {
         $dpr = $daily_premium_rate[$i];
      
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$job_function','$dpr')";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$job_function','$dpr')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
@@ -39,7 +39,7 @@ $count = count($daily_premium_rate);
     {
         $dsr = $daily_sum_rates[$i];
        
-       $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$job_function','$dsr')";
+       $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$job_function','$dsr')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {

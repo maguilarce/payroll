@@ -422,7 +422,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                                         //SHOW THE WEEKLY LUMP PAYMENTS SELECTED AND NOT SELECTED
                                         $values2 = array();
                                         $selected2 = array();
-                                        $query = "SELECT * FROM weekly_lump_payments_employees WHERE week = week('$date') AND employee = '$employee' AND job_function = '$job_function' ";
+                                        $query = "SELECT * FROM weekly_lump_payments_employees WHERE week = week('$date',3) AND employee = '$employee' AND job_function = '$job_function' ";
                                         $result2 = mysql_query($query);
                                         while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
                                             {

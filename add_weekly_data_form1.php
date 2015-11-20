@@ -50,7 +50,7 @@ require_once('connection.php');
     for($i=0;$i<count($daily_premium_rate);$i++)
     {
         $dpr = $daily_premium_rate[$i];
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dpr') ";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dpr') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {
@@ -72,7 +72,7 @@ require_once('connection.php');
     for($i=0;$i<count($daily_lump_sum_rate);$i++)
     {
         $dlr = $daily_lump_sum_rate[$i];
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date'),'$date','$employee','$new_job_function','$dlr') ";
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dlr') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {
@@ -82,7 +82,7 @@ require_once('connection.php');
     
  //deleting previous weekly lump payment rates
        
-    $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date') AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date',3) AND employee = '$employee' AND job_function = '$old_jf' ";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -93,7 +93,7 @@ require_once('connection.php');
     for($i=0;$i<count($weekly_lump_payment);$i++)
     {
         $wlp = $weekly_lump_payment[$i];
-        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date'),'$employee','$new_job_function','$wlp') ";
+        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$new_job_function','$wlp') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {
@@ -103,7 +103,7 @@ require_once('connection.php');
     
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
     //updating accumalated hours
-    $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now());";
+    $query1 = "UPDATE week_hours SET total_week_hours = total_week_hours - '$preview_hours'+'$new_total_hours' WHERE employee_name = '$employee' and week_number = week(now(),3);";
     $row = mysql_query( $query1, $dbh );
     if(! $row )
         {

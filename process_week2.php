@@ -24,7 +24,7 @@ $count = count($weekly_lump_payments);
     {
         $wlp = $weekly_lump_payments[$i];
      
-        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date'),'$employee','$job_function','$wlp')";
+        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$job_function','$wlp')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
