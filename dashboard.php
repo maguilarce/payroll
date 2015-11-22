@@ -198,7 +198,7 @@ WHERE hired = 'y';");
                 <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Dashboard - Administrator</h2>
+                        <h2>Dashboard - Weekly Superintendent & Office Manager</h2>
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
@@ -330,18 +330,12 @@ WHERE hired = 'y';");
                     <form action="create_weekly_timesheet_superintendent1.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
-                                Weekly Timesheets
+                                Manage Weekly Timesheets
                             </button>
                         </div>
                     </form>
                     <br /><br />
-                    <form>
-                        <div class="controls">
-                            <button type="submit" class="btn btn-primary">
-                                Import Fired Employees List
-                            </button>
-                        </div>
-                    </form>
+                    
                 </div>
               
                 </div>

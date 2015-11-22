@@ -1,29 +1,21 @@
 <?php
 require_once('connection.php');
-
-//consulta para agregar los checkbox de premium rates y daily lump sum rates
-//traer por post los datos y los arreglos de los check box
-//if(strpos(!$_SERVER['HTTP_REFERER'],"add_daily_data_table.php"))/
-//{
-  $project_name = $_POST['project'];  
-//}
-
-
-$result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
-FROM employee INNER JOIN daily_timesheet
-ON employee.name=daily_timesheet.employee_name
-WHERE date = CURDATE() AND associated_project = '$project_name';");
-
-if(mysql_num_rows($result)==0)
+function dias_transcurridos($fecha_i,$fecha_f)
 {
-    $message="Alert: You have not yet entered any record.";
-}
-else
-{
-    $message = "";
+	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
+	$dias 	= abs($dias); $dias = floor($dias);		
+	return $dias;
 }
 
-$retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$project_name'");
+$result = mysql_query("SELECT *
+FROM project");
+
+$employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
+FROM employee
+WHERE hired = 'y';");
+//$row = mysql_fetch_array($result, MYSQL_ASSOC);
+
+      
 
 ?>
 
@@ -49,40 +41,16 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
-                   /* $(document).ready(function()
-                  {
-                    
+                    $(document).ready(function()
+                  {             
                     $( ".delete" ).submit(function( event ) {
                     if(!confirm( "This will delete selected daily data. Are you sure?" ))
                         event.preventDefault();
                     });
-                   });*/
-                    function eliminar(){
-                        
-                        if(!confirm( "This will delete selected daily data. Are you sure?" ))
-                        event.preventDefault();
-                }
+                   });
                 </script>
-                <script type="text/javascript"> 
-                function verificar(){
-                    var suma = 0;
-                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
-                    for (var i = 0, j = los_cboxes.length; i < j; i++) {
-
-                    if(los_cboxes[i].checked === true){
-                    suma++;
-                    }
-                }
-
-                if(suma === 0){
-                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
-                return false;
-                }
-
-                }
-                </script> 
 
 	</head>
 	<body>
@@ -212,8 +180,6 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 
                                 
             </ul>
-
-           
             
         </div>
         <!-- /col-3 -->
@@ -229,44 +195,25 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
-                        <table class="table table-striped table-bordered table-hover">
-                            <h4>
-                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
-                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
-                            <tr><td><strong>Project Location(s): </strong></td></tr><?php
-
-                            $i=1;
-                            while($row2 = mysql_fetch_array($retval2,1))
-                            {
-                               echo "<tr><td>".$i++.")".$row2['county'].", ".$row2['state']." ---> <strong>Operators Local Union #:</strong> ".$row2['operator_local']."<strong> / Teamster Local Union #: </strong>".$row2['teamster_local']." <strong> / Laborer Local Union #: </strong>".$row2['laborer_local']."</td></tr>";
-                            }
-                            ?>
-                            </h4>
-                        </table>
+                        <h2>Dashboard - Daily Superintendent</h2>
+                        <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
- 
-                    <h4><strong style="color: red"><?php echo  $message;?></strong></h4><br />
+            <form action="" method="post" name="daily_data">   
+                <h4><strong>Active Projects</strong></h4>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                  
-                                    <th>Employee Name</th>
-                                    <th>Union Trade</th>
-                                    <th>Home local #</th>
-                                    <th>Job Function</th>
-                                    <th>Pay Rate</th>
-                                    <th>Premium Rate</th>
-                                    <th>Daily Lump Sum Rates</th>
-                                    <th>Worked Hours</th>
-                                    <th>Status</th>
-                                    <th>Notes</th>
-                                    <th>Action</th>
-                                   
+                                    <th>Project</th>
+                                    <th>Description</th>
+                                    <th>Starting Date</th>
+                                    <th>Completion Date</th>
+                                    <th>Location</th>
+                                    <th>In Charge of</th>
+                                             
                                 </tr>
                             </thead>
                             <tbody>
@@ -274,164 +221,122 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
                                 ?>
-                           <form action="" method="post">
                                 <tr>
-                            
-                                     
                                     <td>
-                                        <?php echo "{$row['employee_name']}"; ?>
-                                    </td>
-                                                              
-                                    <td>
-                                        <?php echo "{$row['union_trade']}"; ?>                        
+                                        <?php echo "{$row['project_name']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['home_local']}"; ?>                        
+                                        <?php echo "{$row['project_description']}"; ?>
                                     </td>
-                                    <td>
-                                        <?php echo "{$row['job_function']}"; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['pay_rate']}"; ?>      
-                                    </td>
-                                    <td>       
-                                        <?php
-                                        
-                                            $employee = $row['employee_name'];
-                                            $job_function =  $row['job_function'];
-                                            $date = $row['date'];
-                                            
-                                        if($row['processed']=='yes')
-                                        {   
-
-                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-                                                echo "{$row1['premium_rate']}"."<br />";
-                                            }
-                                        }    
-                                        else
+                                     <td>
+                                        <?php echo "{$row['starting_date']}"; 
+                                        if(date("Y-m-d")>$row['starting_date']&&date("Y-m-d")<$row['completion_date'])
                                         {
-                                            $query = "SELECT * from premium_rate;";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-
-                                                $value = $row1['premium_rate_type'];
-                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' / > {$row1['premium_rate_type']}<br>";
-
-                                            }
+                                            echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";
+                                        }
+                                        if(date("Y-m-d")<$row['starting_date'])
+                                        {
+                                            echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";
                                         }
                                         ?>
                                     </td>
-                                    <td>
-                                        <?php
-   
-                                            if($row['processed']=='yes')
-                                        {   $button = "disabled";
-                                            $employee = $row['employee_name'];
-                                            $job_function =  $row['job_function'];
-                                            $date = $row['date'];
-                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-                                                echo "{$row1['daily_lump_rate']}"."<br />";
-                                            }
-                                        }    
-                                        else
+                                     <td>
+                                        <?php echo "{$row['completion_date']}"."<br/>"; 
+                                        if(date("Y-m-d")>$row['completion_date'])
                                         {
-                                            $button = "";
-                                            $query = "SELECT * from daily_lump_sum_rate;";
-                                            $result1 = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
-                                            {
-
-                                                $value = $row1['daily_lump_sum_type'];
-                                                echo "<input type='checkbox' name='daily_sum_rates[]' value='$value' / > {$row1['daily_lump_sum_type']}<br>";
-
-                                            }
+                                            echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";
                                         }
-                                            ?>
-                                    </td>
-                                    <td>
-                                        <?php 
-                                        
-                          
-                                        echo "{$row['total_day_hours']}"; 
-                                   
-                                        
-                                        ?>
-                                    </td>
-
-                                    <td>
-                                        <?php echo "{$row['status']}"; ?>          
-                                    </td>
-                                    <td>
-                                        <?php echo "{$row['daily_notes']}"; ?>  
-                                    </td>
-
-
-                                    <td>
-                                        <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                        <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
-                                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                        <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
-                                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                        
-                                        
-                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button>
-                                        
-                                        
-                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php">Delete</button><br/><br/>
-                                        
-                                        
-                                        <button type="submit" formaction="process2.php" class="btn btn-primary" <?php echo $button;?>>Process </button>
-
-                            
-                                    </td> 
-                                    
-                                    
-                                
+                                        ?>
+                                    </td>
+                                     <td>
+                                        <?php
+                                        $project_name = $row['project_name'];
+                                        $query = "SELECT county,state FROM jurisdiction WHERE project_name = '$project_name'";
+                                        $retval = mysql_query($query);
+                                        while($fila = mysql_fetch_array($retval,1))
+                                        {
+                                            echo $fila['county'].", ".$fila['state']."<br/>";
+                                        }
+                                        ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['in_charge_of']}"; ?>
+                                    </td>
+                                                                    
                                 </tr>
-                                </form>
-                                
-                                
-                                <?php 
-                                
-                                
+                                <?php                               
                                    }
                                 ?>
                             </tbody>
                         </table>
-                   
-                    <table>
-                        <tr><td>
-                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
-                   
-                          
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>  
-                                <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
-                    </form>
-                            </td>
-                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>
-                    <form  method="post" name="daily_data">   
-                  
-                                <button type="submit" class="btn btn-primary" disabled>
-                                    Generate and Print Daily Time Sheet
-                                </button>
-
-                      
+     
+                     <h4><strong>Active Employees</strong></h4>
+                    <table id="demo1" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Hiring Date</th>
+                                    <th>Union Trade</th>
+                                    <th>Crew</th>
+                                             
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while($row = mysql_fetch_array($employees, MYSQL_ASSOC))
+                                            { 
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo "{$row['name']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['address']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['phone_number']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['email']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['hiring_date']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['union_trade']}"; ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['crew']}"; ?>
+                                    </td>
+                                    
+                                                                    
+                                </tr>
+                                <?php                               
+                                   }
+                                ?>
+                            </tbody>
+                        </table>
                         
+                        
+                   
                     </form>
-                            </td></tr>
-                    </table>
+
                     </div>
+                <div class="col-md-2">
+                    <form action="create_daily_timesheet_superintendent1.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Manage Daily Timesheets
+                            </button>
+                        </div>
+                    </form>
+                    <br /><br />
+                    
+                </div>
               
                 </div>
                 <!--/col-->
@@ -503,7 +408,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 col_10: 'select',
                 col_11: 'none',
                 col_12: 'none',
-                       
+        
                 extensions:[
                     {
 
@@ -523,6 +428,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
             var tf = new TableFilter('demo', filtersConfig);
             tf.init();
+            var tf1 = new TableFilter('demo1', filtersConfig);
+            tf1.init();
             
 </script>
 <!-- end filter and pagination -->

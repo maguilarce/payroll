@@ -589,8 +589,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
    
                             <label></label>
                             <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Generate Weekly Time Sheet
+                                <button type="submit" class="btn btn-primary" disabled>
+                                    Generate and Print Weekly Time Sheet
                                 </button>
                             </div>
                         </div>

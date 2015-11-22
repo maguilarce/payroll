@@ -1,18 +1,14 @@
 <?php
 require_once('connection.php');
 
-//consulta para agregar los checkbox de premium rates y daily lump sum rates
-//traer por post los datos y los arreglos de los check box
-//if(strpos(!$_SERVER['HTTP_REFERER'],"add_daily_data_table.php"))/
-//{
-  $project_name = $_POST['project'];  
-//}
-
+$date = $_POST['date']; 
+$union = $_POST['union']; 
+$project_name = $_POST['project']; 
 
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
-WHERE date = CURDATE() AND associated_project = '$project_name';");
+WHERE date = '$date' AND associated_project = '$project_name';");
 
 if(mysql_num_rows($result)==0)
 {
@@ -51,14 +47,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
                  <script language="JavaScript"> 
-                   /* $(document).ready(function()
-                  {
-                    
-                    $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
-                        event.preventDefault();
-                    });
-                   });*/
+
                     function eliminar(){
                         
                         if(!confirm( "This will delete selected daily data. Are you sure?" ))
@@ -235,7 +224,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
                             <h4>
-                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
+                            <tr><td><strong>Date:</strong> <?php echo date($date);?></td></tr>
                             <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
                             <tr><td><strong>Project Location(s): </strong></td></tr><?php
 
@@ -265,7 +254,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
-                                    <th>Action</th>
+                                    
                                    
                                 </tr>
                             </thead>
@@ -373,25 +362,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     </td>
 
 
-                                    <td>
-                                        <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                        <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
-                                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                        <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
-                                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                       
-                                        
-                                        <button type="submit" formaction="edit_daily_data_form.php">Modify</button>
-                                        
-                                        
-                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php">Delete</button><br/><br/>
-                                        
-                                        
-                                        <button type="submit" formaction="process2.php" class="btn btn-primary" <?php echo $button;?>>Process </button>
-
-                            
-                                    </td> 
+                              
                                     
                                     
                                 
@@ -407,19 +378,9 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                             </tbody>
                         </table>
                    
-                    <table>
-                        <tr><td>
-                    <form action="add_daily_data_form.php" method="post" name="daily_data">   
-                   
-                          
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>  
-                                <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
-                    </form>
-                            </td>
-                             <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>
+                    
+                  
+                           
                     <form  method="post" name="daily_data">   
                   
                                 <button type="submit" class="btn btn-primary" disabled>
@@ -429,8 +390,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                       
                         
                     </form>
-                            </td></tr>
-                    </table>
+                            
                     </div>
               
                 </div>
