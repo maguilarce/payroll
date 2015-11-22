@@ -86,6 +86,7 @@ WHERE hired = 'y';");
     <div class="row">
         <div class="col-sm-2">
             <!-- Left column -->
+            <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>
@@ -198,6 +199,7 @@ WHERE hired = 'y';");
                 <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                    
                         <h2>Dashboard - Weekly Superintendent & Office Manager</h2>
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 

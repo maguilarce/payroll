@@ -120,6 +120,7 @@ ORDER BY employee_name");
     <div class="row">
         <div class="col-sm-1">
             <!-- Left column -->
+            <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>

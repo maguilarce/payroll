@@ -101,6 +101,7 @@ $project_name = $_POST['project_name'];
     <div class="row">
         <div class="col-sm-2">
             <!-- Left column -->
+             <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>
@@ -215,6 +216,7 @@ $project_name = $_POST['project_name'];
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                       
                         <h2>Add New Register - Daily Time Sheet - Superintendent</h2>
                         <h4>Date: <?php echo date("F j, Y");?> </h4>
                                 

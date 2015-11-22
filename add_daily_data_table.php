@@ -118,6 +118,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
     <div class="row">
         <div class="col-sm-2">
             <!-- Left column -->
+            <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>
@@ -303,7 +304,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             
                                         if($row['processed']=='yes')
                                         {   
-
+                                            
                                             $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))

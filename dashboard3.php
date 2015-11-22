@@ -1,22 +1,22 @@
 <?php
 require_once('connection.php');
-$counties="";
- if(isset($_POST["project"]))
-  {
-   $project=$_POST["project"]; 
-   $query2 = "SELECT * FROM jurisdiction WHERE project_name='$project'";
-   $result2 = mysql_query($query2);
-   while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
-   {
-    
-    $counties .= $row2['county'].' - '.$row2['state']."\n"."Operators Local Union # ".$row2['operator_local']."\n"."Teamster Local Union # ".$row2['teamster_local']."\n"."Laborer Local Union # ".$row2['laborer_local']."\n\n";
-    }
-    echo ltrim($counties);
-  exit;
-  }
- 
- $query = "SELECT * FROM project";
- $result = mysql_query($query);
+function dias_transcurridos($fecha_i,$fecha_f)
+{
+	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
+	$dias 	= abs($dias); $dias = floor($dias);		
+	return $dias;
+}
+
+$result = mysql_query("SELECT *
+FROM project");
+
+$employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
+FROM employee
+WHERE hired = 'y';");
+//$row = mysql_fetch_array($result, MYSQL_ASSOC);
+
+      
+
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ $counties="";
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
+                 <script language="JavaScript"> 
                     $(document).ready(function()
                   {             
                     $( ".delete" ).submit(function( event ) {
@@ -50,47 +50,6 @@ $counties="";
                         event.preventDefault();
                     });
                    });
-                </script>
-                <script language="JavaScript">
-                    $(document).ready(function()
-                    {
-                       $("#project").change(function()
-                        {
-                            changeFunction();
-                        });
-                    });
-
-                function changeFunction()
-                {
-                $.ajax({
-                   'type':'POST',
-                   'data':$('form').serialize(),
-                   'success':function(data)
-                   { 
-                       $("#project_description").prop("value",data); 
-                   }
-
-                   });
-                }
-                </script>
-                <script type="text/javascript">
-                   
-                $(document).ready(function () {
-                $('.submit').click(function (event) {
-                var count = $('select option:selected').val();
-                if (count == 0) {
-                    alert('Must select at least one project');
-                    event.preventDefault();
-                    
-                }
-                else {
-
-                    
-                }
-                
-                
-            });
-        });
                 </script>
 
 	</head>
@@ -222,8 +181,6 @@ $counties="";
                 
                                 
             </ul>
-
-           
             
         </div>
         <!-- /col-3 -->
@@ -239,86 +196,149 @@ $counties="";
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                       <h4>Current Weekly Time Sheet</h4><br />
                        
+                        <h2>Dashboard - Daily Superintendent</h2>
+                        <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
-                                    <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="view_weekly_data_table.php" class="form form-vertical validate">                       
-                                <div class="control-group">
-                                   
-                                    <label>Select Associated Project To Current Weekly Time Sheet</label>
-                                    <div class="controls">
-                                        <select id="project" name="project" class="form-control">
-                                            <option selected value="0">Select a project...</option>
-                                            <?php
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+            <form action="" method="post" name="daily_data">   
+                <h4><strong>Active Projects</strong></h4>
+                    <table id="demo" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Description</th>
+                                    <th>Starting Date</th>
+                                    <th>Completion Date</th>
+                                    <th>Location</th>
+                                    <th>In Charge of</th>
+                                             
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while($row = mysql_fetch_array($result, MYSQL_ASSOC))
                                             { 
-                                             $value = $row['project_name']; 
-                                             echo "<option value = '$value'>{$row['project_name']}</option>";
-                                            }  
-                                            ?>
-
-                                        </select><br/>
-                                         <label>Select a week</label>
-                                        <select id="week" name="week" class="form-control">
-                                            <?php
-                                            $date = new DateTime();
-                                            $today = new DateTime(date('m/d/Y'));
-                                            $week = $today->format("W");
-                                            
-                                            for($i=$week,$j=0;$i<=53;$i++,$j++)
-                                            {
-                                                
-                                                $first = $date->setISODate(date('Y'), date('W')+$j, "1")->format('m/d/Y');
-                                                $last = $date->setISODate(date('Y'),date('W')+$j, "7")->format('m/d/Y'); 
-                                                echo "<option value = '$i'>From ".$first." to ".$last."</option>";
-                                            }
-                                            ?>
-                                        </select><br/>
-                                         <label>Select union trade</label>
-                                         <select id="union" name="union" class="form-control">
-                                            <?php
-                                            $query = "SELECT union_trade_type FROM union_trade";
-                                            $retval = mysql_query( $query, $dbh );
-                                            if(! $retval )
-                                            {
-                                             die('Could not get data: ' . mysql_error());
-                                            }
-                                             while($row1 = mysql_fetch_array($retval, MYSQL_ASSOC))
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo "{$row['project_name']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['project_description']}"; ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['starting_date']}"; 
+                                        if(date("Y-m-d")>$row['starting_date']&&date("Y-m-d")<$row['completion_date'])
+                                        {
+                                            echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";
+                                        }
+                                        if(date("Y-m-d")<$row['starting_date'])
+                                        {
+                                            echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";
+                                        }
+                                        ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['completion_date']}"."<br/>"; 
+                                        if(date("Y-m-d")>$row['completion_date'])
+                                        {
+                                            echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";
+                                        }
+                                       
+                                        ?>
+                                    </td>
+                                     <td>
+                                        <?php
+                                        $project_name = $row['project_name'];
+                                        $query = "SELECT county,state FROM jurisdiction WHERE project_name = '$project_name'";
+                                        $retval = mysql_query($query);
+                                        while($fila = mysql_fetch_array($retval,1))
+                                        {
+                                            echo $fila['county'].", ".$fila['state']."<br/>";
+                                        }
+                                        ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['in_charge_of']}"; ?>
+                                    </td>
+                                                                    
+                                </tr>
+                                <?php                               
+                                   }
+                                ?>
+                            </tbody>
+                        </table>
+     
+                     <h4><strong>Active Employees</strong></h4>
+                    <table id="demo1" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Hiring Date</th>
+                                    <th>Union Trade</th>
+                                    <th>Crew</th>
+                                             
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while($row = mysql_fetch_array($employees, MYSQL_ASSOC))
                                             { 
-                                                
-                                             echo "<option>{$row1['union_trade_type']}</option>";
-                     
-                                            }  
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div><br />
-                                <div class="control-group">
-                                    <label>Project Location(s)</label><br/>
-                       
-                                    <textarea rows = '10' disabled name="project_description" id="project_description" class="form-control" name="notes"><?php echo ltrim($counties); ?></textarea>
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo "{$row['name']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['address']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['phone_number']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['email']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['hiring_date']}"; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo "{$row['union_trade']}"; ?>
+                                    </td>
+                                     <td>
+                                        <?php echo "{$row['crew']}"; ?>
+                                    </td>
                                     
-                                </div><br />
-    
-                                <div class="controls">
-                                    <button id='create' type="submit" class="submit btn btn-primary">
-                                    View Weekly Time Sheet
-                                </button>
-                                   
-                                      
-                            </form>
+                                                                    
+                                </tr>
+                                <?php                               
+                                   }
+                                ?>
+                            </tbody>
+                        </table>
+                        
+                        
+                   
+                    </form>
+
+                    </div>
+                <div class="col-md-2">
+                    <form action="create_daily_timesheet_foreman.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Manage Daily Timesheet
+                            </button>
                         </div>
-                        <!--/panel content-->
-                    </div>
- 
+                    </form>
+                    <br /><br />
                     
-        
-                    </div>
+                </div>
               
                 </div>
                 <!--/col-->
@@ -390,7 +410,7 @@ $counties="";
                 col_10: 'select',
                 col_11: 'none',
                 col_12: 'none',
-                       
+        
                 extensions:[
                     {
 
@@ -410,6 +430,8 @@ $counties="";
 
             var tf = new TableFilter('demo', filtersConfig);
             tf.init();
+            var tf1 = new TableFilter('demo1', filtersConfig);
+            tf1.init();
             
 </script>
 <!-- end filter and pagination -->

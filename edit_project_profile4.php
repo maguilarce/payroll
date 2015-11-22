@@ -117,6 +117,7 @@ for($i=0;$i<(count($combined4)/2);$i++)
     <div class="row">
         <div class="col-sm-2">
             <!-- Left column -->
+            <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>

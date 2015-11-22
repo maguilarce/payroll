@@ -21,6 +21,7 @@
   <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
+          <img src="let-logo.png" /><h4>Payroll Software App</h4>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h1 class="text-center">Login</h1>
       </div>
@@ -45,9 +46,12 @@
       </div>
   </div>
   </div>
+    <footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 </div>
 	<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+                
 	</body>
+        
 </html>

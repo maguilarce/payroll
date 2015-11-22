@@ -242,15 +242,14 @@ $counties="";
                 <div class="col-md-6">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                       <h4>Current Weekly Time Sheet</h4><br />
+                       <h4>Manage Daily Time Sheet</h4><br />
                        
                                 
                     </div>
                                     <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="view_weekly_data_table.php" class="form form-vertical validate">                       
+                                        <form id="form" name="form" method="post" action="add_daily_foreman_data_table.php" class="form form-vertical validate">                       
                                 <div class="control-group">
-                                   
-                                    <label>Select Associated Project To Current Weekly Time Sheet</label>
+                                    <label>Associated Project</label>
                                     <div class="controls">
                                         <select id="project" name="project" class="form-control">
                                             <option selected value="0">Select a project...</option>
@@ -262,39 +261,6 @@ $counties="";
                                             }  
                                             ?>
 
-                                        </select><br/>
-                                         <label>Select a week</label>
-                                        <select id="week" name="week" class="form-control">
-                                            <?php
-                                            $date = new DateTime();
-                                            $today = new DateTime(date('m/d/Y'));
-                                            $week = $today->format("W");
-                                            
-                                            for($i=$week,$j=0;$i<=53;$i++,$j++)
-                                            {
-                                                
-                                                $first = $date->setISODate(date('Y'), date('W')+$j, "1")->format('m/d/Y');
-                                                $last = $date->setISODate(date('Y'),date('W')+$j, "7")->format('m/d/Y'); 
-                                                echo "<option value = '$i'>From ".$first." to ".$last."</option>";
-                                            }
-                                            ?>
-                                        </select><br/>
-                                         <label>Select union trade</label>
-                                         <select id="union" name="union" class="form-control">
-                                            <?php
-                                            $query = "SELECT union_trade_type FROM union_trade";
-                                            $retval = mysql_query( $query, $dbh );
-                                            if(! $retval )
-                                            {
-                                             die('Could not get data: ' . mysql_error());
-                                            }
-                                             while($row1 = mysql_fetch_array($retval, MYSQL_ASSOC))
-                                            { 
-                                                
-                                             echo "<option>{$row1['union_trade_type']}</option>";
-                     
-                                            }  
-                                            ?>
                                         </select>
                                     </div>
                                 </div><br />
@@ -307,7 +273,7 @@ $counties="";
     
                                 <div class="controls">
                                     <button id='create' type="submit" class="submit btn btn-primary">
-                                    View Weekly Time Sheet
+                                    Create New Daily Time Sheet
                                 </button>
                                    
                                       

@@ -107,6 +107,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
     <div class="row">
         <div class="col-sm-2">
             <!-- Left column -->
+            <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
 
             <hr>
