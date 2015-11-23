@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Bootstrap 3 Admin</title>
+		<title>Let LLC Time Sheet App</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		
@@ -26,16 +26,16 @@
           <h1 class="text-center">Login</h1>
       </div>
       <div class="modal-body">
-          <form class="form col-md-12 center-block">
+          <form method="post" action="login_process.php" class="form col-md-12 center-block">
             <div class="form-group">
-              <input type="text" class="form-control input-lg" placeholder="Email">
+              <input name="user" type="text" class="form-control input-lg" placeholder="User">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control input-lg" placeholder="Password">
+                <input name="password" type="password" class="form-control input-lg" placeholder="Password">
             </div>
             <div class="form-group">
               <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-              <span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need help?</a></span>
+              <span class="pull-right"><a href="#"></a></span><span><a href="mailto:maguilarce@gmail.com">Need help?</a></span>
             </div>
           </form>
       </div>
