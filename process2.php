@@ -1,5 +1,6 @@
 <?php
 require_once('connection.php');
+session_start();
 $project_name = $_POST['project'];
 $daily_premium_rate=$_POST['daily_premium_rate'];
 $daily_sum_rates=$_POST['daily_sum_rates'];
@@ -86,7 +87,7 @@ $count = count($daily_premium_rate);
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="#">My Profile</a></li>
                     </ul>

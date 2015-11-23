@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+session_start();
 $project_name = $_POST['project']; 
 $weekly_lump_payments=$_POST['weekly_lump_payments'];
 $employee=$_POST['employee'];

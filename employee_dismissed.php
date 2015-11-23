@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+session_start();
 $employee_id = $_POST['employee_id'];
 $reason = $_POST['reason'];
 $query = "UPDATE employee

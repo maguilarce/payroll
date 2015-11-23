@@ -15,7 +15,7 @@ else
     $user = filter_var($_POST['user'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     
-    $dbh = new PDO("mysql:host=localhost;dbname=payroll", "root", "");
+    $dbh = new PDO("mysql:host=190.9.34.80;dbname=cyberhost_payroll", "cyberhost_nuej", "18568027");
     
     /*** prepare query ***/
     $stmt = $dbh->prepare("SELECT * FROM user 
@@ -34,14 +34,14 @@ else
     /*** if we have no result then fail boat ***/
         if($user_id == false)
         {
-                $message = 'Login Failed';
+                echo 'Login Failed<br/>';
                 echo "<a href='login.php'>Back to login screen</a>";
         }
         /*** if we do have a result, all is well ***/
         else
         {
                 /*** set the session user_id variable ***/
-                $_SESSION['user_id'] = $user_id;
+                $_SESSION['user_id'] = $user;
                 
                if($user=='rachel')
                header("Location: dashboard.php");
@@ -51,5 +51,8 @@ else
                
                else if($user=='foreman')
                header("Location: dashboard3.php");
+               
+               else 
+                echo "Login Failed<br/><a href='login.php'>Back to login screen</a>";
         }
 }

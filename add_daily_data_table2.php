@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+session_start();
 //consulta para agregar los checkbox de premium rates y daily lump sum rates
 //traer por post los datos y los arreglos de los check box
 $counties="";
@@ -113,7 +113,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="#">My Profile</a></li>
                     </ul>

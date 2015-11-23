@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+session_start();
 /*$result = mysql_query("SELECT 
 daily_timesheet_id,daily_timesheet.date, daily_timesheet.employee_name,employee.union_trade,employee.home_local,daily_timesheet.job_function,daily_timesheet.pay_rate,pay_rate.pay_rate_hourly_amount,daily_timesheet.premium_rate,premium_rate.premium_rate_amount,daily_timesheet.daily_lump_sum_rate,
 daily_lump_sum_rate.daily_lump_sum_amount,daily_timesheet.total_day_hours,daily_timesheet.pay_rate_type,weekly_lump_payments.weekly_lump_payment_type,weekly_lump_payments.weekly_lump_payment_amount
@@ -102,7 +102,7 @@ ORDER BY employee_name");
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="#">My Profile</a></li>
                     </ul>

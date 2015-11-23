@@ -1,6 +1,6 @@
 <?php
 require_once('connection.php');
-
+session_start();
     $union_trade = $_POST['new_union_trade'];
     $query = "INSERT INTO union_trade values ('','$union_trade')";
     $retval = mysql_query( $query, $dbh );
@@ -43,7 +43,7 @@ require_once('connection.php');
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
                     <ul id="g-account-menu" class="dropdown-menu" role="menu">
                         <li><a href="#">My Profile</a></li>
                     </ul>
