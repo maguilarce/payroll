@@ -15,7 +15,7 @@ else
     $user = filter_var($_POST['user'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     
-    $dbh = new PDO("mysql:host=190.9.34.80;dbname=cyberhost_payroll", "cyberhost_nuej", "18568027");
+    $dbh = new PDO("mysql:host=localhost;dbname=payroll", "root", "");
     
     /*** prepare query ***/
     $stmt = $dbh->prepare("SELECT * FROM user 

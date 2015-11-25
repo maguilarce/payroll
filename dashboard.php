@@ -175,7 +175,7 @@ WHERE hired = 'y';");
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+                        <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
 
 
                     </ul>
@@ -337,8 +337,29 @@ WHERE hired = 'y';");
                                 Manage Weekly Timesheets
                             </button>
                         </div>
+                    </form> <br /><br />
+                    <form action="create_daily_timesheet_superintendent1.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Manage Daily Timesheets As Office Manager
+                            </button>
+                        </div>
+                    </form> <br /><br />
+                     <form action="create_daily_timesheet_foreman.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Manage Daily Timesheet As Foreman
+                            </button>
+                        </div>
                     </form>
                     <br /><br />
+                    <form action="project_table.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                View/Edit Current Projects
+                            </button>
+                        </div>
+                    </form>
                     
                 </div>
               

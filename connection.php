@@ -1,6 +1,6 @@
 <?php
 require_once('dbconfig.php');
-session_start();
+
 #  Check database to host connection 
 if(!function_exists('mysql_connect'))
 {

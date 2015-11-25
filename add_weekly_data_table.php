@@ -212,7 +212,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+                       <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
 
 
                     </ul>
@@ -696,6 +696,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 col_17: 'none',
                 col_18: 'none',
                 col_19: 'none',
+                col_20: 'none',
 
 
                 extensions:[

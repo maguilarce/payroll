@@ -165,7 +165,7 @@ ON employee.name=daily_timesheet.employee_name;");
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_project_table.php">Add/Modify/Delete project</a></li>
+                        <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
 
 
                     </ul>
