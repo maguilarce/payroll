@@ -155,9 +155,9 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                     </ul>
                 </li>
                 <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lumps payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lump Sum Payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump payment</a>
+                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump sum payment</a>
                         </li>
 
                     </ul>
