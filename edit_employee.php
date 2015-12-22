@@ -2,17 +2,17 @@
 require_once('connection.php');
 session_start();
     $employee_id = $_POST['id'];
-    $name = $_POST['name'];
-    $license_number = $_POST['license_number'];
+    $name = $_POST['last_name'].",".$_POST['first_name'];
     $social_security_number = $_POST['social_security_number'];
     $address = $_POST['address'];
     $phone_number = $_POST['phone_number'];
     $email = $_POST['email'];
     $union_trade = $_POST['union_trade'];
+    $home_local = $_POST['home_local'];
     $crew = $_POST['crew'];    
     $hiring_date = $_POST['hiring_date'];
     $query = "UPDATE employee
-              SET name='$name',license_number='$license_number',social_security_number='$social_security_number',address='$address',phone_number='$phone_number',email='$email',
+              SET name='$name',home_local='$home_local',social_security_number='$social_security_number',address='$address',phone_number='$phone_number',email='$email',
               union_trade='$union_trade',hiring_date='$hiring_date',crew='$crew'
               WHERE employee_id='$employee_id'";
     
@@ -192,7 +192,7 @@ session_start();
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Employee modified satisfactorily</h4>
                             </div>
-                            <form name="add_employee" action="add_employee_form.php">
+                            <form name="add_employee" action="edit_employee_table.php">
                                <div class="controls">
                                         <button type="submit" class="btn btn-primary">
                                             Back

@@ -9,6 +9,10 @@ session_start();
     $result = mysql_query($query);
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
 
+    $name = explode(',',$row['name']);
+    $last_name = $name[0];
+    $first_name = $name[1];
+    
 
 
 ?>
@@ -183,18 +187,18 @@ session_start();
                         <div class="panel-body">
                             <form action="edit_employee.php" method="post" class="form form-vertical">
                                 <div class="control-group">
-                                    <label>Name</label>
+                                    <label>First Name</label>
                                     <div class="controls">
-                                        <input name="name" type="text" value="<?php echo "{$row['name']}"; ?>" class="form-control" placeholder="Enter Name">
+                                        <input name="first_name" type="text" value="<?php echo $first_name; ?>" class="form-control" placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label>License Number</label>
+                                    <label>Last Name</label>
                                     <div class="controls">
-                                        <input name="license_number" type="text" value="<?php echo "{$row['license_number']}"; ?>" class="form-control" placeholder="Enter License Number">
+                                        <input name="last_name" type="text" value="<?php echo $last_name; ?>" class="form-control" placeholder="Enter Name">
                                     </div>
-                                 </div>   
-                                 <div class="control-group">
+                                </div>
+                               <div class="control-group">
                                     <label>SSN</label>
                                     <div class="controls">
                                         <input name="social_security_number" type="text" value="<?php echo "{$row['social_security_number']}"; ?>" class="form-control" placeholder="Enter SSN">
@@ -241,6 +245,11 @@ session_start();
                                     </div>
                                 </div>
                                 <div class="control-group">
+                                    <label>Home local #</label>
+                                    <div class="controls">
+                                        <input id="home_local" name="home_local" type="text" class="form-control" value="<?php echo "{$row['home_local']}";?>">
+                                    </div>
+                                <div class="control-group">
                                     <label>Crew</label>
                                     <div class="controls">
                                         <select name="crew" class="form-control">
@@ -282,7 +291,7 @@ session_start();
                                     <div class="controls">
                                         
                                         <button type="submit" class="btn btn-primary">
-                                            Add employee
+                                            Modify employee
                                         </button>
                                         <input type="hidden" name="id" value="<?php echo "{$row['employee_id']} <br>"; ?>">
                                     </div>
@@ -302,14 +311,14 @@ session_start();
             <!--/row-->
 
             <hr>
-
+                
            
         </div>
         <!--/col-span-9-->
     </div>
 </div>
 <!-- /Main -->
-
+    </div>
 <footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 
 <div class="modal" id="addWidgetModal">

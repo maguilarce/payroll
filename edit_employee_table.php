@@ -180,6 +180,7 @@ session_start();
                                     <th>Phone #</th>
                                     <th>Email</th>
                                     <th>Union </th>
+                                    <th>Home Local # </th>
                                     <th>Crew </th>
                                     <th>Hiring date </th>
                                     <th>Action</th>
@@ -206,6 +207,7 @@ session_start();
                                     <td><?php echo "{$row['phone_number']} <br>"; ?></td> 
                                     <td><?php echo "{$row['email']} <br>"; ?></td> 
                                     <td><?php echo "{$row['union_trade']} <br>"; ?></td> 
+                                    <td><?php echo "{$row['home_local']} <br>"; ?></td> 
                                     <td><?php echo "{$row['crew']} <br>"; ?></td> 
                                     <td><?php echo "{$row['hiring_date']} <br>"; ?></td> 
                                     <td>
