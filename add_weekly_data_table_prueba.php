@@ -190,7 +190,9 @@ ORDER BY employee_name");
                  <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lump Sum Payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete lump sum payment</a>
+                         <li><a href="add_lump_payment_table.php">Add/Modify/Delete Daily lump sum payment</a>
+                        </li>
+                        <li><a href="add_weekly_lump_payment_table.php">Add/Modify/Delete Weekly lump sum payment</a>
                         </li>
 
                     </ul>
