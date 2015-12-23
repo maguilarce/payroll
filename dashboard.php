@@ -17,7 +17,7 @@ FROM employee
 WHERE hired = 'y';");
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
-      
+$type = $_GET['ty'];      
 
 ?>
 
@@ -96,7 +96,8 @@ WHERE hired = 'y';");
             <!--
 			LEFT MENU
 		<!-->
-            <ul class="nav nav-stacked">
+       <?php if($type==1){ ?>
+                <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
                         <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
@@ -187,7 +188,56 @@ WHERE hired = 'y';");
             </ul>
             
         </div>
+       <?php } ?>
         <!-- /col-3 -->
+    <!------------------------Cuando es Manager-------------------------------->
+       <?php if($type==2 ){ ?>
+                <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
+                    
+                    <ul class="nav nav-stacked collapse in" id="menu1">
+                    
+                        <li class="active"> <div class="col-md-2">
+                            <form action="create_weekly_timesheet_superintendent1.php">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Weekly Timesheets</button>
+                            </div>
+                            </form>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <ul class="nav nav-stacked collapse in" id="menu1">
+                    <li class="active"> <div class="col-md-2">
+                    <form action="create_daily_timesheet_superintendent1.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Daily Timesheets
+                            </button>
+                        </div>
+                    </form></div></li>
+                    </ul>
+                </li>
+               
+                
+            </ul>
+
+            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
+
+            <hr>
+
+            <ul class="nav nav-stacked">
+                
+                
+                                
+            </ul>
+            
+        </div>
+       <?php } ?> 
+        
+        
+        
+        
         <div class="col-sm-9">
 
 

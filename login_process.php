@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+require_once('connection.php');
 
 if(!isset( $_POST['user'], $_POST['password']))
 {
@@ -15,23 +15,25 @@ else
     $user = filter_var($_POST['user'], FILTER_SANITIZE_STRING);
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     
-    $dbh = new PDO("mysql:host=localhost;dbname=payroll", "root", "");
-    
-    /*** prepare query ***/
-    $stmt = $dbh->prepare("SELECT * FROM user 
-                    WHERE login = :user AND password = :password");
-    
-    /*** bind the parameters ***/
+    /*
+    $dbh = new PDO("mysql:host=localhost;dbname=payroll", "root", "");  
+    // prepare query //
+    $stmt = $dbh->prepare("SELECT * FROM user WHERE login = :user AND password = :password");
+    // bind the parameters //
     $stmt->bindParam(':user', $user, PDO::PARAM_STR);
     $stmt->bindParam(':password', $password, PDO::PARAM_STR, 40);
-    
-    /*** execute the prepared statement ***/
+    // execute the prepared statement ///
     $stmt->execute();
-
-    /*** check for a result ***/
+    // check for a result //
     $user_id = $stmt->fetchColumn();
-    
-    /*** if we have no result then fail boat ***/
+     */
+     
+    $sql = "SELECT * FROM user WHERE login = '$user' AND password ='$password'";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res);
+    $user_id = $row[0];
+    $user_type = $row[3];
+    //if we have no result then fail boat //
         if($user_id == false)
         {
                 echo 'Login Failed<br/>';
@@ -41,17 +43,13 @@ else
         else
         {
                 /*** set the session user_id variable ***/
-                $_SESSION['user_id'] = $user;
-                
-               if($user=='rachel')
-               header("Location: dashboard.php");
-               
-               else if($user=='manager')
-               header("Location: dashboard2.php");
-               
-               else if($user=='foreman')
-               header("Location: dashboard3.php");
-               
+               $_SESSION['user_id'] = $user;
+               if($user_type =='admin')
+               header("Location: dashboard.php?ty=1");
+               else if($user_type =='manager')
+               header("Location: dashboard.php?ty=2");
+               else if($user_type =='foreman')
+               header("Location: dashboard.php?ty=3");
                else 
                 echo "Login Failed<br/><a href='login.php'>Back to login screen</a>";
         }
