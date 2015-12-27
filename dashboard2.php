@@ -194,33 +194,33 @@ WHERE hired = 'y';");
                     </form>
 
                     </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <form action="create_weekly_timesheet_superintendent1.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
                                 Weekly Timesheets
                             </button>
                         </div>
-                    </form> <br /><br />
+                    </form> <br>
                     <form action="create_daily_timesheet_superintendent1.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
-                                Daily Timesheets as Office Manager
+                                Office Manager <br> Daily Timesheets
                             </button>
                         </div>
-                    </form> <br /><br />
+                    </form> <br>
                      <form action="create_daily_timesheet_foreman.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
-                                Daily Timesheet As Foreman
+                                Foreman <br> Daily Timesheets
                             </button>
                         </div>
                     </form>
-                    <br /><br />
+                    <br>
                     <form action="project_table.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
-                                View/Edit Current Projects
+                                View/Edit <br> Current Projects
                             </button>
                         </div>
                     </form>
