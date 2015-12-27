@@ -89,7 +89,7 @@ $type = $_GET['ty'];
         <div class="col-sm-2">
             <!-- Left column -->
             <img src="let-logo.png" /><br/>
-            <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
+            <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>Workers</strong></a>
 
             <hr>
 
@@ -241,21 +241,58 @@ $type = $_GET['ty'];
     <?php } ?> 
             
     
-    <!------------------------------------------------------------------------->
-        
-        <div class="col-sm-9">
+<!-------------------------Cuando es Superintendent---------------------------->
+ <?php if($type==4 ){ ?>
+                <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu1">                
+                        <li class="active"> <div class="col-md-2">
+                            </form>
+                            <form action="create_weekly_timesheet_superintendent1.php">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Weekly Timesheets</button>
+                            </div>
+                            </form>
+                            </div>
+                        </li>
+                        <hr>
+                        <li class="active"> <div class="col-md-2">
+                        <form action="create_daily_timesheet_superintendent1.php">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Office Manager Daily Timesheets</button>
+                            </div>
+                        </form></div>
+                        </li>
+                        <hr>
+                        <li class="active"> <div class="col-md-2">
+                            <form action="create_daily_timesheet_foreman.php">
+                            <div class="controls">
+                            <button type="submit" class="btn btn-primary">Foreman Daily Timesheets</button>
+                             </div>
+                        </li>
+
+                    
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    <?php } ?> 
+            
+           
+    
+<!----------------------------------------------------------------------------->
+
+    <div class="col-sm-9">
 
 
             <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
             <hr>
 
-                        <!--
-			CENTER MENU
-		<!-->
+        <!-----------------CENTER MENU -------------------------------------->
             
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-10">
+                <div class="col-md-20">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                     
@@ -387,6 +424,7 @@ $type = $_GET['ty'];
                     </form>
 
                     </div>
+ <?php if($type==1){?>
                 <div class="col-md-2">
                     <form action="create_weekly_timesheet_superintendent1.php">
                         <div class="controls">
@@ -419,7 +457,7 @@ $type = $_GET['ty'];
                     </form>
                     
                 </div>
-              
+ <?php } ?>             
                 </div>
                 <!--/col-->
                 
