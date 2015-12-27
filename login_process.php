@@ -46,10 +46,12 @@ else
                $_SESSION['user_id'] = $user;
                if($user_type =='admin')
                header("Location: dashboard.php?ty=1");
-               else if($user_type =='manager')
+               else if($user_type == 'manager')
                header("Location: dashboard.php?ty=2");
-               else if($user_type =='foreman')
+               else if($user_type == 'foreman')
                header("Location: dashboard.php?ty=3");
+               else if($user_type == 'superintendent')
+               header("Location: dashboard.php?ty=4");
                else 
                 echo "Login Failed<br/><a href='login.php'>Back to login screen</a>";
         }

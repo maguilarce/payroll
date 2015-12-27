@@ -192,11 +192,32 @@ $type = $_GET['ty'];
         <!-- /col-3 -->
     <!------------------------Cuando es Manager-------------------------------->
        <?php if($type==2 ){ ?>
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu1">
+                    <li class="active"> <div class="col-md-2">
+                        <form action="create_daily_timesheet_superintendent1.php">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Daily Timesheets</button>
+                            </div>
+                        </form></div>
+                    </li>
+                    </ul>
+                </li>
+               
+                
+            </ul>
+           
+           
+            
+        </div>
+       <?php } ?> 
+        
+    <!----------------------------Cuando Es Foreman --------------------------->    
+    <?php if($type==3 ){ ?>
                 <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
-                    
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                    
+                    <ul class="nav nav-stacked collapse in" id="menu1">                
                         <li class="active"> <div class="col-md-2">
                             <form action="create_weekly_timesheet_superintendent1.php">
                             <div class="controls">
@@ -205,38 +226,22 @@ $type = $_GET['ty'];
                             </form>
                             </div>
                         </li>
-                    </ul>
-                    
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                    <li class="active"> <div class="col-md-2">
-                    <form action="create_daily_timesheet_superintendent1.php">
-                        <div class="controls">
-                            <button type="submit" class="btn btn-primary">
-                                Daily Timesheets
-                            </button>
-                        </div>
-                    </form></div></li>
+                        <hr>
+                        <li class="active"> <div class="col-md-2">
+                        <form action="create_daily_timesheet_superintendent1.php">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">Daily Timesheets</button>
+                            </div>
+                        </form></div>
+                    </li>
                     </ul>
                 </li>
-               
-                
             </ul>
-
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
-
-            <hr>
-
-            <ul class="nav nav-stacked">
-                
-                
-                                
-            </ul>
-            
         </div>
-       <?php } ?> 
-        
-        
-        
+    <?php } ?> 
+            
+    
+    <!------------------------------------------------------------------------->
         
         <div class="col-sm-9">
 
