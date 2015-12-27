@@ -55,8 +55,31 @@ $type = $_GET['ty'];
                 </script>
 
 	</head>
-	<body>
+<frameset  rows="8%,88%,4%,*" frameborder="yes" border="1" framespacing="0">
+  <frame src="top.php" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame"/>
+<frameset  cols="200,*" framebborder="yes" border="1" framespacing="0">
+  <?php if($type == 1){?>
+  <frame src="menu_izq_1.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
+  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <?php }?>
+  <?php if($type == 2){?>
+  <frame src="menu_izq_2.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
+  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <?php }?>
+  <?php if($type == 3){?>
+  <frame src="menu_izq_3.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
+  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <?php }?>
+  <?php if($type == 4){?>
+  <frame src="menu_izq_3.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
+  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <?php }?>
+</frameset>  
+  <frame src="down.php" name="lowFrame" scrolling="No" noresize="noresize" id="lowFrame" />
+</frameset>
+        <body>
 <!-- header -->
+        
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -93,6 +116,8 @@ $type = $_GET['ty'];
 
             <hr>
 
+            
+            
             <!--
 			LEFT MENU
 		<!-->

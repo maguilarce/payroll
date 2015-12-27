@@ -54,147 +54,12 @@ WHERE hired = 'y';");
 
 	</head>
 	<body>
-<!-- header -->
-<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Payroll & Timesheet Application</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
-                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                        <li><a href="#">My Profile</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- /container -->
-</div>
-<!-- /Header -->
-
-<!-- Main -->
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            <!-- Left column -->
-            <img src="let-logo.png" /><br/>
-            <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i> Workers</strong></a>
-
-            <hr>
-
-            <!--
-			LEFT MENU
-		<!-->
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
-                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
-                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
-
-                    </ul>
-                </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-
-                    <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
-                        </li>
-
-                    </ul>
-                </li>
-                
-            </ul>
-
-            <hr>
-
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Rates</strong></a>
-
-            <hr>
-
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
-
-
-                    </ul>
-                </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-
-                    <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lump Sum Payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu7">
-                         <li><a href="add_lump_payment_table.php">Add/Modify/Delete Daily lump sum payment</a>
-                        </li>
-                        <li><a href="add_weekly_lump_payment_table.php">Add/Modify/Delete Weekly lump sum payment</a>
-                        </li>
-
-                    </ul>
-                </li>
-                                
-            </ul>
-
-           <hr>
-
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
-
-            <hr>
-
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
-
-                    </ul>
-                </li>
-                
-                                
-            </ul>
-            
-        </div>
-        <!-- /col-3 -->
-        <div class="col-sm-9">
-
-
+    <div class="row col-md-12">
+        <hr>
             <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
             <hr>
-
-                        <!--
-			CENTER MENU
-		<!-->
-            
+            <!-- CENTER MENU -->
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-10">
@@ -330,14 +195,36 @@ WHERE hired = 'y';");
 
                     </div>
                 <div class="col-md-2">
+                    <form action="create_weekly_timesheet_superintendent1.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Weekly Timesheets
+                            </button>
+                        </div>
+                    </form> <br /><br />
                     <form action="create_daily_timesheet_superintendent1.php">
                         <div class="controls">
                             <button type="submit" class="btn btn-primary">
-                                Manage Daily Timesheets
+                                Daily Timesheets as Office Manager
+                            </button>
+                        </div>
+                    </form> <br /><br />
+                     <form action="create_daily_timesheet_foreman.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                Daily Timesheet As Foreman
                             </button>
                         </div>
                     </form>
                     <br /><br />
+                    <form action="project_table.php">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">
+                                View/Edit Current Projects
+                            </button>
+                        </div>
+                    </form>
+      <br /><br />
                     
                 </div>
               
@@ -350,7 +237,7 @@ WHERE hired = 'y';");
                
                 <!--/col-span-6-->
 
-            </div>
+         
             <!--/row-->
 
             <hr>
@@ -361,9 +248,6 @@ WHERE hired = 'y';");
     </div>
 </div>
 <!-- /Main -->
-
-<footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
-
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
