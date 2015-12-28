@@ -2,6 +2,7 @@
 session_start();
 
 require_once('connection.php');
+$type = $_GET['ty'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,20 +42,20 @@ require_once('connection.php');
             <a class="navbar-brand" href="#">Payroll & Timesheet Application</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
-                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                        <li><a href="#">My Profile</a></li>
-                    </ul>
-                </li>
+            <ul class="nav navbar-nav navbar-right">    
+              <?php if($type == 1){ ?>
+                <li><a href="dashboard2.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i>My Dashboard</a></li>
+              <?php } ?>
+              <?php if($type == 2){ ?>
+                <li><a href="dashboard3.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i>My DashBoard</a></li>
+              <?php  } ?>
+                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> </a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
             </ul>
         </div>
     </div>
-      
-            
-            
-            
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>                    
             
         </body>

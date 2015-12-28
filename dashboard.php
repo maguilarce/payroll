@@ -56,7 +56,11 @@ $type = $_GET['ty'];
 
 	</head>
 <frameset  rows="8%,88%,4%,*" frameborder="yes" border="1" framespacing="0">
-  <frame src="top.php" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame"/>
+  <?php if($type == 1){?>
+   <frame src="top.php?ty=1" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame"/>
+  <?php } if($type >= 2){?>
+   <frame src="top.php?ty=2" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame"/>
+  <?php }?> 
 <frameset  cols="200,*" framebborder="yes" border="1" framespacing="0">
   <?php if($type == 1){?>
   <frame src="menu_izq_1.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
@@ -64,158 +68,22 @@ $type = $_GET['ty'];
   <?php }?>
   <?php if($type == 2){?>
   <frame src="menu_izq_2.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
-  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <frame src="dashboard3.php" name="mainFrame" id="mainFrame" title="mainFrame" />
   <?php }?>
   <?php if($type == 3){?>
   <frame src="menu_izq_3.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
-  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <frame src="dashboard3.php" name="mainFrame" id="mainFrame" title="mainFrame" />
   <?php }?>
   <?php if($type == 4){?>
-  <frame src="menu_izq_3.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
-  <frame src="dashboard2.php" name="mainFrame" id="mainFrame" title="mainFrame" />
+  <frame src="menu_izq_4.php" name="leftFrame" scrolling="Yes" noresize="noresize" id="leftFrame"  title="leftFrame"/>
+  <frame src="dashboard3.php" name="mainFrame" id="mainFrame" title="mainFrame" />
   <?php }?>
 </frameset>  
   <frame src="down.php" name="lowFrame" scrolling="No" noresize="noresize" id="lowFrame" />
 </frameset>
         <body>
-<!-- header -->
-        
-<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Payroll & Timesheet Application</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> <span class="caret"></span></a>
-                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                        <li><a href="#">My Profile</a></li>
-                    </ul>
-                </li>
-                <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- /container -->
-</div>
-<!-- /Header -->
-
-<!-- Main -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            <!-- Left column -->
-            <img src="let-logo.png" /><br/>
-            <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>Workers</strong></a>
-
-            <hr>
-
-            
-            
-            <!--
-			LEFT MENU
-		<!-->
-       <?php if($type==1){ ?>
-                <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
-                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
-                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
-
-                    </ul>
-                </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-
-                    <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
-                        </li>
-
-                    </ul>
-                </li>
-                
-            </ul>
-
-            <hr>
-
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Rates</strong></a>
-
-            <hr>
-
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
-
-
-                    </ul>
-                </li>
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-
-                    <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                 <li class="nav-header">
-                    <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lump Sum Payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <ul class="nav nav-stacked collapse" id="menu7">
-                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete Daily lump sum payment</a>
-                        </li>
-                        <li><a href="add_weekly_lump_payment_table.php">Add/Modify/Delete Weekly lump sum payment</a>
-                        </li>
-                    </ul>
-                </li>
-
-                                
-            </ul>
-
-           <hr>
-
-            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
-
-            <hr>
-
-            <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
-
-
-                    </ul>
-                </li>
-                
-                                
-            </ul>
-            
-        </div>
-       <?php } ?>
-        <!-- /col-3 -->
-    <!------------------------Cuando es Manager-------------------------------->
+       
+<!------------------------Cuando es Manager-------------------------------->
        <?php if($type==2 ){ ?>
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>

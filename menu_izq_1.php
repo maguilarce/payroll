@@ -29,89 +29,75 @@
             <!-- Left column -->
             <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>Workers</strong></a>
-            <hr>
+            <br>
             <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee info</strong> <i class="glyphicon glyphicon-user"></i></a>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee Info</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="add_employee_form.php">Add new employee</a></li>
-                        <li class="active"> <a href="edit_employee_table.php">Edit/modify employee</a></li>
-                        <li class="active"> <a href="delete_employee_table.php">Delete employee</a></li>
-
+                        <li class="active"> <a href="add_employee_form.php" target="mainFrame">Add new employee</a></li>
+                        <li class="active"> <a href="edit_employee_table.php" target="mainFrame">Edit/modify employee</a></li>
+                        <li class="active"> <a href="delete_employee_table.php" target="mainFrame">Delete employee</a></li>
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
-
                     <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="add_job_function_table.php">Add/Modify/Delete job function</a>
+                        <li><a href="add_job_function_table.php" target="mainFrame">Add/Modify/Delete job function</a>
                         </li>
-
-
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="add_status_table.php">Add/Modify/Delete status</a>
+                       <li><a href="add_status_table.php" target="mainFrame">Add/Modify/Delete status</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu4">
-                       <li><a href="add_union_trade_table.php">Add/Modify/Delete union trade</a>
+                        <li><a href="add_union_trade_table.php" target="mainFrame">Add/Modify/Delete union trade</a>
                         </li>
 
                     </ul>
                 </li>
                 
             </ul>
-
-            <hr>
-
+            <br>
             <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Rates</strong></a>
-
-            <hr>
-
+            <br>
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_pay_rate_table.php">Add/Modify/Delete pay rate</a></li>
-
-
+                        <li class="active"> <a href="add_pay_rate_table.php" target="mainFrame">Add/Modify/Delete pay rate</a></li>
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
 
                     <ul class="nav nav-stacked collapse" id="menu6">
-                        <li><a href="add_premium_rate_table.php">Add/Modify/Delete premiun rate</a>
+                        <li><a href="add_premium_rate_table.php" target="mainFrame">Add/Modify/Delete premiun rate</a>
                         </li>
-
-
                     </ul>
                 </li>
                  <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu7"><strong>Lump Sum Payments</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu7">
-                        <li><a href="add_lump_payment_table.php">Add/Modify/Delete Daily lump sum payment</a>
+                        <li><a href="add_lump_payment_table.php" target="mainFrame">Add/Modify/Delete Daily lump sum payment</a>
                         </li>
-                        <li><a href="add_weekly_lump_payment_table.php">Add/Modify/Delete Weekly lump sum payment</a>
+                        <li><a href="add_weekly_lump_payment_table.php" target="mainFrame">Add/Modify/Delete Weekly lump sum payment</a>
                         </li>
                     </ul>
                 </li>
-
-                                
             </ul>
 
-           <hr>
+           <br>
 
             <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Projects</strong></a>
 
-            <hr>
+            <br>
 
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="create_project_profile1.php">Project Profiles</a></li>
+                        <li class="active"> <a href="create_project_profile1.php" target="mainFrame">Project Profiles</a></li>
 
 
                     </ul>
@@ -119,6 +105,22 @@
                 
                                 
             </ul>
+            <br>
+            <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Users</strong></a>
+            <br>
+            <ul class="nav nav-stacked">
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Users Options</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+                    <ul class="nav nav-stacked collapse in" id="menu6">
+                        <li class="active"> <a href="create_user.php" target="mainFrame">Create User</a></li>
+                        <li class="active"> <a href="edit_user.php" target="mainFrame">Edit/Delete User</a></li>
+
+                    </ul>
+                </li>
+                
+                                
+            </ul>
+            
+
             
         </div>
     </div></div>

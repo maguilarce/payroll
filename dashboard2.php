@@ -56,9 +56,6 @@ WHERE hired = 'y';");
 	<body>
 <div class="container-fluid">
     <div class="row col-md-12">
-        <hr>
-            <a href="dashboard.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
-            <hr>
             <!-- CENTER MENU -->
             <div class="row">
                 <!-- center left-->
@@ -224,24 +221,11 @@ WHERE hired = 'y';");
                             </button>
                         </div>
                     </form>
-      <br /><br />
+      
                     
                 </div>
               
                 </div>
-                <!--/col-->
-                
-                            <!--
-			right MENU
-		<!-->
-               
-                <!--/col-span-6-->
-
-         
-            <!--/row-->
-
-            <hr>
-
            
         </div>
         <!--/col-span-9-->
