@@ -1,3 +1,10 @@
+<?php
+session_start();
+if($_SESSION['logged'])
+{    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -30,24 +37,24 @@
             <img src="let-logo.png" /><br/>
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>Workers</strong></a>
             <br>
-            <ul class="nav nav-stacked">
+            <ul class="nav nav-stacked">                
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                    <li class="active"> <div class="col-md-2">
-                            <form action="create_daily_timesheet_superintendent1.php" target="mainFrame">
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">Daily Timesheets</button>
-                            </div>
-                        </form></div>
-                    </li>
+                    <ul class="nav nav-stacked collapse in" id="menu1">      
+                            <li class="active"> <a href="create_daily_timesheet_superintendent1.php" target="mainFrame">Daily Timesheets</a></li>
                     </ul>
                 </li>
-            </ul> 
+            </ul>
         </div>
     </div></div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
-</body>               
+ 
+  <?php } 
+else{ 
+header("Location: index.php");  } ?>     
+    
+</body>
+</html>
             
         

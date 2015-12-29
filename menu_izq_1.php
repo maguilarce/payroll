@@ -1,3 +1,10 @@
+<?php
+session_start();
+if($_SESSION['logged'])
+{    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -127,4 +134,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
-</body>     
+    
+    <?php } 
+else{ 
+header("Location: index.php");  } ?> 
+</body> </html>     

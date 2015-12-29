@@ -44,6 +44,7 @@ else
         {
                 /*** set the session user_id variable ***/
                $_SESSION['user_id'] = $user;
+               $_SESSION['logged'] = 1;
                if($user_type =='admin')
                header("Location: dashboard.php?ty=1");
                else if($user_type == 'manager')

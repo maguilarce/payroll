@@ -1,8 +1,12 @@
 <?php
 session_start();
-
+if($_SESSION['logged'])
+{
 require_once('connection.php');
 $type = $_GET['ty'];
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,12 +54,16 @@ $type = $_GET['ty'];
                 <li><a href="dashboard3.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i>My DashBoard</a></li>
               <?php  } ?>
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> </a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
+                <li><a href="logout.php"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
             </ul>
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>                    
-            
+
+    <?php } 
+else{ 
+header("Location: index.php");  } ?> 
+    
         </body>

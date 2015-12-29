@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+if($_SESSION['logged'])
+{    
+
 require_once('connection.php');
 function dias_transcurridos($fecha_i,$fecha_f)
 {
@@ -304,5 +309,8 @@ WHERE hired = 'y';");
             
 </script>
 <!-- end filter and pagination -->
-	</body>
+<?php } 
+else{ 
+header("Location: index.php");  } ?> 
+</body>
 </html>
