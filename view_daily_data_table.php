@@ -75,15 +75,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
 	</head>
 	<body>
-<!-- header -->
-<!-- /Header -->
 
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9">
-            <a href="dashboard3.php"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>
-            <hr>
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-14">
