@@ -118,8 +118,8 @@ if($_SESSION['logged'])
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Users Options</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu6">
-                        <li class="active"> <a href="create_user.php" target="mainFrame">Create User</a></li>
-                        <li class="active"> <a href="edit_user.php" target="mainFrame">Edit/Delete User</a></li>
+                        <li class="active"> <a href="add_user_form.php" target="mainFrame">Create User</a></li>
+                        <li class="active"> <a href="edit_user_form.php" target="mainFrame">Edit/Delete User</a></li>
 
                     </ul>
                 </li>

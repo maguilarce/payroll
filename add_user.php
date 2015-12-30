@@ -2,21 +2,17 @@
 require_once('connection.php');
 session_start();
    
-    $name = $_POST['lname'].', '.$_POST['fname'];
-    $social_security_number = $_POST['social_security_number'];
-    $address = $_POST['address'];
-    $phone_number = $_POST['phone_number'];
+    $name = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $login = $_POST['login'];
+    $password = $_POST['password1'];
     $email = $_POST['email'];
-    $union_trade = $_POST['union_trade'];
-    $home_local = $_POST['home_local'];
-    $crew = $_POST['crew'];
-    $hiring_date = $_POST['hiring_date'];
+    $type = $_POST['usertype'];
     
-    $query = "INSERT INTO employee (name,social_security_number,address,phone_number,email,union_trade,home_local,hiring_date,crew,hired)
-              VALUES ('$name','$social_security_number','$address','$phone_number','$email','$union_trade','$home_local','$hiring_date','$crew','y')";
-
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
+    $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
+              VALUES ('$name','$lname','$email','$login','$password','$type')";
+    $retval = mysql_query( $query, $dbh);
+    if(!$retval )
     {
      die('Could not get data: ' . mysql_error());
     }
@@ -57,9 +53,9 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Employee added satisfactorily</h4>
+                                <h4>User added satisfactorily</h4>
                             </div>
-                            <form name="add_employee" action="add_employee_form.php" target="mainFrame">
+                            <form name="add_user" action="add_user_form.php" target="mainFrame">
                                <div class="controls">
                                         <button type="submit" class="btn btn-primary">
                                             Back
