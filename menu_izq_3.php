@@ -38,8 +38,7 @@ if($_SESSION['logged'])
             <br>
             <ul class="nav nav-stacked">                
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Options</strong> <i class="glyphicon glyphicon-user"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu1">                    
-                            <li class="active"> <a href="create_daily_timesheet_superintendent1.php" target="mainFrame">Office Manager<br>Daily Timesheets</a></li>
+                    <ul class="nav nav-stacked collapse in" id="menu1">
                             <li class="active"> <a href="create_daily_timesheet_foreman.php" target="mainFrame">Foreman <br> Daily Timesheets</a></li>
                     </ul>
                 </li>

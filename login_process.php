@@ -32,7 +32,7 @@ else
     $res = mysql_query($sql);
     $row = mysql_fetch_array($res);
     $user_id = $row[0];
-    $user_type = $row[3];
+    $user_type = $row[6];
     //if we have no result then fail boat //
         if($user_id == false)
         {
