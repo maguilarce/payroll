@@ -1,15 +1,21 @@
 <?php
 require_once('connection.php');
 session_start();
-
-/*
-    $employee_id = $_POST['id'];
-    $query = "DELETE FROM employee WHERE employee_id = '$employee_id' ";
+    $user_id = $_POST['user_id'];
+    $fname = $_POST['first_name'];
+    $lname = $_POST['last_name'];
+    $email = $_POST['email'];
+    $login = $_POST['login'];
+    $u_type = $_POST['u_type'];
+    $query = "UPDATE user SET f_name='$fname',l_name='$lname',email='$email',login='$login',
+              type='$u_type' WHERE iduser='$user_id'";
+    
     $retval = mysql_query( $query, $dbh );
-    if(! $retval )
+    if(!$retval )
     {
      die('Could not get data: ' . mysql_error());
-    }*/
+    }
+       
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +37,10 @@ session_start();
 
 	</head>
 	<body>
-    <!-- /container -->
-
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-11">
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
@@ -44,39 +48,30 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Employee dismissal</h4>
+                                <h4>User modified satisfactorily</h4>
                             </div>
-                            <form name="dismissal" action="employee_dismissed.php" method="post">
-                                <input name="employee_id" type="hidden" value="<?php echo $_POST['id'];?>">
-                                <label>Reason: </label>
-                              
-                                <div class="controls">
-                                        <select name="reason" class="form-control">
-                                                                                      
-                                             <option>Laid off</option>
-                                             <option>Voluntary quit</option>
-                                             <option>Discharged</option>
-                                             <option>Terminated</option>
-                                                    
-
-                                        </select>
+                            <form name="add_user" action="edit_user_table.php">
+                               <div class="controls">
+                                        <button type="submit" class="btn btn-primary">
+                                            Back
+                                        </button>
                                     </div>
-                                <br />
-                                <button type="submit" class="btn btn-primary">
-                                            Dismiss employee
-                                </button>                         
                             </form>
+                           
                         </div>
+                        
                         <!--/panel content-->
                     </div>
                     <!--/panel-->                
             </div>
             <!--/row-->
+           
         </div>
         <!--/col-span-9-->
     </div>
     </div></div>
 <!-- /Main -->
+
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
