@@ -40,28 +40,28 @@ if($_SESSION['logged'])
             <ul class="nav nav-stacked">
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee Info</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
                     <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="add_employee_form.php" target="mainFrame">Add new employee</a></li>
-                        <li class="active"> <a href="edit_employee_table.php" target="mainFrame">Edit/modify employee</a></li>
-                        <li class="active"> <a href="delete_employee_table.php" target="mainFrame">Delete employee</a></li>
+                        <li class="active"> <a href="add_employee_form.php" target="mainFrame">Add New Employee</a></li>
+                        <li class="active"> <a href="edit_employee_table.php" target="mainFrame">Modify/Delete Employee</a></li>
+                        <!--<li class="active"> <a href="delete_employee_table.php" target="mainFrame">Delete employee</a></li>-->
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu2"><strong>Job functions</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu2">
-                        <li><a href="add_job_function_table.php" target="mainFrame">Add/Modify/Delete job function</a>
+                        <li><a href="add_job_function_table.php" target="mainFrame">Add/Modify/Delete<br>Job Function</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu3"><strong>Status</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu3">
-                       <li><a href="add_status_table.php" target="mainFrame">Add/Modify/Delete status</a>
+                       <li><a href="add_status_table.php" target="mainFrame">Add/Modify/Delete<br>Status</a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-header">
                     <a href="#" data-toggle="collapse" data-target="#menu4"><strong>Union trade</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu4">
-                        <li><a href="add_union_trade_table.php" target="mainFrame">Add/Modify/Delete union trade</a>
+                        <li><a href="add_union_trade_table.php" target="mainFrame">Add/Modify/Delete<br>Union Trade</a>
                         </li>
 
                     </ul>

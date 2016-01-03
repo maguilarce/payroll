@@ -82,7 +82,8 @@ session_start();
 
                                         <form name="delete_employee" action="delete_employee_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['employee_id']} <br>"; ?>">
-                                            <input type="submit" name="delete" value="Delete employee">
+                                            <button type="submit" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <!--<input type="submit" name="delete" value="Delete employee">-->
                                         </form>
                                     </td> 
                                 

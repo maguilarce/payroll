@@ -1,21 +1,21 @@
 <?php
 require_once('connection.php');
 session_start();
+    $user_id = $_POST['user_id'];
+    $pass1 = $_POST['password_1'];
+    $pass2 = $_POST['password_2'];
+    $iduser=$_SESSION['user_id'];
    
-    $name = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $login = $_POST['login'];
-    $password = 123456;
-    $email = $_POST['email'];
-    $type = $_POST['usertype'];
-    
-    $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
-              VALUES ('$name','$lname','$email','$login','$password','$type')";
-    $retval = mysql_query( $query, $dbh);
-    if(!$retval )
-    {
-     die('Could not get data: ' . mysql_error());
+    if($pass1 == $pass2)
+    {    
+      $query = "UPDATE user SET password='$pass1' WHERE iduser='$user_id'";
+      $retval = mysql_query( $query, $dbh );
+        if(!$retval )
+        {die('Could not get data: ' . mysql_error());}
     }
+     
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -37,15 +37,10 @@ session_start();
 
 	</head>
 	<body>
-<!-- header -->
-
-<!-- /Header -->
-
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12">
-
+        <div class="col-sm-11">
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
@@ -53,14 +48,11 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>User added satisfactorily</h4>
+                                <?php if($pass1==$pass2){ ?><h4>Password Updated satisfactorily</h4><?php } ?>
+                                <?php if($pass1!=$pass2){ ?><h4>Passwords must be the same!</h4><?php } ?>
+                                
                             </div>
-                            <form name="add_user" action="add_user_form.php" target="mainFrame">
-                               <div class="controls">
-                                        <button type="submit" class="btn btn-primary">
-                                            Back
-                                        </button>
-                               </div>
+                            <a href="edit_pass_user_form.php?iduser=<?php echo $iduser;?>" target="mainFrame" class="btn btn-primary glyphicon glyphicon-backward"> Back </a>
                             </form>
                            
                         </div>
@@ -68,23 +60,14 @@ session_start();
                         <!--/panel content-->
                     </div>
                     <!--/panel-->                
-                         
-                <!--/col-span-6-->
-
             </div>
             <!--/row-->
-
-            <hr>
-
            
         </div>
         <!--/col-span-9-->
-        </div></div>
     </div>
-       
+    </div></div>
 <!-- /Main -->
-
-
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">

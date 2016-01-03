@@ -37,7 +37,7 @@ else
         if($user_id == false)
         {
                 echo 'Login Failed<br/>';
-                echo "<a href='login.php'>Back to login screen</a>";
+                echo "<a href='index.php'>Back to login screen</a>";
         }
         /*** if we do have a result, all is well ***/
         else
@@ -54,6 +54,6 @@ else
                else if($user_type == 'superintendent')
                header("Location: dashboard.php?ty=4");
                else 
-                echo "Login Failed<br/><a href='login.php'>Back to login screen</a>";
+                echo "Login Failed<br/><a href='index.php'>Back to login screen</a>";
         }
 }

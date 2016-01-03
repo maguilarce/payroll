@@ -1,21 +1,16 @@
 <?php
 require_once('connection.php');
 session_start();
-   
-    $name = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $login = $_POST['login'];
-    $password = 123456;
-    $email = $_POST['email'];
-    $type = $_POST['usertype'];
+    $user_id = $_POST['user_id'];
     
-    $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
-              VALUES ('$name','$lname','$email','$login','$password','$type')";
-    $retval = mysql_query( $query, $dbh);
+    $query = "UPDATE user SET password=123456 WHERE iduser='$user_id'";
+    
+    $retval = mysql_query( $query, $dbh );
     if(!$retval )
     {
      die('Could not get data: ' . mysql_error());
     }
+       
 ?>
 
 <!DOCTYPE html>
@@ -37,15 +32,10 @@ session_start();
 
 	</head>
 	<body>
-<!-- header -->
-
-<!-- /Header -->
-
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12">
-
+        <div class="col-sm-11">
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-6">
@@ -53,38 +43,27 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>User added satisfactorily</h4>
+                                <h4>Password Reset Succesfully</h4>
                             </div>
-                            <form name="add_user" action="add_user_form.php" target="mainFrame">
+                            <form name="edit_user" action="edit_user_table.php">
                                <div class="controls">
                                         <button type="submit" class="btn btn-primary">
                                             Back
                                         </button>
-                               </div>
+                                    </div>
                             </form>
-                           
                         </div>
-                        
                         <!--/panel content-->
                     </div>
                     <!--/panel-->                
-                         
-                <!--/col-span-6-->
-
             </div>
             <!--/row-->
-
-            <hr>
-
            
         </div>
         <!--/col-span-9-->
-        </div></div>
     </div>
-       
+    </div></div>
 <!-- /Main -->
-
-
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">

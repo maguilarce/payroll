@@ -4,6 +4,7 @@ if($_SESSION['logged'])
 {
 require_once('connection.php');
 $type = $_GET['ty'];
+$iduser=$_SESSION['user_id'];
 
 
 
@@ -48,12 +49,12 @@ $type = $_GET['ty'];
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">    
               <?php if($type == 1){ ?>
-                <li><a href="dashboard2.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i>My Dashboard</a></li>
+                <li><a href="dashboard2.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</a></li>
               <?php } ?>
               <?php if($type == 2){ ?>
-                <li><a href="dashboard3.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i>My DashBoard</a></li>
+                <li><a href="dashboard3.php" target="mainFrame"><i class="glyphicon glyphicon-dashboard"></i> My DashBoard</a></li>
               <?php  } ?>
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $_SESSION['user_id']; ?> </a></li>
+                <li><a href="edit_pass_user_form.php?iduser=<?php echo $iduser;?>" target="mainFrame"><i class="glyphicon glyphicon-user"></i> <?php echo $iduser ?> </a></li>
                 <li><a href="logout.php"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
             </ul>
         </div>

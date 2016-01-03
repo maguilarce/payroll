@@ -5,7 +5,7 @@ session_start();
     $query = "SELECT * FROM user WHERE iduser = '$user_id' ";
     $result = mysql_query($query);
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
-    
+    echo $user_id;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,9 +104,10 @@ session_start();
                                     </div>
                                 </div>
                             </form>
-                            <form action="change_pass_user.php" method="post" class="form form-vertical">
+                            <hr>
+                            <form action="reset_pass_user.php" method="post" class="form form-vertical">
                                 <div class="controls">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>    
+                                    <button type="submit" class="btn btn-primary" >Reset Password</button>    
                                         <input type="hidden" name="user_id" value="<?php echo "{$row['iduser']} <br>"; ?>">
                                 </div>
                             </form>    

@@ -74,13 +74,15 @@ session_start();
                                     <td>
                                         <form id="modify" action="edit_job_function_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['job_function_id']}"; ?>">
-                                            <input name="modify_job_function" type="submit" value="Modify">
+                                            <button type="submit" class="btn btn-primary" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+                                            <!--<input name="modify_job_function" type="submit" value="Modify">-->
                                         </form>
                                     </td>
                                     <td>
                                         <form class="delete" action="delete_job_function_form.php" method="post">
                                             <input type="hidden" name="id" value="<?php echo "{$row['job_function_id']}"; ?>">
-                                            <input  type="submit" value="Delete">
+                                            <button type="submit" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <!--<input  type="submit" value="Delete">-->
                                         </form>
                                     </td>
                                     

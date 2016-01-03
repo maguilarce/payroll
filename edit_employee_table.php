@@ -47,7 +47,7 @@ session_start();
                                     <th>Home Local # </th>
                                     <th>Crew </th>
                                     <th>Hiring date </th>
-                                    <th>Action</th>
+                                    <th colspan="2">Actions</th>
                                     
                                 </tr>
                             </thead>
@@ -76,11 +76,21 @@ session_start();
                                     <td><?php echo "{$row['hiring_date']} <br>"; ?></td> 
                                     <td>
 
-                                        <form action="edit_employee_form.php" method="post">
+                                        <form name="edit_employee" action="edit_employee_form.php" method="post">
                                         <input type="hidden" name="id" value="<?php echo "{$row['employee_id']} <br>"; ?>">
-                                        <input type="submit" name="modify" value="Modify">
+                                        <button type="submit" class="btn btn-primary" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <!--<input type="submit" name="modify" value="Modify">-->
                                         </form>
                                     </td> 
+                                    <td>
+                                        <form name="delete_employee" action="delete_employee_form.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo "{$row['employee_id']} <br>"; ?>">
+                                            <button type="submit" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                            <!--<input type="submit" name="delete" value="Delete employee">-->
+                                        </form>
+                                        
+                                        
+                                    </td>
                                 
                                 </tr>
                                    <?php

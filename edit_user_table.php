@@ -43,7 +43,8 @@ session_start();
                                     <th>Login</th>
                                     <th>Email</th>
                                     <th>Type</th>
-                                    <th>Action</th>
+                                    <th colspan="2">Actions</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,13 +68,17 @@ session_start();
                                     <td>
                                         <form action="edit_user_form.php" method="post">
                                         <input type="hidden" name="iduser" value="<?php echo "{$row['iduser']} <br>"; ?>">
-                                        <input type="submit" name="modify" value="Modify">
+                                        <button type="submit" class="btn btn-primary" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+                                        <!--<input type="submit" name="modify" value="Modify">-->
                                         </form>
+                                        </td><td>
                                         <form action="delete_user_form.php" method="post">
                                         <input type="hidden" name="iduser" value="<?php echo "{$row['iduser']} <br>"; ?>">
-                                        <input type="submit" name="delete" value="Delete">
-                                        </form>
-                                    </td>                      
+                                        <button type="submit" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                        <!--<input type="submit" name="delete" value="Delete">-->
+                                        </form> 
+                                    </td>
+                                                         
                                 </tr>
                                    <?php
                                             }
