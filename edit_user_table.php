@@ -26,15 +26,15 @@ session_start();
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
-            <div class="row">
                 <!-- center left-->
                 <div class="col-md-10">
-                    <div class="panel-title">
-                        <i class="glyphicon glyphicon-wrench pull-right"></i>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>Modify User</h4>
-                    </div>
-          
+                            </div>
+                        </div>
                     <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -86,15 +86,11 @@ session_start();
                             </tbody>
                         </table>
                     </div>
-              
+                </div>
                 </div>
                 <!--/col-->
             </div>
            
-        </div>
-        <!--/col-span-9-->
-    </div>
-
 <!-- /Main -->
 
 <div class="modal" id="addWidgetModal">

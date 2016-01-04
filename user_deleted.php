@@ -1,22 +1,14 @@
 <?php
 require_once('connection.php');
 session_start();
+$user_id = $_POST['user_id'];
 
-/*
-    $employee_id = $_POST['id'];
-    $query = "DELETE FROM employee WHERE employee_id = '$employee_id' ";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-    }*/
-$query = "SELECT * FROM status";
-    $retval = mysql_query( $query, $dbh );
+$query = "DELETE FROM user WHERE iduser='$user_id'";
+$retval = mysql_query($query);
     if(! $retval )
     {
      die('Could not get data: ' . mysql_error());
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +30,6 @@ $query = "SELECT * FROM status";
 
 	</head>
 	<body>
-    <!-- /container -->
 
 <!-- Main -->
 <div class="container-fluid">
@@ -51,30 +42,20 @@ $query = "SELECT * FROM status";
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Employee dismissal</h4>
+                                <h4>User Deleted successfully</h4>
                             </div>
-                            <form name="dismissal" action="employee_dismissed.php" method="post">
-                                <input name="employee_id" type="hidden" value="<?php echo $_POST['id'];?>">
-                                <label>Reason: </label>
-                              
-                                <div class="controls">
-                                        <select name="reason" class="form-control">
-                                                                                      
-                                            <?php
-                                            while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
-                                            { echo "<option>{$row['status_type']}</option>"; }  
-                                            ?>
-                                        </select>
-                                    </div>
-                                <br />
-                                <button type="submit" class="btn btn-primary">
-                                            Dismiss employee
-                                </button>                         
+                            <form name="edit_form" action="edit_user_table.php">
+                                <button type="submit" class="btn btn-primary" title="Deleted"><i class="glyphicon glyphicon-backward"></i> Back to Table</button>
+                                <!--<input type="submit" value="Back">-->
                             </form>
+                           
                         </div>
+                        
                         <!--/panel content-->
                     </div>
                     <!--/panel-->                
+                <!--/col-span-6-->
+
             </div>
             <!--/row-->
         </div>
@@ -82,6 +63,7 @@ $query = "SELECT * FROM status";
     </div>
     </div></div>
 <!-- /Main -->
+
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">

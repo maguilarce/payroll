@@ -47,7 +47,8 @@ $retval = mysql_query($query);
                                 <h4>Employee dismissed successfully</h4>
                             </div>
                             <form name="delete_form" action="delete_employee_table.php">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary" title="Back to table"><i class="glyphicon glyphicon-backward"></i> Back</button>
+                                <!--<input type="submit" value="Back">-->
                             </form>
                            
                         </div>

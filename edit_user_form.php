@@ -2,10 +2,10 @@
 require_once('connection.php');
 session_start();
     $user_id = $_POST['iduser'];
-    $query = "SELECT * FROM user WHERE iduser = '$user_id' ";
+    $query = "SELECT * FROM user WHERE iduser = '$user_id'";
     $result = mysql_query($query);
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
-    echo $user_id;
+    ;
 ?>
 <!DOCTYPE html>
 <html lang="en">

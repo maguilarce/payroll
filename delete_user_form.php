@@ -1,22 +1,11 @@
 <?php
 require_once('connection.php');
 session_start();
+$user_id = $_POST['iduser'];
+$query = "SELECT login FROM user WHERE iduser = '$user_id' ";
+    $result = mysql_query($query);
+    $row = mysql_fetch_array($result, MYSQL_ASSOC);
 
-/*
-    $employee_id = $_POST['id'];
-    $query = "DELETE FROM employee WHERE employee_id = '$employee_id' ";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-    }*/
-$query = "SELECT * FROM status";
-    $retval = mysql_query( $query, $dbh );
-    if(! $retval )
-    {
-     die('Could not get data: ' . mysql_error());
-    }
-    
 ?>
 
 <!DOCTYPE html>
@@ -51,26 +40,33 @@ $query = "SELECT * FROM status";
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Employee dismissal</h4>
+                                <h4>User Delete Confirmation</h4>
                             </div>
-                            <form name="dismissal" action="employee_dismissed.php" method="post">
-                                <input name="employee_id" type="hidden" value="<?php echo $_POST['id'];?>">
-                                <label>Reason: </label>
+                            <hr>
+                              <label>Are you Sure you want to delete this User?  </label>
+                                                               
+                            <div> 
+                                
+                                        
+                                        <h4><?php echo $row['login']; ?></h4><br>
+                                        <table size="100">  
+                                            <tr>
+                                                <td align="left">
+                                                <form name="delete_user" action="user_deleted.php" method="post">
+                                                    <input name="user_id" type="hidden" value="<?php echo $user_id;?>">
+                                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-trash"> Yes</button>
+                                                    <label>    </label>
+                                                </form> 
+                                                </td>
+                                                <td align="right">      
+                                                <form name="cancel_delete" action="edit_user_table.php" method="post">
+                                                    <button type="submit" class="btn btn-primary glyphicon glyphicon-zoom-out"> No</button>                           
+                                                </form>
+                                                </td>    
+                                            </tr>
+                                </table>
+                            </div>
                               
-                                <div class="controls">
-                                        <select name="reason" class="form-control">
-                                                                                      
-                                            <?php
-                                            while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
-                                            { echo "<option>{$row['status_type']}</option>"; }  
-                                            ?>
-                                        </select>
-                                    </div>
-                                <br />
-                                <button type="submit" class="btn btn-primary">
-                                            Dismiss employee
-                                </button>                         
-                            </form>
                         </div>
                         <!--/panel content-->
                     </div>

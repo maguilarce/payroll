@@ -9,12 +9,15 @@ session_start();
     $email = $_POST['email'];
     $type = $_POST['usertype'];
     
-    $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
-              VALUES ('$name','$lname','$email','$login','$password','$type')";
-    $retval = mysql_query( $query, $dbh);
-    if(!$retval )
+    $query_p="SELECT * FROM user where login='$login'" ;
+    $res=mysql_query($query_p);
+    if(!$res)
     {
-     die('Could not get data: ' . mysql_error());
+        $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
+              VALUES ('$name','$lname','$email','$login','$password','$type')";
+        $retval = mysql_query( $query, $dbh);
+        if(!$retval )
+            { die('Could not get data: ' . mysql_error());}
     }
 ?>
 
@@ -53,7 +56,10 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>User added satisfactorily</h4>
+                                <?php if(!$res){ ?>
+                                <h4>User added satisfactorily</h4> <?php } ?>
+                                <?php if($res){ ?>
+                                <h4>User already exist, try a diferent login</h4> <?php } ?>
                             </div>
                             <form name="add_user" action="add_user_form.php" target="mainFrame">
                                <div class="controls">
