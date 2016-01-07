@@ -62,10 +62,10 @@ require_once('connection.php');
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-10">
         <div class="row">
                 <!-- center left-->
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                         <h2>Current Projects</h2><br>
@@ -89,20 +89,21 @@ require_once('connection.php');
                     <div class='panel panel-default'>       
                        <div class='panel-heading'>       
                         <div class='panel-title'>
+                             <table><tr><td style='vertical-align:text-top'>
                                 <h5><strong>Project Name: </strong>".$row['project_name']."<br></h5>
                                 <h5><strong>Project Description: </strong>".$row['project_description']."<br></h5>
                                 <h5><strong>General Contractor: </strong>".$row['general_contractor']."<br></h5>
                                 <h5><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h5>
-                                <h5><strong>Starting date: </strong>".$row['starting_date']."</h5>
-                                <h5><strong>Completion date: </strong>".$row['completion_date']."</h5>
-                                <h5><strong>County(ies) where project has jurisdiction: </strong><br>";
-                       
+                                </td><td style='vertical-align:text-top'><h5><strong> Starting date: </strong> ".$row['starting_date']."</h5>
+                                <h5><strong> Completion date: </strong> ".$row['completion_date']."</h5>
+                                <h5><strong> County(ies) where project has jurisdiction: </strong><br>";
+                                
                                 while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
                                 {
-                                    echo $row2['county']." - ".$row2['state']."<br />";
+                                    echo $row2['county']." - ".$row2['state']."<br/>";
                                 }
                                 
-                               echo "</h5>
+                               echo "</h5></td></tr></table><br>
                                 <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-edit'></i>
                                     Edit
                                 </button>  

@@ -214,9 +214,19 @@ echo '<br />';
                                                     ?> */
                                      ?>     
                                 <table>
-                                    <tr>
-                                        <td> HOLA</td>
-                                    </tr>
+                                    <tr><td>
+                                        <?php
+                                        $i=0;
+                                        
+                                                    while($row = mysql_fetch_array($res, MYSQL_ASSOC))
+                                                    { 
+                                                       $id_emp=$row['employee_id']; 
+                                                       echo "<input type = 'checkbox' name = employees[] value='$id_emp'/>".$row['name']." "."<br />";
+                                                       $i++;
+                                                   
+                                                    } 
+                                        
+                                                    ?></td></tr>
                                 </table>
                                     
                                                
