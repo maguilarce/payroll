@@ -212,9 +212,19 @@ echo '<br />';
                                                     }  
                                                     echo "</td></tr><table>";
                                                     ?> */
-                                     ?>     
+                                     ?> 
+                                    
+                              
+                                    
                                 <table>
-                                    <tr><td>
+                              
+                                    <tr><td colspan="3"><div class="panel">
+                            
+                                <i class="glyphicon glyphicon-wrench pull-right"></i>
+                                <h4>Employees in this Project</h4>
+                                <h6>Please select employees to work in this project:</h6>
+                            
+                        </div>
                                         <?php
                                         $i=0;
                                         
@@ -228,7 +238,7 @@ echo '<br />';
                                         
                                                     ?></td></tr>
                                 </table>
-                                    
+                                <br>
                                                
                         </tbody>
                          
@@ -237,12 +247,7 @@ echo '<br />';
                         
                     </table>
                             
-                            <table>
-                            <tr>
-                                   
-                                                  
-                            </tr>
-                            </table>
+                            
                             <button formaction="process_jurisdiction.php" type="submit" class="btn btn-primary">
                                     Create Project Profile
                                 </button>
@@ -263,7 +268,7 @@ echo '<br />';
             </div>
             <!--/row-->
 
-            <hr>
+            
 
            
         </div>
