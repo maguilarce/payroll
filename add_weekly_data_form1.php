@@ -59,7 +59,6 @@ session_start();
         }
     }
                 
-    
      //deleting previus daily lump rates
     
     $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";

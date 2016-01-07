@@ -435,6 +435,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
                                 <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                                 <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
+                                
                                 </form>
                                 <?php  
 
@@ -443,18 +444,24 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 ?>
                             </tbody>
                         </table>
-   
+                   
                             <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary" disabled>
+                </form>
+                <form  method="post" action="print_table1.php" class="form form-vertical" target="_blank">
+                        <div class="controls">
+                                <input type="hidden" name="job_function" value="<?php echo $week; ?>">
+                                <input type="hidden" name="job_function" value="<?php echo $union; ?>">
+                                <input type="hidden" name="job_function" value="<?php echo $project_name; ?>">
+                                <button type="submit" class="btn btn-primary">
                                     Generate and Print Weekly Time Sheet
                                 </button>
-                            </div>
+                        </div>
+                </form>
                         </div>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                    </form>
+                    
                       <!--
-                                   <form action="add_weekly_data.php" method="post" name="daily_data">   
+                    <form action="add_weekly_data.php" method="post" name="daily_data">   
                     <div class="control-group">
                             <label></label>
                             <div class="controls">

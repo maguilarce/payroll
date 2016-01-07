@@ -38,10 +38,10 @@ if($_SESSION['logged'])
             <a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>Workers</strong></a>
             <br>
             <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee Info</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu1">
-                        <li class="active"> <a href="add_employee_form.php" target="mainFrame">Add New Employee</a></li>
-                        <li class="active"> <a href="edit_employee_table.php" target="mainFrame">Modify/Delete Employee</a></li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><strong>Employee Info</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <ul class="nav nav-stacked collapse" id="menu1">
+                        <li> <a href="add_employee_form.php" target="mainFrame">Add New Employee</a></li>
+                        <li> <a href="edit_employee_table.php" target="mainFrame">Modify/Delete Employee</a></li>
                         <!--<li class="active"> <a href="delete_employee_table.php" target="mainFrame">Delete employee</a></li>-->
                     </ul>
                 </li>
@@ -72,9 +72,9 @@ if($_SESSION['logged'])
             <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Rates</strong></a>
             <br>
             <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="add_pay_rate_table.php" target="mainFrame">Add/Modify/Delete pay rate</a></li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Pay rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <ul class="nav nav-stacked collapse" id="menu5">
+                        <li > <a href="add_pay_rate_table.php" target="mainFrame">Add/Modify/Delete pay rate</a></li>
                     </ul>
                 </li>
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Premium rates</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
@@ -102,9 +102,9 @@ if($_SESSION['logged'])
             <br>
 
             <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu5"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu5">
-                        <li class="active"> <a href="create_project_profile1.php" target="mainFrame">Project Profiles</a></li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu8"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <ul class="nav nav-stacked collapse" id="menu8">
+                        <li> <a href="create_project_profile1.php" target="mainFrame">Project Profiles</a></li>
 
 
                     </ul>
@@ -116,10 +116,10 @@ if($_SESSION['logged'])
             <a href="#"><strong><i class="glyphicon glyphicon-link"></i> Users</strong></a>
             <br>
             <ul class="nav nav-stacked">
-                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu6"><strong>Users Options</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
-                    <ul class="nav nav-stacked collapse in" id="menu6">
-                        <li class="active"> <a href="add_user_form.php" target="mainFrame">Create User</a></li>
-                        <li class="active"> <a href="edit_user_table.php" target="mainFrame">Edit/Delete User</a></li>
+                <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu9"><strong>Users Options</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <ul class="nav nav-stacked collapse" id="menu9">
+                        <li> <a href="add_user_form.php" target="mainFrame">Create User</a></li>
+                        <li> <a href="edit_user_table.php" target="mainFrame">Edit/Delete User</a></li>
 
                     </ul>
                 </li>

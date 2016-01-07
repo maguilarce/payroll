@@ -9,6 +9,17 @@ $general_contractor = $_GET['general_contractor'];
 $in_charge_of = $_GET['in_charge_of'];
 $starting_date = $_GET['starting_date'];
 $completion_date = $_GET['completion_date'];
+
+
+$sql = "SELECT * FROM employee where status=1";
+$res = mysql_query($sql);
+
+if(! $res )
+    {
+     die('Could not get data: ' . mysql_error());
+    }
+                                            
+
 /*print_r($counties);
 echo '<br />';
 $decode = array();
@@ -163,7 +174,7 @@ echo '<br />';
                                         $county = $array1[$i];
                                         $state = $array2[$i];
                                         
-                                        ?>
+                                ?>
 
                                     <tr>
                                     
@@ -185,9 +196,29 @@ echo '<br />';
                                         </td>
 
                                     </tr>
+                                    
                                     <?php
                                     }
-                                     ?>
+                                    /*echo "<table><tr>"; 
+                                    
+                                                   echo "<td>";
+                                                    $i=0;
+                                                    while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
+                                                    { 
+                                                       $id_emp=$row['employee_id']; 
+                                                       echo "<input type = 'checkbox' name = employees[] value='$id_emp'/>".$row['name']." "."<br />";
+                                                       $i++;
+                                                       echo "tabla";
+                                                    }  
+                                                    echo "</td></tr><table>";
+                                                    ?> */
+                                     ?>     
+                                <table>
+                                    <tr>
+                                        <td> HOLA</td>
+                                    </tr>
+                                </table>
+                                    
                                                
                         </tbody>
                          
@@ -195,6 +226,13 @@ echo '<br />';
 
                         
                     </table>
+                            
+                            <table>
+                            <tr>
+                                   
+                                                  
+                            </tr>
+                            </table>
                             <button formaction="process_jurisdiction.php" type="submit" class="btn btn-primary">
                                     Create Project Profile
                                 </button>

@@ -80,11 +80,14 @@ $completion_date = $_POST['completion_date'];
                         <?php
                             $states = "Alabama,Alaska,Arizona,Arkansas,California,Colorado,Connecticut,Delaware,Florida,Georgia,Hawaii,Idaho,Illinois,Indiana,Iowa,Kansas,Kentucky,Louisiana,Maine,Maryland,Massachusetts,Michigan,Minnesota,Mississippi,Missouri,Montana,Nebraska,Nevada,New Hampshire,New Jersey,New Mexico,New York,North Carolina,North Dakota,Ohio,Oklahoma,Oregon,Pennsylvania,Rhode Island,South Carolina,South Dakota,Tennessee,Texas,Utah,Vermont,Virginia,Washington,West Virginia,Wisconsin,Wyoming,Washington DC";
                             $state = explode(",",$states);
+                            echo "<table><tr><td style='vertical-align:text-top'>";
                             for($i=0;$i<count($state);$i++)
                             {
+                                if($i == 17 || $i == 34){echo "</td><td style='vertical-align:text-top'>";}
                                 $value = $state[$i];
-                                echo "<input type='checkbox' name='states[]' value='$value' / >".$value."<br />";
+                                echo "<input type='checkbox' name='states[]' value='$value' / >"." ".$value."<br />";
                             }
+                            echo "</td></tr></table>";
                             ?>
                                 </div>
                                 

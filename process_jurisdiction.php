@@ -79,7 +79,8 @@ for($i=0;$i<count($state);$i++)
                             </div>
                             
                             <form action="project_table.php">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i>Back to Projects Table</button>
+                                <!--<input type="submit" value="Back">-->
                             </form>
                            
                         </div>

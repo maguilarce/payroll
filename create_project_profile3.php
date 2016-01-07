@@ -69,10 +69,10 @@ if(! $result )
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-title">
@@ -85,36 +85,37 @@ if(! $result )
                         
                         <form method="GET" action="create_project_profile4.php" >
                                 <div class="control-group">
-                                                  
+                                    <table>
+                                        <tr>
+                                            
+                                        </tr>
+                                    </table>
                         <?php
                             for($i=0;$i<count($states);$i++)
                                 {
-                                    $state = $states[$i];
-                                    echo "<h3>".$state.":</h3><br />";
-                                    $query = "SELECT idcounties,county FROM counties WHERE state = '$state';";
-                                    $result = mysql_query($query);
+                                   $state = $states[$i]." ";
+                                   $query = "SELECT idcounties,county FROM counties WHERE state = '$state';";
+                                   $result = mysql_query($query);
+                                   if($i == 0){echo "<table><tr><td style='vertical-align:text-top'>";}
+                                   if($i>0){echo "<td style='vertical-align:text-top' >";}
+                                   echo "<h3 style='margin:10px'>".$state." </h3><br />";
                                     while($row = mysql_fetch_array($result,MYSQL_ASSOC))
                                     {
                                         $county = $row['county'];
                                         $comma = ",";
-                                        $star = "*";
-                                       
+                                        $star = "*";  
                                         //echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
-                                      echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">".$county."<br />";
-                                       
+                                        echo "<input type = 'checkbox' name = counties[] value=".urlencode($county.$comma.$state.$star).">"." ".$county." "."<br />";
                                     }
-                                    
+                                    echo "</td>";
 
                                 }
+                                echo "</tr></table>";
                             ?>
                                 </div>
                                 
                                 <br />
-                                <button type="submit" class="btn btn-primary" >
-                                    Continue to Step 4 >>
-                                </button>
-                                
-                                <?php
+                                                               <?php
                                 for($i=0;$i<count($states);$i++)
                                 {
                                     $state = $states[$i];
@@ -129,6 +130,11 @@ if(! $result )
                                 <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
                                 <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
                                 <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
+                        
+                                <button type="submit" class="btn btn-primary" >
+                                    Continue to Step 4 >>
+                                </button>
+                                
                         </form>
                        
                         <!--/panel content-->

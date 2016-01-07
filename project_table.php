@@ -107,10 +107,10 @@ require_once('connection.php');
                                 }
                                 
                                echo "</h4>
-                                <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'>
+                                <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-edit'></i>
                                     Edit Project Profile
                                 </button>  
-                                <button class='delete' formaction='delete_project.php' type='submit' class='btn btn-primary'>
+                                <button formaction='delete_project.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i>
                                     Delete Project Profile
                                 </button>
                         </div>
