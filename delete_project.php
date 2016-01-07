@@ -50,10 +50,11 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <h4>Project profile deleted successfully</h4>
+                                <h4>Project Profile Deleted Successfully</h4>
                             </div>
                             <form name="delete_form" action="project_table.php">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i> Back to Projects Table</button>
+                               <!-- <input type="submit" value="Back"> -->
                             </form>
                            
                         </div>

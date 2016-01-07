@@ -46,7 +46,8 @@ session_start();
                                 <h4>New pay rate group created successfully</h4>
                             </div>
                             <form action="add_pay_rate_table.php">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i> Back</button>
+                                <!--<input type="submit" value="Back"> -->
                             </form>
                            
                         </div>

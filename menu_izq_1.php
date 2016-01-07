@@ -105,8 +105,7 @@ if($_SESSION['logged'])
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu8"><strong>Projects</strong> <i class="glyphicon glyphicon-chevron-right"></i></a>
                     <ul class="nav nav-stacked collapse" id="menu8">
                         <li> <a href="create_project_profile1.php" target="mainFrame">Project Profiles</a></li>
-
-
+                        <li> <a href="project_table.php" target="mainFrame">Current Projects</a></li>
                     </ul>
                 </li>
                 

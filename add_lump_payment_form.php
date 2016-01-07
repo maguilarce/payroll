@@ -45,7 +45,8 @@ session_start();
                                 <h4>New lump payment created successfully</h4>
                             </div>
                             <form action="add_lump_payment_table.php">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i> Back</button>
+                                <!--<input type="submit" value="Back">-->
                             </form>
                         </div>
                         <!--/panel content-->

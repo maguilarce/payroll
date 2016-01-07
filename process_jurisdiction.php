@@ -50,10 +50,10 @@ for($i=0;$i<count($state);$i++)
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-10">
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="panel-title">
@@ -79,7 +79,7 @@ for($i=0;$i<count($state);$i++)
                             </div>
                             
                             <form action="project_table.php">
-                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i>Back to Projects Table</button>
+                                <button type="submit" class="btn btn-primary" title="Back"><i class="glyphicon glyphicon-backward"></i> Back to Projects List</button>
                                 <!--<input type="submit" value="Back">-->
                             </form>
                            

@@ -58,7 +58,6 @@ require_once('connection.php');
 
 	</head>
 	<body>
-<
 
 <!-- Main -->
 <div class="container-fluid">
@@ -66,21 +65,18 @@ require_once('connection.php');
         <div class="col-sm-9">
         <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-9">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Current Projects</h2><br />
-                        <h4>Date: <?php echo date("F j, Y");?></h4><br />
+                        <h2>Current Projects</h2><br>
+                        <h4>Date: <?php echo date("F j, Y");?></h4><br>
                                 
                     </div>
-                   
-
                    
                    <?php
                    
                    $query = "SELECT * FROM project";
                    $result = mysql_query($query);
-                   
                    
                    while ($row = mysql_fetch_array($result,MYSQL_ASSOC))
                    {
@@ -93,25 +89,25 @@ require_once('connection.php');
                     <div class='panel panel-default'>       
                        <div class='panel-heading'>       
                         <div class='panel-title'>
-                                <h4><strong>Project Name: </strong>".$row['project_name']."<br /></h4>
-                                <h4><strong>Project Description: </strong>".$row['project_description']."<br /></h4>
-                                <h4><strong>General Contractor: </strong>".$row['general_contractor']."<br /></h4>
-                                <h4><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h4>
-                                <h4><strong>Starting date: </strong>".$row['starting_date']."</h4>
-                                <h4><strong>Completion date: </strong>".$row['completion_date']."</h4>
-                                <h4><strong>County(ies) where project has jurisdiction: </strong><br />";
+                                <h5><strong>Project Name: </strong>".$row['project_name']."<br></h5>
+                                <h5><strong>Project Description: </strong>".$row['project_description']."<br></h5>
+                                <h5><strong>General Contractor: </strong>".$row['general_contractor']."<br></h5>
+                                <h5><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h5>
+                                <h5><strong>Starting date: </strong>".$row['starting_date']."</h5>
+                                <h5><strong>Completion date: </strong>".$row['completion_date']."</h5>
+                                <h5><strong>County(ies) where project has jurisdiction: </strong><br>";
                        
                                 while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
                                 {
                                     echo $row2['county']." - ".$row2['state']."<br />";
                                 }
                                 
-                               echo "</h4>
+                               echo "</h5>
                                 <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-edit'></i>
-                                    Edit Project Profile
+                                    Edit
                                 </button>  
                                 <button formaction='delete_project.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i>
-                                    Delete Project Profile
+                                    Delete
                                 </button>
                         </div>
                     </div>
