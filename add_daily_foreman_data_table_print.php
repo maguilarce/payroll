@@ -76,6 +76,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <img src="let-logo.png" /><br/>
                         <h4><strong>Daily Time Sheet - Foreman</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
                             <h4>

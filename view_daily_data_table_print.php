@@ -93,6 +93,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <img src="let-logo.png" /><br/>
                         <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
                             <h4>

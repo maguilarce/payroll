@@ -2,8 +2,10 @@
 require_once('connection.php');
 
 session_start();
-$project_name = $_POST['project']; 
-$result = mysql_query("SELECT 
+
+$project_name = $_POST['project'];
+
+$result = mysql_query("SELECT
 daily_timesheet_id,
 daily_timesheet.date,
 daily_timesheet.employee_name,
@@ -24,7 +26,8 @@ INNER JOIN employee ON daily_timesheet.employee_name = employee.name
 WHERE week_number = week(now(),3) AND associated_project = '$project_name'
 ORDER BY employee_name");
 
-
+echo $project_name;
+echo "HOLA";
 if(mysql_num_rows($result)==0)
 {
     $message="Alert: You have not yet entered any record.";

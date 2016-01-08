@@ -460,7 +460,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
    
                             <label></label>
                             <div class="controls">
-                                <form action="add_weekly_data_table_print.php" target="_blank">
+                                <form action="add_weekly_data_table_print.php" target="_blank" method="POST">
                                  <input type="hidden" name="project" value="<?php echo $project_name; ?>">   
                                   <button type="submit" class="btn btn-primary">
                                     Generate and Print Weekly Time Sheet
