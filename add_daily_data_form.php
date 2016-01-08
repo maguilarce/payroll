@@ -89,7 +89,7 @@ $project_name = $_POST['project_name'];
                          
                          }
                          if(res[cant-1]=== "ST")
-                         {  for (var i = 1; i < j; i++) 
+                         {  for (var i = 0; i < j; i++) 
                             { los_cboxes[0].checked = false
                               los_cboxes[i].disabled = false;   
                             }
