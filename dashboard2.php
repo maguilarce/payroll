@@ -74,7 +74,7 @@ WHERE hired = 'y' AND status = 1;");
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
-            <form action="" method="post" name="daily_data">   
+              
                 <h4><strong>Active Projects</strong></h4>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -85,7 +85,7 @@ WHERE hired = 'y' AND status = 1;");
                                     <th>Completion Date</th>
                                     <th>Location</th>
                                     <th>In Charge of</th>
-                                             
+                                    <th>Details</th>         
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,7 +135,12 @@ WHERE hired = 'y' AND status = 1;");
                                      <td>
                                         <?php echo "{$row['in_charge_of']}"; ?>
                                     </td>
-                                                                    
+                                    <td>
+                                        <form action="project_detail.php" method="POST">
+                                            <input type="hidden" name="id_project" value="<?php echo "{$row['project_id']} <br>"; ?>">  
+                                         <button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-zoom-in'></i>View</button>   
+                                        </form>                      
+                                    </td>                                
                                 </tr>
                                 <?php                               
                                    }
@@ -184,8 +189,7 @@ WHERE hired = 'y' AND status = 1;");
                                      <td>
                                         <?php echo "{$row['crew']}"; ?>
                                     </td>
-                                    
-                                                                    
+                                                      
                                 </tr>
                                 <?php                               
                                    }
@@ -193,10 +197,6 @@ WHERE hired = 'y' AND status = 1;");
                             </tbody>
                         </table>
                         
-                        
-                   
-                    </form>
-
                     </div>
                 <div class="col-md-1">
                     <form action="create_weekly_timesheet_superintendent1.php">

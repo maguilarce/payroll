@@ -133,8 +133,8 @@ WHERE hired = 'y';");
                                     </td>
                                     <td>
                                         <form action="project_detail.php" method="POST">
-                                            
-                                            
+                                            <input type="hidden" name="id_project" value="<?php echo "{$row['project_id']} <br>"; ?>">  
+                                         <button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-zoom-in'></i>View</button>   
                                         </form>   
                                            
                                     </td>                       
