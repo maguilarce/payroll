@@ -64,7 +64,6 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-                <script type="text/javascript" src="js/jQuery.print.js"></script>
                  <script language="JavaScript"> 
                    /* $(document).ready(function()
                   {
@@ -90,14 +89,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 $(this).next().val($(this).val());
             });
         });
-        
-        
     </script>
-    <script>
-    function P_div4(){  $(p2).print(); return( false );}
-    
-    </script>
-        
 
 	</head>
 	<body>
@@ -108,7 +100,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
             <div class="row">
                 <!-- center left-->
                 <div class="col-md-12">
-                    <div class="panel-title" name="p2">
+                    <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                         <h4><strong>Weekly Time Sheet</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
@@ -460,14 +452,9 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
    
                             <label></label>
                             <div class="controls">
-                                <form action="add_weekly_data_table_print.php" target="_BLANK">
-                                    
                                 <button type="submit" class="btn btn-primary" disabled>
                                     Generate and Print Weekly Time Sheet
-                                   
                                 </button>
-                                    <input name='boton67' type='button' id='boton67' value='Imprimir' onclick='P_div4();' align='middle'/>
-                                </form>
                             </div>
                         </div>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">

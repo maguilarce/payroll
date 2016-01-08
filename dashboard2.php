@@ -103,21 +103,15 @@ WHERE hired = 'y' AND status = 1;");
                                      <td>
                                         <?php echo "{$row['starting_date']}"; 
                                         if(date("Y-m-d")>$row['starting_date']&&date("Y-m-d")<$row['completion_date'])
-                                        {
-                                            echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";}
                                         if(date("Y-m-d")<$row['starting_date'])
-                                        {
-                                            echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";}
                                         ?>
                                     </td>
                                      <td>
                                         <?php echo "{$row['completion_date']}"."<br/>"; 
                                         if(date("Y-m-d")>$row['completion_date'])
-                                        {
-                                            echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";}
                                        
                                         ?>
                                     </td>

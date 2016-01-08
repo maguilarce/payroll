@@ -66,6 +66,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
+                <script type="text/javascript" src="js/jQuery.print.js"></script>
                  <script language="JavaScript"> 
                    /* $(document).ready(function()
                   {
@@ -92,6 +93,10 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
             });
         });
     </script>
+    <script>
+    function P_div4(){  $(demo).print(); return( false );}
+    
+    </script>
 
 	</head>
 	<body>
@@ -101,7 +106,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-10">
-            <div class="row">
+            <div class="row" n>
                 <!-- center left-->
                 <div class="col-md-12">
                     <div class="panel-title">
@@ -452,7 +457,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 <input type="hidden" name="job_function" value="<?php echo $week; ?>">
                                 <input type="hidden" name="job_function" value="<?php echo $union; ?>">
                                 <input type="hidden" name="job_function" value="<?php echo $project_name; ?>">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="button" class="btn btn-primary" onclick="P_div4();">
                                     Generate and Print Weekly Time Sheet
                                 </button>
                         </div>

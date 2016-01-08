@@ -42,8 +42,9 @@ $counties="";
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
+             	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <script type="text/javascript" src="jquery/jquery/jQuery.print.js"></script>
+                <script type="text/javascript"> 
                     $(document).ready(function()
                   {             
                     $( ".delete" ).submit(function( event ) {
