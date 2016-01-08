@@ -50,7 +50,7 @@ $project_name = $_POST['project_name'];
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <script type="text/javascript"> 
+                <script type="text/javascript"> 
                     function verificar(){
                         var suma = 0;
                         var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
@@ -67,6 +67,39 @@ $project_name = $_POST['project_name'];
                     }
 
                     }
+                    
+                    function desactivar() {
+                        var los_cboxes = document.getElementsByName("daily_premium_rate[]");
+                        var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
+                        var elem = document.getElementById("pay_rate_type");
+                        var elem2 = document.getElementById("payrate").value;
+                        var res = elem2.split(" ");
+                        var cant = res.length;
+                        elem.value = res[cant-1];
+                        //alert("entra");
+                        var j = los_cboxes.length
+                        var k = ot_cboxes.length;
+                        if(res[cant-1]=== "OT")
+                        {   for (var i = 0; i < j; i++) 
+                            {los_cboxes[0].checked = true;
+                             los_cboxes[i].disabled = true;}
+                             for (var l = 0; l < k; l++) 
+                            {ot_cboxes[0].checked = true;
+                             ot_cboxes[l].disabled = true;}
+                         
+                         }
+                         if(res[cant-1]=== "ST")
+                         {  for (var i = 1; i < j; i++) 
+                            { los_cboxes[0].checked = false
+                              los_cboxes[i].disabled = false;   
+                            }
+                            for (var l = 0; l < k; l++) 
+                            {ot_cboxes[0].checked = false;
+                             ot_cboxes[l].disabled = false;}
+                         }
+                     }
+
+                    
                     </script> 
 
 	</head>
@@ -125,7 +158,7 @@ $project_name = $_POST['project_name'];
                                         </select>
                                     </td>
                                     <td>
-                                         <select name="pay_rate" class="form-control"> 
+                                        <select id="payrate" name="pay_rate" class="form-control" onchange="javascript:desactivar();"> 
                                         <?php
                                         while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
                                             { 
@@ -136,14 +169,7 @@ $project_name = $_POST['project_name'];
                                       
                                     </td>    
                                     <td>
-                                         <select name="pay_rate_type" class="form-control"> 
-                                       
-                                                <option>ST</option>
-                                                <option>OT</option>
-                                                
-                                     
-                                         </select>
-                                      
+                                        <input type="text" id="pay_rate_type" disabled>    
                                     </td>    
                                     
                                     <td>
@@ -154,7 +180,7 @@ $project_name = $_POST['project_name'];
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
                                                 $value = $row1['premium_rate_type'];
-                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value'/> {$row1['premium_rate_type']}<br>";
+                                                echo "<input type='checkbox' name='daily_premium_rate[]' value='$value' /> {$row1['premium_rate_type']}<br>";
 
                                                 }
                                             ?>
@@ -175,7 +201,7 @@ $project_name = $_POST['project_name'];
                                     </td> 
                                          
                                     <td>
-                                        <input name="worked_hours" type="text" class="form-control">
+                                        <input name="worked_hours" type="text" class="form-control" >
                                     </td> 
                                     
                                     
