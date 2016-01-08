@@ -2,7 +2,7 @@
 require_once('connection.php');
 session_start();
 $project_name = $_POST['project'];
-$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,total_day_hours,status
+$result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,total_day_hours,daily_timesheet.status
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = CURDATE() AND associated_project = '$project_name';");
