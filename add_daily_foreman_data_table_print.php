@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 session_start();
-$project_name = $_POST['project'];
+$project_name = $_POST['p_pname'];
 $result = mysql_query("SELECT daily_timesheet_id,employee_name,employee.union_trade,job_function,pay_rate,total_day_hours,daily_timesheet.status
 FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
@@ -41,8 +41,9 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-                	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                  <script type="text/javascript"> 
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                <script type="text/javascript" src="js/jQuery.print.js"></script>  
+                <script type="text/javascript"> 
                     $(document).ready(function()
                   {             
                     $( ".delete" ).submit(function( event ) {
@@ -51,7 +52,9 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                     });
                    });
                 </script>
-
+<script>
+    function P_div4(){$(area).print(); return( false );}
+    </script>
 	</head>
 	<body>
 <!-- header -->
@@ -59,6 +62,11 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 <!-- /Header -->
 
 <!-- Main -->
+<div id="boton_print">
+  <div class="controls">
+    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Weekly Time Sheet</button>
+  </div> </div><hr>
+<div id="area">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -68,6 +76,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <img src="let-logo.png" /><br/>
                         <h4><strong>Daily Time Sheet - Foreman</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
                             <h4>
@@ -152,37 +161,11 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                                 ?>
                             </tbody>
                         </table>
-                   
-                    </form>
-                    
-                    <table><tr>
-                            <td><form action="add_daily_foreman_data_form.php" method="post" name="daily_data">   
-                    <div class="control-group">
-                            <label></label>
-                            <div class="controls">
-                                <button type="submit" class="btn btn-primary">
-                                    Add new register
-                                </button>
-
-                            </div>
-                        </div>
-                        <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
-                                </form>
-                            
-                            </td>
-                            
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td> 
-                            <form action="add_daily_foreman_data_table_print.php" method="post" name="daily_data" target="_blank">   
-                            <div class="controls">
-                                <input type="hidden" name="p_pname" value="<?php echo $project_name; ?>">
-                                <button type="submit" class="btn btn-primary">
-                                    Generate and Print Daily Time Sheet
-                                </button>
-                            </div>                        
-                            </form></td>
-                        </tr></table>
-                    </div>
+                <br>        
+                <label>______________________</label><br>
+                <label>  Signature </label>
+                </div><br>
+                </div>
               
                 </div>
                 <!--/col-->
@@ -193,7 +176,6 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
         </div>
         <!--/col-span-9-->
     </div>
-</div>
 <!-- /Main -->
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -220,45 +202,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->
-                <script data-config>
-                var filtersConfig = {          
-                paging: true,  
-                paging_length: 20,  
-                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
-                rows_counter: true,  
-                rows_counter_text: "Rows:",  
-                display_all_text: " [ Show all ] ",
-                loader: true, 
-                col_0: 'select',
-                col_1: 'select',
-                col_2: 'select',
-                col_3: 'none',
-                col_4: 'none',
-                col_5: 'select',
-                col_6: 'none',
 
-                       
-                extensions:[
-                    {
-
-                        editable: false,
-                        selection: false
-
-                    }, {
-                        name: 'sort',
-                        types: [
-                            'string', 'string', 'number',
-                            'number', 'number', 'number',
-                            'number', 'number', 'number'
-                        ]
-                    }
-                ]
-            };
-
-            var tf = new TableFilter('demo', filtersConfig);
-            tf.init();
-            
-</script>
 <!-- end filter and pagination -->
 	</body>
 </html>

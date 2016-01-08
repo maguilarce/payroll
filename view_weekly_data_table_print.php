@@ -1,9 +1,9 @@
 <?php
 require_once('connection.php');
 session_start();
-$week = $_POST['week']; 
-$union = $_POST['union']; 
-$project_name = $_POST['project']; 
+$week = $_POST['p_week']; 
+$union = $_POST['p_union']; 
+$project_name = $_POST['p_pname']; 
 
 $result = mysql_query("SELECT 
 daily_timesheet_id,
@@ -94,7 +94,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
         });
     </script>
     <script>
-    function P_div4(){  $(demo).print(); return( false );}
+    function P_div4(){$(area).print(); return( false );}
     
     </script>
 
@@ -103,6 +103,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
 
 <!-- Main -->
+<div id="boton_print">
+  <div class="controls">
+    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Weekly Time Sheet</button>
+  </div> </div><hr>
+<div id="area">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-10">
@@ -111,8 +116,9 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <div class="col-md-12">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <img src="let-logo.png" /><br/>
                         <h4><strong>Weekly Time Sheet</strong></h4>
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover" >
                             <h4>
                             <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
                             <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
@@ -451,18 +457,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         </table>
                    
                             <label></label>
-                </form>
-                <form  method="post" action="view_weekly_data_table_print.php" class="form form-vertical" target="_blank">
-                        <div class="controls">
-                                <input type="hidden" name="p_week" value="<?php echo $week; ?>">
-                                <input type="hidden" name="p_union" value="<?php echo $union; ?>">
-                                <input type="hidden" name="p_pname" value="<?php echo $project_name; ?>">
-                                <button type="submit" class="btn btn-primary"">
-                                    Generate and Print Weekly Time Sheet
-                                </button>
-                        </div>
-                </form>
-                        </div>
+                
+                <br>        
+                <label>______________________</label><br>
+                <label>  Signature </label>
+                </div><br>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                     
                       <!--
@@ -493,7 +492,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
             </div>
             <!--/row-->
-        </div>
+</div></div>
         <!--/col-span-9-->
     
 <!-- /Main -->
@@ -524,56 +523,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->
                 <script data-config>
-                var filtersConfig = {          
-                paging: true,  
-                paging_length: 20,  
-                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
-                rows_counter: true,  
-                rows_counter_text: "Rows:",  
-                display_all_text: " [ Show all ] ",
-                loader: true, 
-                col_0: 'select',
-                col_1: 'select',
-                col_2: 'select',
-                col_3: 'select',
-                col_4: 'select',
-                col_5: 'none',
-                col_6: 'none',
-                col_7: 'none',
-                col_8: 'none',
-                col_9: 'none',
-                col_10: 'none',
-                col_11: 'none',
-                col_12: 'none',
-                col_13: 'none',
-                col_14: 'none',
-                col_15: 'none',
-                col_16: 'none',
-                col_17: 'none',
-                col_18: 'none',
-                col_19: 'none',
+                
 
-
-                extensions:[
-                    {
-
-                        editable: false,
-                        selection: false
-
-                    }, {
-                        name: 'sort',
-                        types: [
-                            'string', 'string', 'number',
-                            'number', 'number', 'number',
-                            'number', 'number', 'number'
-                        ]
-                    }
-                ]
-            };
-
-            var tf = new TableFilter('demo', filtersConfig);
-            tf.init();
-            
 </script>
 <!-- end filter and pagination -->
 	</body>

@@ -101,8 +101,6 @@ session_start();
                                                     echo "<option selected>{$row1['union_trade_type']}</option>";
                                                 }
                                                 else echo "<option>{$row1['union_trade_type']}</option>";                           
-                                             
-                     
                                             }  
                                             ?>
 
@@ -127,9 +125,7 @@ session_start();
                                                 {
                                                     echo "<option selected>{$row1['crew_type']}</option>";
                                                 }
-                                                else echo "<option>{$row1['crew_type']}</option>";                           
-                                             
-                     
+                                                else echo "<option>{$row1['crew_type']}</option>";
                                             }  
                                             ?>
 
@@ -150,6 +146,19 @@ session_start();
                                         
                                      </div>
                                     
+                                </div>
+                                <div class="control-group">
+                                    <label>Status: </label>
+                                     <div class="controls">
+                                         <select name="st_emp" class="form-control">
+                                            <?php
+                                                if($row['status']==1)
+                                                {echo "<option selected value='1'>Active</option><option value='0'>Inactive</option>";}
+                                                if($row['status']==0){ echo "<option selected value='1'>Active</option><option value='0'>Inactive</option>";}
+                                            ?>
+
+                                        </select>
+                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label></label>

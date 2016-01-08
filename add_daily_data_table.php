@@ -287,11 +287,13 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                             </td>
                              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>
-                    <form  method="post" name="daily_data">   
-                  
-                                <button type="submit" class="btn btn-primary" disabled>
+                    <form  method="post" action="add_daily_data_table_print.php" class="form form-vertical" target="_blank">
+                            <div class="controls">            
+                                <input type="hidden" name="p_pname" value="<?php echo $project_name; ?>">
+                                <button type="submit" class="btn btn-primary">
                                     Generate and Print Daily Time Sheet
                                 </button>
+                            </div>
                     </form>
                             </td></tr>
                     </table>

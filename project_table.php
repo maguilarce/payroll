@@ -84,7 +84,8 @@ require_once('connection.php');
                        $pname = $row['project_name'];
                        $query2 = "SELECT county,state FROM jurisdiction WHERE project_name='$pname'";
                        $result2 = mysql_query($query2);
-                       
+                       $query3 = "SELECT employee_id FROM emp_proj WHERE project_name='$pname'";
+                       $result3 = mysql_query($query3);
                        echo "<form method='post'>
                     <div class='panel panel-default'>       
                        <div class='panel-heading'>       
@@ -93,14 +94,22 @@ require_once('connection.php');
                                 <h5><strong>Project Name: </strong>".$row['project_name']."<br></h5>
                                 <h5><strong>Project Description: </strong>".$row['project_description']."<br></h5>
                                 <h5><strong>General Contractor: </strong>".$row['general_contractor']."<br></h5>
-                                <h5><strong>Person in charge of the project: </strong>".$row['in_charge_of']."</h5>
-                                </td><td style='vertical-align:text-top'><h5><strong> Starting date: </strong> ".$row['starting_date']."</h5>
-                                <h5><strong> Completion date: </strong> ".$row['completion_date']."</h5>
-                                <h5><strong> County(ies) where project has jurisdiction: </strong><br>";
+                                <h5><strong>Person in charge of the project: </strong><br>".$row['in_charge_of']."</h5>
+                                <h5><strong>Employees in this Project: </strong><br>";
+                               while($row3 = mysql_fetch_array($result3,MYSQL_ASSOC))
+                               {
+                                   $query4="SELECT name FROM employee WHERE employee_id='".$row3['employee_id']."'";
+                                   $result4 = mysql_query($query4);
+                                   $row4=  mysql_fetch_array($result4);
+                                   echo $row4['name']."<br>";
+                               }
+                               echo "</h5></td><td style='vertical-align:text-top'><h5><strong>&nbsp&nbsp Starting date: </strong> ".$row['starting_date']."</h5>
+                                <h5><strong>&nbsp&nbsp Completion date: </strong> ".$row['completion_date']."</h5>
+                                <h5><strong>&nbsp&nbsp County(ies) where project has jurisdiction: </strong><br>";
                                 
                                 while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
                                 {
-                                    echo $row2['county']." - ".$row2['state']."<br/>";
+                                    echo "&nbsp&nbsp&nbsp&nbsp".$row2['county']." - ".$row2['state']."<br/>";
                                 }
                                 
                                echo "</h5></td></tr></table><br>
@@ -138,7 +147,7 @@ require_once('connection.php');
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Add Widget</h4>
             </div>

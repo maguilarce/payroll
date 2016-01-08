@@ -1,9 +1,9 @@
 <?php
 require_once('connection.php');
 session_start();
-$date = $_POST['date']; 
-$union = $_POST['union']; 
-$project_name = $_POST['project']; 
+$date = $_POST['p_date']; 
+$union = $_POST['p_union']; 
+$project_name = $_POST['p_pname']; 
 
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,status,daily_notes,processed
 FROM employee INNER JOIN daily_timesheet
@@ -46,7 +46,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                 <script language="JavaScript"> 
+                <script type="text/javascript" src="js/jQuery.print.js"></script>
+                <script language="JavaScript"> 
 
                     function eliminar(){
                         
@@ -72,11 +73,18 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
                 }
                 </script> 
-
+    <script>
+        function P_div4(){$(area).print(); return( false );}
+    </script>
 	</head>
 	<body>
 
 <!-- Main -->
+<div id="boton_print">
+  <div class="controls">
+    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Weekly Time Sheet</button>
+  </div> </div><hr>
+<div id="area">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9">
@@ -85,6 +93,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <div class="col-md-14">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
+                        <img src="let-logo.png" /><br/>
                         <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
                         <table class="table table-striped table-bordered table-hover">
                             <h4>
@@ -218,17 +227,10 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 <?php }?>
                             </tbody>
                         </table>
-                    <form  method="post" action="view_daily_data_table_print.php" class="form form-vertical" target="_blank">
-                            <div class="controls">
-                                <input type="hidden" name="p_date" value="<?php echo $date; ?>">
-                                <input type="hidden" name="p_union" value="<?php echo $union; ?>">
-                                <input type="hidden" name="p_pname" value="<?php echo $project_name; ?>">
-                                <button type="submit" class="btn btn-primary">
-                                    Generate and Print Daily Time Sheet
-                                </button>
-                            </div>
-                    </form>
-                    </div>
+                <br>        
+                    <label>______________________</label><br>
+                    <label>  Signature </label>
+                </div>
                 </div>
                 <!--/col-->
                 <!--/col-span-6-->
@@ -237,7 +239,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
             <hr>
         </div>
         <!--/col-span-9-->
-    </div>
+</div></div>
 <!-- /Main -->
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -264,47 +266,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->
-                <script data-config>
-                var filtersConfig = {          
-                paging: true,  
-                paging_length: 20,  
-                results_per_page: ['# rows per page',[20,10,8,6,4,2]],  
-                rows_counter: true,  
-                rows_counter_text: "Rows:",  
-                display_all_text: " [ Show all ] ",
-                loader: true, 
-                col_0: 'select',
-                col_1: 'select',
-                col_2: 'select',
-                col_3: 'select',
-                col_4: 'none',
-                col_5: 'none',
-                col_6: 'none',
-                col_7: 'none',
-                col_8: 'select',
-                col_9: 'none',
-
-                       
-                extensions:[
-                    {
-
-                        editable: false,
-                        selection: false
-
-                    }, {
-                        name: 'sort',
-                        types: [
-                            'string', 'string', 'number',
-                            'number', 'number', 'number',
-                            'number', 'number', 'number'
-                        ]
-                    }
-                ]
-            };
-            var tf = new TableFilter('demo', filtersConfig);
-            tf.init();
-            
-</script>
+                
 <!-- end filter and pagination -->
 </body>
 </html>

@@ -92,8 +92,7 @@ session_start();
                                         </button>
                                     </div>
                         </div>
-                        <h6>Every User will be created with default password "123456" it must by changed by the user when starts to works with page in the top options</h6>
-                                
+                        <h6>Every User will be created with default password "123456" it must by changed by the user when starts to work with the page in the top options</h6>
                         <br>             
                         </div>
                             </form>

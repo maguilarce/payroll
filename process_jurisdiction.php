@@ -4,6 +4,7 @@ require_once('connection.php');
 session_start();
 $state=$_POST['state'];
 $county=$_POST['county'];
+$a_employees=$_POST['employees'];
 $project_name = $_POST['pname'];
 $project_description = $_POST['pdescription'];
 $general_contractor = $_POST['general_contractor'];
@@ -23,8 +24,16 @@ for($i=0;$i<count($state);$i++)
     $laborer = $_POST[$group]['laborer'];
 
     $query = "INSERT INTO jurisdiction VALUES ('','$project_name','$county[$i]','$state[$i]','$operator','$laborer','$teamster')";
-    $result = mysql_query($query);
+    $result = mysql_query($query,$dbh);
 }
+
+for($j=0;$j<count($a_employees);$j++)
+{
+    $query2 = "INSERT INTO emp_proj VALUES ('','$project_name','$a_employees[$j]')";
+    $result2 = mysql_query($query2,$dbh);
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -59,20 +68,24 @@ for($i=0;$i<count($state);$i++)
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
                                 <h4>New Project Profile Created Succesfuly</h4>
-                                <h4><strong>Project Name: </strong><br /><?php echo $project_name; ?></h4>
-                                <h4><strong>Project Description: </strong><br /><?php echo $project_description; ?></h4>
-                                <h4><strong>General Contractor: </strong><br /><?php echo $general_contractor; ?></h4>
-                                <h4><strong>Person in charge of the project: </strong><br /><?php echo $in_charge_of; ?></h4>
-                                <h4><strong>County(ies) where the project has jurisdiction: </strong><br />
-                                <?php 
-                                
-                                for($i=0;$i<count($state);$i++)
-                                {
-                                    echo $county[$i]." - ".$state[$i]."<br />";
-                                }
-                                
+                                <h4><strong>Project Name: </strong><br><?php echo $project_name; ?></h4>
+                                <h4><strong>Project Description: </strong><br><?php echo $project_description; ?></h4>
+                                <h4><strong>General Contractor: </strong><br><?php echo $general_contractor; ?></h4>
+                                <h4><strong>Person in charge of the project: </strong><br><?php echo $in_charge_of; ?></h4>
+                                <h4><strong>Employees in this Project:</strong><br> 
+                                <?php
+                                for($j=0;$j<count($state);$j++)
+                                {   $query3="SELECT * FROM employee WHERE employee_id='".$a_employees[$j]."'";
+                                    $res3= mysql_query($query3,$dbh);
+                                    $row3=  mysql_fetch_array($res3);
+                                    echo $row3['name']."<br>";}
                                 ?>
-                                                                
+                                </h4>
+                                <h4><strong>County(ies) where the project has jurisdiction: </strong><br>
+                                <?php 
+                                for($i=0;$i<count($state);$i++)
+                                {echo $county[$i]." - ".$state[$i]."<br>";}
+                                ?>
                                 </h4>
                                 <h4><strong>Starting date: </strong><br /><?php echo $starting_date; ?></h4>
                                 <h4><strong>Completion date: </strong><br /><?php echo $starting_date; ?></h4>

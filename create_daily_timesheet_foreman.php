@@ -107,11 +107,9 @@ $counties="";
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                        <h4>Manage Daily Time Sheet</h4><br />
-                       
-                                
-                    </div>
-                                    <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="add_daily_foreman_data_table.php" class="form form-vertical validate">                       
+                         </div>
+                            <div class="panel-body">
+                                <form id="form" name="form" method="post" action="add_daily_foreman_data_table.php" class="form form-vertical validate">                       
                                 <div class="control-group">
                                     <label>Associated Project</label>
                                     <div class="controls">

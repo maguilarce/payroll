@@ -334,7 +334,6 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 </div>
 <!-- /Main -->
 
-<footer class="text-center">Let LLC - CopyRight © 2015 - <a href="http://www.letllc.com"><strong>www.letllc.com</strong></a></footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">

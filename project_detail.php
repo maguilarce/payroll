@@ -1,23 +1,9 @@
 <?php
 require_once('connection.php');
+
 session_start();
-$counties="";
- if(isset($_POST["project"]))
-  {
-   $project=$_POST["project"]; 
-   $query2 = "SELECT * FROM jurisdiction WHERE project_name='$project'";
-   $result2 = mysql_query($query2);
-   while($row2 = mysql_fetch_array($result2, MYSQL_ASSOC))
-   {
-    
-    $counties .= $row2['county'].' - '.$row2['state']."\n"."Operators Local Union # ".$row2['operator_local']."\n"."Teamster Local Union # ".$row2['teamster_local']."\n"."Laborer Local Union # ".$row2['laborer_local']."\n\n";
-    }
-    echo ltrim($counties);
-  exit;
-  }
- 
- $query = "SELECT * FROM project";
- $result = mysql_query($query);
+$project_id = $_POST['id_project'];
+      
 ?>
 
 <!DOCTYPE html>
@@ -42,133 +28,127 @@ $counties="";
                 <link href="css/style/colsVisibility.css" rel="stylesheet">
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
-             	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-                <script type="text/javascript" src="jquery/jquery/jQuery.print.js"></script>
-                <script type="text/javascript"> 
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                 <script language="JavaScript"> 
                     $(document).ready(function()
                   {             
                     $( ".delete" ).submit(function( event ) {
-                    if(!confirm( "This will delete selected daily data. Are you sure?" ))
+                    if(!confirm( "This will delete selected project profile. Are you sure?" ))
                         event.preventDefault();
                     });
                    });
                 </script>
-                <script language="JavaScript">
-                    $(document).ready(function()
-                    {
-                       $("#project").change(function()
-                        {
-                            changeFunction();
-                        });
-                    });
+                <script type="text/javascript"> 
+                function verificar(){
+                    var suma = 0;
+                    var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                    for (var i = 0, j = los_cboxes.length; i < j; i++) {
 
-                function changeFunction()
-                {
-                $.ajax({
-                   'type':'POST',
-                   'data':$('form').serialize(),
-                   'success':function(data)
-                   { 
-                       $("#project_description").prop("value",data); 
-                   }
+                    if(los_cboxes[i].checked === true){
+                    suma++;
+                    }
+                }
 
-                   });
+                if(suma === 0){
+                alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                return false;
                 }
-                </script>
-                <script type="text/javascript">
-                   
-                $(document).ready(function () {
-                $('.submit').click(function (event) {
-                var count = $('select option:selected').val();
-                if (count == 0) {
-                    alert('Must select at least one project');
-                    event.preventDefault();
-                    
-                }
-                else {
 
-                    
                 }
-                
-                
-            });
-        });
-                </script>
+                </script> 
 
 	</head>
 	<body>
+
+<!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
-                       
-            <div class="row">
+        <div class="col-sm-10">
+        <div class="row">
                 <!-- center left-->
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                       <h4>Create Daily Time Sheet</h4><br />
-                       
+                        <h2>Project Detail</h2><br>
+                        <h4>Date: <?php echo date("F j, Y");?></h4><br>
                                 
                     </div>
-                                    <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="add_daily_foreman_data_table.php" class="form form-vertical validate">                       
-                                <div class="control-group">
-                                    <label>Associated Project</label>
-                                    <div class="controls">
-                                        <select id="project" name="project" class="form-control">
-                                            <option selected value="0">Select a project...</option>
-                                            <?php
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                             $value = $row['project_name']; 
-                                             echo "<option value = '$value'>{$row['project_name']}</option>";
-                                            }  
-                                            ?>
-
-                                        </select>
-                                    </div>
-                                </div><br />
-                                <div class="control-group">
-                                    <label>Project Location(s)</label><br/>
-                       
-                                    <textarea rows = '10' disabled name="project_description" id="project_description" class="form-control" name="notes"><?php echo ltrim($counties); ?></textarea>
-                                    
-                                </div><br />
-    
-                                <div class="controls">
-                                    <button id='create' type="submit" class="submit btn btn-primary">
-                                    Create New Daily Time Sheet
+                   
+                   <?php
+                   
+                   $query = "SELECT * FROM project WHERE project_id='$project_id'";
+                   $result = mysql_query($query);
+                   
+                   $row = mysql_fetch_array($result,MYSQL_ASSOC);
+                   
+                       $id = $row['project_id'];
+                       $pname = $row['project_name'];
+                       $query2 = "SELECT county,state FROM jurisdiction WHERE project_name='$pname'";
+                       $result2 = mysql_query($query2);
+                       $query3 = "SELECT employee_id FROM emp_proj WHERE project_name='$pname'";
+                       $result3 = mysql_query($query3);
+                       echo "<form method='post'>
+                    <div class='panel panel-default'>       
+                       <div class='panel-heading'>       
+                        <div class='panel-title'>
+                             <table><tr><td style='vertical-align:text-top'>
+                                <h5><strong>Project Name: </strong>".$row['project_name']."<br></h5>
+                                <h5><strong>Project Description: </strong>".$row['project_description']."<br></h5>
+                                <h5><strong>General Contractor: </strong>".$row['general_contractor']."<br></h5>
+                                <h5><strong>Person in charge of the project: </strong><br>".$row['in_charge_of']."</h5>
+                                <h5><strong>Employees in this Project: </strong><br>";
+                               while($row3 = mysql_fetch_array($result3,MYSQL_ASSOC))
+                               {
+                                   $query4="SELECT name FROM employee WHERE employee_id='".$row3['employee_id']."'";
+                                   $result4 = mysql_query($query4);
+                                   $row4=  mysql_fetch_array($result4);
+                                   echo $row4['name']."<br>";
+                               }
+                               echo "</h5></td><td style='vertical-align:text-top'><h5><strong>&nbsp&nbsp Starting date: </strong> ".$row['starting_date']."</h5>
+                                <h5><strong>&nbsp&nbsp Completion date: </strong> ".$row['completion_date']."</h5>
+                                <h5><strong>&nbsp&nbsp County(ies) where project has jurisdiction: </strong><br>";
+                                
+                                while($row2 = mysql_fetch_array($result2,MYSQL_ASSOC))
+                                {
+                                    echo "&nbsp&nbsp&nbsp&nbsp".$row2['county']." - ".$row2['state']."<br/>";
+                                }
+                                
+                               echo "</h5></td></tr></table><br>
+                                <button formaction='edit_project_profile1.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-edit'></i>
+                                    Edit
+                                </button>  
+                                <button formaction='delete_project.php' type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i>
+                                    Delete
                                 </button>
-                                   
-                                      
-                            </form>
                         </div>
-                        <!--/panel content-->
                     </div>
- 
-                    
-        
+                    </div>
+                     <input type='hidden' name='id' value='$id'>
+                     <input type='hidden' name='project_name' value='$pname'>
+                    </form>   
+                       ";                       
+                   
+                   
+                   ?>
+
                     </div>
               
                 </div>
                 <!--/col-->
-            
+                <!--/col-span-6-->
+
             </div>
             <!--/row-->
-
-            <hr>
-
            
         </div>
         <!--/col-span-9-->
     </div>
-</div>
 <!-- /Main -->
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Add Widget</h4>
             </div>

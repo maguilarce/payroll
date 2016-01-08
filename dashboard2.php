@@ -5,6 +5,7 @@ if($_SESSION['logged'])
 {    
 
 require_once('connection.php');
+
 function dias_transcurridos($fecha_i,$fecha_f)
 {
 	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
@@ -12,12 +13,13 @@ function dias_transcurridos($fecha_i,$fecha_f)
 	return $dias;
 }
 
+
 $result = mysql_query("SELECT *
 FROM project");
 
 $employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
 FROM employee
-WHERE hired = 'y';");
+WHERE hired = 'y' AND status = 1;");
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
       
@@ -72,7 +74,7 @@ WHERE hired = 'y';");
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
-            <form action="" method="post" name="daily_data">   
+              
                 <h4><strong>Active Projects</strong></h4>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -83,7 +85,7 @@ WHERE hired = 'y';");
                                     <th>Completion Date</th>
                                     <th>Location</th>
                                     <th>In Charge of</th>
-                                             
+                                    <th>Details</th>         
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,21 +103,15 @@ WHERE hired = 'y';");
                                      <td>
                                         <?php echo "{$row['starting_date']}"; 
                                         if(date("Y-m-d")>$row['starting_date']&&date("Y-m-d")<$row['completion_date'])
-                                        {
-                                            echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: green' ><strong>The project has started</strong></h6>";}
                                         if(date("Y-m-d")<$row['starting_date'])
-                                        {
-                                            echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: blue' ><strong>The project will start in ".dias_transcurridos(date("Y-m-d"),$row['starting_date'])." days</strong></h6>";}
                                         ?>
                                     </td>
                                      <td>
                                         <?php echo "{$row['completion_date']}"."<br/>"; 
                                         if(date("Y-m-d")>$row['completion_date'])
-                                        {
-                                            echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";
-                                        }
+                                        {echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";}
                                        
                                         ?>
                                     </td>
@@ -133,7 +129,12 @@ WHERE hired = 'y';");
                                      <td>
                                         <?php echo "{$row['in_charge_of']}"; ?>
                                     </td>
-                                                                    
+                                    <td>
+                                        <form action="project_detail.php" method="POST">
+                                            <input type="hidden" name="id_project" value="<?php echo "{$row['project_id']} <br>"; ?>">  
+                                         <button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-zoom-in'></i>View</button>   
+                                        </form>                      
+                                    </td>                                
                                 </tr>
                                 <?php                               
                                    }
@@ -182,8 +183,7 @@ WHERE hired = 'y';");
                                      <td>
                                         <?php echo "{$row['crew']}"; ?>
                                     </td>
-                                    
-                                                                    
+                                                      
                                 </tr>
                                 <?php                               
                                    }
@@ -191,10 +191,6 @@ WHERE hired = 'y';");
                             </tbody>
                         </table>
                         
-                        
-                   
-                    </form>
-
                     </div>
                 <div class="col-md-1">
                     <form action="create_weekly_timesheet_superintendent1.php">
