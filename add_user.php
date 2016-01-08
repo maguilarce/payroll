@@ -9,9 +9,12 @@ session_start();
     $email = $_POST['email'];
     $type = $_POST['usertype'];
     
+    //echo $login;
     $query_p="SELECT * FROM user where login='$login'" ;
-    $res=mysql_query($query_p);
-    if(!$res)
+    $res=mysql_query($query_p,$dbh);
+    $row=  mysql_fetch_array($res);
+    //echo $query_p;
+    if(!$row)
     {
         $query = "INSERT INTO user (f_name,l_name,email,login,password,type)
               VALUES ('$name','$lname','$email','$login','$password','$type')";
@@ -56,9 +59,9 @@ session_start();
                         <div class="panel-heading">
                             <div class="panel-title">
                                 <i class="glyphicon glyphicon-wrench pull-right"></i>
-                                <?php if(!$res){ ?>
+                                <?php if(!$row){ ?>
                                 <h4>User added satisfactorily</h4> <?php } ?>
-                                <?php if($res){ ?>
+                                <?php if($row){ ?>
                                 <h4>User already exist, try a diferent login</h4> <?php } ?>
                             </div>
                             <form name="add_user" action="add_user_form.php" target="mainFrame">

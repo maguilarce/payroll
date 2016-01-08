@@ -2,6 +2,10 @@
 require_once('connection.php');
 session_start();
 
+$query = "SELECT * from user WHERE login != 'foreman'";
+$result = mysql_query($query);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +72,21 @@ session_start();
                                         <input id="in_charge_of" name="in_charge_of" type="text" class="form-control" placeholder="Enter Person in charge of this project">
                                     </div><br />
                                 </div> 
+                                <div class="control-group">
+                                    <label>Authorized User Associated to this Project: </label>
+                                    <div class="controls">
+                                        <select name="user_au" class="form-control">
+                                            <option value=""
+                                            <?php
+                                            while($row1 =  mysql_fetch_array($result,MYSQL_ASSOC))                                            
+                                            { 
+                                                echo "<option value=".$row1['iduser'].">{$row1['l_name']},{$row1['f_name']}</option>";}
+                                           ?>
+
+                                        </select>
+                                    </div><br>
+                                </div> 
+                                
                                 <div class="control-group">
                                     <label>Project Starting Date: </label>
                                      <div class="controls">

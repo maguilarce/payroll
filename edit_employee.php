@@ -11,9 +11,10 @@ session_start();
     $home_local = $_POST['home_local'];
     $crew = $_POST['crew'];    
     $hiring_date = $_POST['hiring_date'];
+    $status=$_POST['st_emp'];
     $query = "UPDATE employee
               SET name='$name',home_local='$home_local',social_security_number='$social_security_number',address='$address',phone_number='$phone_number',email='$email',
-              union_trade='$union_trade',hiring_date='$hiring_date',crew='$crew'
+              union_trade='$union_trade',hiring_date='$hiring_date',crew='$crew',status='$status'
               WHERE employee_id='$employee_id'";
     
     $retval = mysql_query( $query, $dbh );

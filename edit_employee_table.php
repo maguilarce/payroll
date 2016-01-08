@@ -47,6 +47,7 @@ session_start();
                                     <th>Home Local # </th>
                                     <th>Crew </th>
                                     <th>Hiring date </th>
+                                    <th>Status</th>
                                     <th colspan="2">Actions</th>
                                     
                                 </tr>
@@ -74,6 +75,7 @@ session_start();
                                     <td><?php echo "{$row['home_local']} <br>"; ?></td> 
                                     <td><?php echo "{$row['crew']} <br>"; ?></td> 
                                     <td><?php echo "{$row['hiring_date']} <br>"; ?></td> 
+                                    <td><?php if($row['status']){echo "Active <br>";}else{ echo "Inactive <br>";} ?></td>
                                     <td>
 
                                         <form name="edit_employee" action="edit_employee_form.php" method="post">

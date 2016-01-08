@@ -5,6 +5,7 @@ if($_SESSION['logged'])
 {    
 
 require_once('connection.php');
+
 function dias_transcurridos($fecha_i,$fecha_f)
 {
 	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
@@ -12,12 +13,13 @@ function dias_transcurridos($fecha_i,$fecha_f)
 	return $dias;
 }
 
+
 $result = mysql_query("SELECT *
 FROM project");
 
 $employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
 FROM employee
-WHERE hired = 'y';");
+WHERE hired = 'y' AND status = 1;");
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
       

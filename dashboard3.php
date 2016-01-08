@@ -1,5 +1,7 @@
 <?php
 require_once('connection.php');
+session_start();
+$iduser=$_SESSION['user_id'];
 function dias_transcurridos($fecha_i,$fecha_f)
 {
 	$dias	= (strtotime($fecha_i)-strtotime($fecha_f))/86400;
@@ -7,8 +9,12 @@ function dias_transcurridos($fecha_i,$fecha_f)
 	return $dias;
 }
 
-$result = mysql_query("SELECT *
-FROM project");
+$query1="SELECT * from user WHERE login='$iduser'";
+$res1=  mysql_query($query1);
+$row1= mysql_fetch_array($res1);
+$uid= $row1['iduser'];
+$query2 = "SELECT * FROM project WHERE user_id='$uid'";
+$result = mysql_query($query2);
 
 $employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
 FROM employee
@@ -65,7 +71,7 @@ WHERE hired = 'y';");
                         <h2>Dashboard - Daily Superintendent</h2>
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                     </div>
-            <form action="" method="post" name="daily_data">   
+            <!--<form action="" method="post" name="daily_data">   -->
                 <h4><strong>Active Projects</strong></h4>
                     <table id="demo" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -76,7 +82,7 @@ WHERE hired = 'y';");
                                     <th>Completion Date</th>
                                     <th>Location</th>
                                     <th>In Charge of</th>
-                                             
+                                    <th>Details</th>         
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,8 +114,7 @@ WHERE hired = 'y';");
                                         if(date("Y-m-d")>$row['completion_date'])
                                         {
                                             echo "<h6 style='color: red' ><strong>Warning: The completion date has expired</strong></h6>";
-                                        }
-                                       
+                                        }                                      
                                         ?>
                                     </td>
                                      <td>
@@ -126,14 +131,20 @@ WHERE hired = 'y';");
                                      <td>
                                         <?php echo "{$row['in_charge_of']}"; ?>
                                     </td>
-                                                                    
+                                    <td>
+                                        <form action="project_detail.php" method="POST">
+                                            
+                                            
+                                        </form>   
+                                           
+                                    </td>                       
                                 </tr>
                                 <?php                               
                                    }
                                 ?>
                             </tbody>
                         </table>
-     
+     <!--
                      <h4><strong>Active Employees</strong></h4>
                     <table id="demo1" class="table table-striped table-bordered table-hover">
                             <thead>
@@ -149,53 +160,43 @@ WHERE hired = 'y';");
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?ph 
                                 while($row = mysql_fetch_array($employees, MYSQL_ASSOC))
                                             { 
                                 ?>
                                 <tr>
                                     <td>
-                                        <?php echo "{$row['name']}"; ?>
+                                        <?ph echo "{$row['name']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['address']}"; ?>
+                                        <?ph echo "{$row['address']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['phone_number']}"; ?>
+                                        <?ph echo "{$row['phone_number']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['email']}"; ?>
+                                        <?ph echo "{$row['email']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['hiring_date']}"; ?>
+                                        <?ph echo "{$row['hiring_date']}"; ?>
                                     </td>
                                     <td>
-                                        <?php echo "{$row['union_trade']}"; ?>
+                                        <?ph echo "{$row['union_trade']}"; ?>
                                     </td>
                                      <td>
-                                        <?php echo "{$row['crew']}"; ?>
-                                    </td>
-                                    
-                                                                    
+                                        <?ph echo "{$row['crew']}"; ?>
+                                    </td>                                 
                                 </tr>
-                                <?php                               
+                                <?ph                        
                                    }
                                 ?>
                             </tbody>
-                        </table>
+                        </table>-->
                         
-                        
-                   
-                    </form>
-
+                    <!--</form> -->
                     </div>
-                
-              
                 </div>
-                
             <hr>
-
-           
         </div>
         <!--/col-span-9-->
     </div>

@@ -10,14 +10,15 @@ $in_charge_of = $_POST['in_charge_of'];
 $states = $_POST['states'];
 $starting_date = $_POST['starting_date'];
 $completion_date = $_POST['completion_date'];
+$user_id=$_POST['user_aut'];
 
-$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of','$starting_date','$completion_date')";
+$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of','$starting_date','$completion_date','$user_id')";
 $result = mysql_query($query);
 if(! $result )
-    {
-     die('Could not get data: ' . mysql_error());
+  {
+    die('Could not get data: ' . mysql_error());
 
-    }
+  }
 
 //*************************************************************************************
 ?>
@@ -130,7 +131,7 @@ if(! $result )
                                 <input type="hidden" name="in_charge_of" value="<?php echo $in_charge_of; ?>">
                                 <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
                                 <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
-                        
+                                
                                 <button type="submit" class="btn btn-primary" >
                                     Continue to Step 4 >>
                                 </button>

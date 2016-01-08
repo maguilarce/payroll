@@ -3,7 +3,7 @@ require_once('connection.php');
 session_start();
 $result1 = mysql_query("SELECT *
                        FROM employee
-                       WHERE hired = 'y'");
+                       WHERE hired = 'y' AND status=1");
 
 
 $result2 = mysql_query("SELECT job_function_type
