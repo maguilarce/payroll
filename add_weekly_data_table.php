@@ -460,13 +460,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
    
                             <label></label>
                             <div class="controls">
-                                <form action="add_weekly_data_table_print.php" target="_BLANK">
-                                    
-                                <button type="submit" class="btn btn-primary" disabled>
+                                <form action="add_weekly_data_table_print.php" target="_blank">
+                                 <input type="hidden" name="project" value="<?php echo $project_name; ?>">   
+                                  <button type="submit" class="btn btn-primary">
                                     Generate and Print Weekly Time Sheet
-                                   
-                                </button>
-                                    <input name='boton67' type='button' id='boton67' value='Imprimir' onclick='P_div4();' align='middle'/>
+                                  </button>
                                 </form>
                             </div>
                         </div>

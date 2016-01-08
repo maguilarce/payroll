@@ -452,12 +452,12 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                    
                             <label></label>
                 </form>
-                <form  method="post" action="print_table1.php" class="form form-vertical" target="_blank">
+                <form  method="post" action="view_weekly_data_table_print.php" class="form form-vertical" target="_blank">
                         <div class="controls">
-                                <input type="hidden" name="job_function" value="<?php echo $week; ?>">
-                                <input type="hidden" name="job_function" value="<?php echo $union; ?>">
-                                <input type="hidden" name="job_function" value="<?php echo $project_name; ?>">
-                                <button type="button" class="btn btn-primary" onclick="P_div4();">
+                                <input type="hidden" name="p_week" value="<?php echo $week; ?>">
+                                <input type="hidden" name="p_union" value="<?php echo $union; ?>">
+                                <input type="hidden" name="p_pname" value="<?php echo $project_name; ?>">
+                                <button type="submit" class="btn btn-primary"">
                                     Generate and Print Weekly Time Sheet
                                 </button>
                         </div>
