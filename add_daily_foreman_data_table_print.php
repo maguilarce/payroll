@@ -99,7 +99,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                                     <th>Group</th>
                                     <th>Worked Hours</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                   
                                    
                                 </tr>
                             </thead>
@@ -132,29 +132,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                                     <td>
                                         <?php echo "{$row['status']}"; ?>          
                                     </td>
-
-
-
-                                    <td>
-                                        <form action="edit_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                            <button type="submit" class="btn btn-primary" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
-                                            <!--<input type="submit" name="modify" value="Modify">-->
-                                        </form>
-                                        <br />
-                                        <form class="delete" id="delete" action="delete_daily_foreman_data_form.php" method="post">
-                                            <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                            <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                            <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                            <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                            <button type="submit" class="btn btn-primary" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                                            <!--<input type="submit" name="delete" value="Delete">-->
-                                        </form>
-                                    </td> 
                                     
-
-                                
                                 </tr>
                                 <?php                               
                                    }
@@ -162,8 +140,8 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                             </tbody>
                         </table>
                 <br>        
-                <label>______________________</label><br>
-                <label>  Signature </label>
+                <label>_______________________</label><br>
+                <label>&nbsp;&nbsp;Signature </label>
                 </div><br>
                 </div>
               

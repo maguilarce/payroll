@@ -18,7 +18,7 @@ $result = mysql_query($query2);
 
 $employees = mysql_query("SELECT name,address,phone_number,email,hiring_date,union_trade,crew 
 FROM employee
-WHERE hired = 'y';");
+WHERE hired = 'y' AND status = 1;");
 //$row = mysql_fetch_array($result, MYSQL_ASSOC);
 
       

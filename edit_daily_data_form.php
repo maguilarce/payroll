@@ -25,6 +25,56 @@ $result = mysql_query("SELECT *
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
+                <script type="text/javascript"> 
+                    function verificar(){
+                        var suma = 0;
+                        var los_cboxes = document.getElementsByName('daily_premium_rate[]'); 
+                        for (var i = 0, j = los_cboxes.length; i < j; i++) {
+
+                        if(los_cboxes[i].checked === true){
+                        suma++;
+                        }
+                    }
+
+                    if(suma === 0){
+                    alert("Must select at least one Premium Rate/Daily Lump Rate. You can choose 'None'");
+                    return false;
+                    }
+
+                    }
+                    
+                function desactivar() {
+                        var los_cboxes = document.getElementsByName("daily_premium_rate[]");
+                        var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
+                        var elem = document.getElementById("pay_rate_type");
+                        var elem2 = document.getElementById("payrate").value;
+                        var res = elem2.split(" ");
+                        var cant = res.length;
+                        elem.value = res[cant-1];
+                        //alert("entra");
+                        var j = los_cboxes.length
+                        var k = ot_cboxes.length;
+                        if(res[cant-1]=== "OT")
+                        {   for (var i = 0; i < j; i++) 
+                            {los_cboxes[0].checked = true;
+                             los_cboxes[i].disabled = true;}
+                             for (var l = 0; l < k; l++) 
+                            {ot_cboxes[0].checked = true;
+                             ot_cboxes[l].disabled = true;}
+                         
+                         }
+                         if(res[cant-1]=== "ST")
+                         {  for (var i = 0; i < j; i++) 
+                            { los_cboxes[0].checked = false
+                              los_cboxes[i].disabled = false;   
+                            }
+                            for (var l = 0; l < k; l++) 
+                            {ot_cboxes[0].checked = false;
+                             ot_cboxes[l].disabled = false;}
+                         }
+                     }
+        </script>
+                
 	</head>
 	<body>
 
@@ -113,26 +163,17 @@ $result = mysql_query("SELECT *
                                         ?>
                                          </select>
                                     </td>  
-                                      <td>
-                                         <select name="pay_rate_type" class="form-control"> 
-                                        
+                                        <td>
                                             <?php
                                             $query = "SELECT pay_rate_type from daily_timesheet WHERE daily_timesheet_id = '$id';";
                                             $result = mysql_query($query);
-                                            while($row1 = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                                if($row['pay_rate_type']=='ST')
-                                                {
-                                                    echo "<option selected>ST</option><option>OT</option>";
-                                                }
-                                                else echo "<option selected>OT</option><option>ST</option>";
-                     
-                                            }  
+                                            $row1 = mysql_fetch_array($result, MYSQL_ASSOC);
+                                            $prt = $row1['pay_rate_type'];
+                                            echo "<input type='text' id='pay_rate_type' value='$prt' disabled>";    
+                                              
                                         ?>
                              
-                                         
-                                         </select>
-                                    </td>
+                                        </td>
                                     <td>
                                         
                                         <?php

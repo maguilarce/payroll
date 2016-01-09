@@ -137,7 +137,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     <th>Worked Hours</th>
                                     <th>Status</th>
                                     <th>Notes</th>
-                                    <th>Action</th>
+                                   
                                    
                                 </tr>
                             </thead>
@@ -245,25 +245,6 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     </td>
 
 
-                                    <td>
-                                        <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">
-                                        <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
-                                        <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
-                                        <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
-                                        <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
-                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                       
-                                        
-                                            <button type="submit" formaction="edit_daily_data_form.php">Modify</button>
-                                        
-                                        
-                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php">Delete</button><br/><br/>
-                                        
-                                        
-                                        <button type="submit" formaction="process2.php" class="btn btn-primary" <?php echo $button;?>>Process </button>
-
-                            
-                                    </td> 
                                     
                                     
                                 
@@ -280,7 +261,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         </table>
                     <br>        
                     <label>______________________</label><br>
-                    <label>  Signature </label>   
+                    <label>&nbsp;&nbsp;Signature </label>   
                     
                     </div>
               

@@ -163,8 +163,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     <th>Saturday</th>
                                     <th>Sunday</th>
                                     <th>Total Week Hours</th>
-                                    <th>Action</th>
-                                   
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -432,22 +431,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         $menweeklyhours+=$totalh;
                                         ?>
                                     </td>
-
-            
-
-                                    <td>
-                                    
-                                      
-
-                                            
-                                        <button type="submit" formaction="edit_weekly_data_form.php">Modify</button> <br /><br />
-                                        <button onclick="eliminar();" type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
-                                        <button type="submit" formaction="process_week2.php" class="btn btn-primary" <?php echo $button; ?> >Process </button> <br />
-                                        <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                                    </td> 
-                                    
-
-                                
+                            
                                 </tr>
                                 <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                 <input type="hidden" name="employee" value="<?php echo "{$row['employee_name']}"; ?>">

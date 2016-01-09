@@ -1,6 +1,7 @@
 <?php
 require_once('connection.php');
 session_start();
+$iduser=$_SESSION['user_id'];
 $counties="";
  if(isset($_POST["project"]))
   {
@@ -15,9 +16,15 @@ $counties="";
     echo ltrim($counties);
   exit;
   }
- 
- $query = "SELECT * FROM project";
- $result = mysql_query($query);
+
+$query1="SELECT * from user WHERE login='$iduser'";
+$res1=  mysql_query($query1);
+$row1= mysql_fetch_array($res1);
+$uid= $row1['iduser'];
+
+$query = "SELECT * FROM project WHERE user_id='$uid'";
+$result = mysql_query($query);
+
 ?>
 
 <!DOCTYPE html>
