@@ -20,6 +20,7 @@ $result6 = mysql_query("SELECT status_type
 
 $project_name = $_POST['project_name'];     
 
+echo $project_name;
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +139,7 @@ $project_name = $_POST['project_name'];
                                 </button>
                             </div>
                         </div>
-                        <input type="hidden" name="project_name" value="<?php echo $_POST['project_name'];?>"
+                        <input type="hidden" name="project_name" value="<?php echo $project_name;?>">
                     </form>
                     </div>
               
