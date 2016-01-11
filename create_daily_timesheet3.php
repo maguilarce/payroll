@@ -161,8 +161,14 @@ $result4 = mysql_query($query4);
                                     View Current Weekly Time Sheet
                                 </button>
                                    
-                                      
-                            </form>
+                        
+                     <br>
+                     <form action="create_weekly_timesheet_superintendent1.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
+                        
+                    </form>      
                         </div>
                         <!--/panel content-->
                     </div>

@@ -20,7 +20,7 @@ $result6 = mysql_query("SELECT status_type
 
 $project_name = $_POST['project_name'];     
 
-echo $project_name;
+
 ?>
 
 <!DOCTYPE html>
@@ -141,6 +141,13 @@ echo $project_name;
                         </div>
                         <input type="hidden" name="project_name" value="<?php echo $project_name;?>">
                     </form>
+                    <br>
+                    <form action="add_daily_foreman_data_table.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
+                        
+                    </form>      
                     </div>
               
                 </div>

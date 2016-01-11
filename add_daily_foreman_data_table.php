@@ -184,6 +184,8 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
                         </tr></table>
                     </div>
               
+                        
+                    </form>      
                 </div>
                 <!--/col-->
                 <!--/col-span-6-->
