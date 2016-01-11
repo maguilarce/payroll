@@ -21,9 +21,33 @@ $query1="SELECT * from user WHERE login='$iduser'";
 $res1=  mysql_query($query1);
 $row1= mysql_fetch_array($res1);
 $uid= $row1['iduser'];
+$u_type = $row1['type'];
 
-$query = "SELECT * FROM project WHERE user_id='$uid'";
-$result = mysql_query($query);
+if($u_type=='foreman'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=4";
+$result3 = mysql_query($query3);
+}
+if($u_type=='manager'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=3";
+$query4 = "SELECT * FROM project WHERE level=4";
+$result3 = mysql_query($query3);
+$result4 = mysql_query($query4);
+}
+
+if($u_type=='superintendent'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=2";
+$query4 = "SELECT * FROM project WHERE level=3 OR level=4";
+$result3 = mysql_query($query3);
+$result4 = mysql_query($query4);
+}
+
+if($u_type=='admin'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=1";
+$query4 = "SELECT * FROM project WHERE level=2 OR level=3 OR level=4";
+$result3 = mysql_query($query3);
+$result4 = mysql_query($query4);
+}
+
 
 ?>
 
@@ -123,11 +147,23 @@ $result = mysql_query($query);
                                         <select id="project" name="project" class="form-control">
                                             <option selected value="0">Select a project...</option>
                                             <?php
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+                                            //caso que sea foreman 
+                                            if($u_type=='foreman'){
+                                            while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
                                             { 
-                                             $value = $row['project_name']; 
-                                             echo "<option value = '$value'>{$row['project_name']}</option>";
-                                            }  
+                                             $value = $row3['project_name']; 
+                                             echo "<option value = '$value'>{$row3['project_name']}</option>";
+                                            }}
+                                            
+                                            //caso que sea otro usuario diferente a foreman
+                                            else{
+                                             while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
+                                             {$value = $row3['project_name']; 
+                                             echo "<option value = '$value'>{$row3['project_name']}</option>";}
+                                             while($row4 = mysql_fetch_array($result4, MYSQL_ASSOC))
+                                             {$value = $row4['project_name']; 
+                                             echo "<option value = '$value'>{$row4['project_name']}</option>";}
+                                            }
                                             ?>
 
                                         </select>

@@ -48,6 +48,7 @@ $result = mysql_query("SELECT *
                         var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
                         var elem = document.getElementById("pay_rate_type");
                         var elem2 = document.getElementById("payrate").value;
+                        var nones = document.getElementsByName("nones");
                         var res = elem2.split(" ");
                         var cant = res.length;
                         elem.value = res[cant-1];
@@ -61,7 +62,7 @@ $result = mysql_query("SELECT *
                              for (var l = 0; l < k; l++) 
                             {ot_cboxes[0].checked = true;
                              ot_cboxes[l].disabled = true;}
-                         
+                             nones.value=1;
                          }
                          if(res[cant-1]=== "ST")
                          {  for (var i = 0; i < j; i++) 
@@ -71,6 +72,7 @@ $result = mysql_query("SELECT *
                             for (var l = 0; l < k; l++) 
                             {ot_cboxes[0].checked = false;
                              ot_cboxes[l].disabled = false;}
+                            nones.value=0;
                          }
                      }
         </script>
@@ -82,10 +84,10 @@ $result = mysql_query("SELECT *
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-11">
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-12">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                         <h2>Daily Time Sheet</h2><br />
@@ -144,7 +146,7 @@ $result = mysql_query("SELECT *
                                     </td>      
                                     
                                     <td>
-                                         <select name="pay_rate" class="form-control"> 
+                                         <select id="payrate" name="pay_rate" class="form-control" onchange="javascript:desactivar();">
                                         <?php
                                    
                                             $query = "SELECT pay_rate_type from pay_rate;";
@@ -312,8 +314,16 @@ $result = mysql_query("SELECT *
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
+                         <input type="hidden" name="nones" value="0">
                         
                     </form>
+                    <br>
+                    <form action="add_daily_data_table.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
+                        
+                    </form>      
                     </div>
               
                 </div>

@@ -1,6 +1,7 @@
 <?php
 require_once('connection.php');
 session_start();
+$iduser=$_SESSION['user_id'];
 $counties="";
  if(isset($_POST["project"]))
   {
@@ -16,8 +17,25 @@ $counties="";
   exit;
   }
  
- $query = "SELECT * FROM project";
- $result = mysql_query($query);
+$query1="SELECT * from user WHERE login='$iduser'";
+$res1=  mysql_query($query1);
+$row1= mysql_fetch_array($res1);
+$uid= $row1['iduser'];
+$u_type = $row1['type'];
+
+if($u_type=='superintendent'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=2";
+$query4 = "SELECT * FROM project WHERE level=3 OR level=4";
+$result3 = mysql_query($query3);
+$result4 = mysql_query($query4);
+}
+
+if($u_type=='admin'){    
+$query3 = "SELECT * FROM project WHERE user_id='$uid' and level=1";
+$query4 = "SELECT * FROM project WHERE level=2 OR level=3 OR level=4";
+$result3 = mysql_query($query3);
+$result4 = mysql_query($query4);
+}
 ?>
 
 <!DOCTYPE html>
@@ -118,11 +136,13 @@ $counties="";
                                         <select id="project" name="project" class="form-control">
                                             <option selected value="0">Select a project...</option>
                                             <?php
-                                            while($row = mysql_fetch_array($result, MYSQL_ASSOC))
-                                            { 
-                                             $value = $row['project_name']; 
-                                             echo "<option value = '$value'>{$row['project_name']}</option>";
-                                            }  
+                                            while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
+                                             {$value = $row3['project_name']; 
+                                             echo "<option value = '$value'>{$row3['project_name']}</option>";}
+                                             while($row4 = mysql_fetch_array($result4, MYSQL_ASSOC))
+                                             {$value = $row4['project_name']; 
+                                             echo "<option value = '$value'>{$row4['project_name']}</option>";}
+                                            
                                             ?>
 
                                         </select><br/>
@@ -175,6 +195,13 @@ $counties="";
                                    
                                       
                             </form>
+                                        <br>
+                     <form action="create_weekly_timesheet_superintendent1.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    
+                        
+                    </form>      
                         </div>
                         <!--/panel content-->
                     </div>

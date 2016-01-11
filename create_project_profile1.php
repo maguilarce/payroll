@@ -82,8 +82,9 @@ $result = mysql_query($query);
                                             { 
                                                 echo "<option value=".$row1['iduser'].">{$row1['l_name']},{$row1['f_name']}</option>";}
                                            ?>
-
+                                                    
                                         </select>
+                                        
                                     </div><br>
                                 </div> 
                                 
