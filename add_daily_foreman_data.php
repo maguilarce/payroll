@@ -8,7 +8,7 @@ session_start();
     $status = $_POST['status'];
     $project_name = $_POST['project_name'];  
     $total_hours = $_POST['worked_hours'];
-   echo $project_name;
+   //echo $project_name;
     
     //getting pay rate type of given pay rate
     $query = "SELECT type FROM pay_rate WHERE pay_rate_type = '$pay_rate' ";
@@ -99,7 +99,7 @@ session_start();
                                 <h4>New daily data added successfully</h4>
                             </div>
                             <form action="add_daily_foreman_data_table.php" method="post">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
                                 <input type="hidden" name="project" value="<?php echo $project_name;?>">
                             </form>
                            

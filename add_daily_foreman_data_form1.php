@@ -7,15 +7,13 @@ session_start();
     $old_jf = $_POST['old_jf'];
     $date = $_POST['date'];
     $new_pay_rate = $_POST['pay_rate'];
-    $new_pay_rate_type = $_POST['pay_rate_type'];
+    $new_pay_rate_type = $_POST['nprt'];
     $new_total_hours = $_POST['worked_hours'];
     $new_status = $_POST['status'];
     $new_notes = $_POST['notes'];
     $preview_hours = $_POST['preview_hours'];
     $employee = $_POST['employee'];
   
-
-    
 //update daily worker data
     $query = "UPDATE daily_timesheet
               SET job_function='$new_job_function',

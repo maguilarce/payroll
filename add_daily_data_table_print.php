@@ -47,6 +47,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 <link href="css/style/filtersVisibility.css" rel="stylesheet">
                 <!--end filter and pagination -->
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+                
                 <script type="text/javascript" src="js/jQuery.print.js"></script> 
                 
                 <script language="JavaScript"> 
@@ -83,8 +84,10 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 }
                 </script> 
  <script>
-        function P_div4(){$(area).print(); return( false );}
+    function P_div4(){$(area).print(); return( false );}
+    
     </script>
+
 	</head>
 	<body>
 
@@ -303,7 +306,6 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->

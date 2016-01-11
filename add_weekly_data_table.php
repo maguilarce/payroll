@@ -435,8 +435,8 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                       
 
                                             
-                                        <button type="submit" formaction="edit_weekly_data_form.php">Modify</button> <br /><br />
-                                        <button onclick="eliminar();" type="submit" formaction="delete_weekly_data_form.php">Delete</button> <br /><br />
+                                        <button type="submit" formaction="edit_weekly_data_form.php" class="btn btn-primary">Modify</button> <br /><br />
+                                        <button onclick="eliminar();" type="submit" formaction="delete_weekly_data_form.php" class="btn btn-primary">Delete</button> <br /><br />
                                         <button type="submit" formaction="process_week2.php" class="btn btn-primary" <?php echo $button; ?> >Process </button> <br />
                                         <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                     </td> 
@@ -466,6 +466,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     Generate and Print Weekly Time Sheet
                                   </button>
                                 </form>
+                            </div>
+                            <div class="controls">
+                                <form action="create_weekly_timesheet_superintendent1.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    </form>
                             </div>
                         </div>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">

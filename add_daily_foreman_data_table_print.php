@@ -64,7 +64,7 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 <!-- Main -->
 <div id="boton_print">
   <div class="controls">
-    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Weekly Time Sheet</button>
+    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Daily Time Sheet</button>
   </div> </div><hr>
 <div id="area">
 <div class="container-fluid">
@@ -176,7 +176,6 @@ $retval2 = mysql_query("SELECT county,state FROM jurisdiction WHERE project_name
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->

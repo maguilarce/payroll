@@ -29,6 +29,20 @@ $result = mysql_query("SELECT *
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
+                <script type="text/javascript"> 
+                function desactivar() {
+                        var elem = document.getElementById("pay_rate_type");
+                        var nprt = document.getElementById("nprt");
+                        var elem2 = document.getElementById("payrate").value;
+                        var res = elem2.split(" ");
+                        var cant = res.length;
+                        elem.value = res[cant-1];
+                        nprt.value=elem.value;
+                        //alert("entra");
+                        
+                     }
+        </script>
+                
 	</head>
 	<body>
 
@@ -95,7 +109,7 @@ $result = mysql_query("SELECT *
                                     </td>      
                                     
                                     <td>
-                                         <select name="pay_rate" class="form-control"> 
+                                         <select id="payrate" name="pay_rate" class="form-control" onchange="javascript:desactivar();">
                                         <?php
                                    
                                             $query = "SELECT pay_rate_type from pay_rate;";
@@ -115,14 +129,14 @@ $result = mysql_query("SELECT *
                                          </select>
                                     </td>  
                                       <td>
-                                         <select name="pay_rate_type" class="form-control"> 
-                                        
-                                   
-                                            <option>ST</option>
-                                            <option>OT</option>
-
-                                         
-                                         </select>
+                                        <?php
+                                            $query = "SELECT pay_rate_type from daily_timesheet WHERE daily_timesheet_id = '$id';";
+                                            $result = mysql_query($query);
+                                            $row1 = mysql_fetch_array($result, MYSQL_ASSOC);
+                                            $prt = $row1['pay_rate_type'];
+                                            echo "<input type='text' id='pay_rate_type' value='$prt' readonly='readonly'>";    
+                                              
+                                        ?>
                                     </td>    
                                     
                                     
@@ -171,6 +185,14 @@ $result = mysql_query("SELECT *
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                        <input type="hidden" id="nprt" name="nprt" value="T">
+                        
+                    </form>
+                    <br>
+                    <form action="add_daily_foreman_data_table.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
                     </form>
                     </div>
               

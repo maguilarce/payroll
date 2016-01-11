@@ -75,6 +75,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 </script> 
     <script>
         function P_div4(){$(area).print(); return( false );}
+        
     </script>
 	</head>
 	<body>
@@ -82,7 +83,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 <!-- Main -->
 <div id="boton_print">
   <div class="controls">
-    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Weekly Time Sheet</button>
+    <button type="button" class="btn btn-primary" onclick="P_div4();">Print Daily Time Sheet</button>
   </div> </div><hr>
 <div id="area">
 <div class="container-fluid">
@@ -223,13 +224,12 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                     <td>
                                 <?php echo "{$row['daily_notes']}"; ?>  
                                     </td>             </tr>
-                                </form>
                                 <?php }?>
                             </tbody>
                         </table>
                 <br>        
                     <label>______________________</label><br>
-                    <label>  Signature </label>
+                    <label>&nbsp;&nbsp;Signature </label>
                 </div>
                 </div>
                 <!--/col-->
@@ -262,7 +262,6 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 </div>
 <!-- /.modal -->
 	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/scripts.js"></script>
                 <!-- filter and pagination -->

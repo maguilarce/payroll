@@ -328,14 +328,14 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
-                         <input type="hidden" name="nones" value="0">
+                         <input type="hidden" name="nones"  id="nones" value="0">
                         
                     </form>
                     <br>
                     <form action="add_daily_data_table.php" method="post">
                     <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
                     <input type="hidden" name="project" value="<?php echo $project_name; ?>">
-                    <input type="hidden" name="nones" value="0">
+ 
                         
                     </form>      
                     </div>

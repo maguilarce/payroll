@@ -460,7 +460,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 
                 <br>        
                 <label>______________________</label><br>
-                <label>  Signature </label>
+                <label>&nbsp;&nbsp;Signature </label>
                 </div><br>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                     
