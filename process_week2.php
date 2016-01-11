@@ -7,6 +7,7 @@ $employee=$_POST['employee'];
 $job_function=$_POST['job_function'];
 $id=$_POST['id'];
 $date = $_POST['date'];
+$pay_rate = $_POST['pay_rate'];
 
 
 $query = "UPDATE daily_timesheet
@@ -24,7 +25,7 @@ $count = count($weekly_lump_payments);
     {
         $wlp = $weekly_lump_payments[$i];
      
-        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$job_function','$wlp')";
+        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$job_function','$wlp','$pay_rate')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {

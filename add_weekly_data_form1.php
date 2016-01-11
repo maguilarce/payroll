@@ -5,6 +5,7 @@ session_start();
     $id = $_POST['id'];
     $new_job_function = $_POST['job_function'];
     $old_jf = $_POST['old_jf'];
+    $old_pr = $_POST['old_pr'];
     $date = $_POST['date'];
     $new_pay_rate = $_POST['pay_rate'];
     $new_pay_rate_type = $_POST['pay_rate_type'];
@@ -40,7 +41,7 @@ session_start();
   
     //deleting previus daily premium rates
     
-    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' AND pay_rate = '$old_pr' ";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -51,7 +52,7 @@ session_start();
     for($i=0;$i<count($daily_premium_rate);$i++)
     {
         $dpr = $daily_premium_rate[$i];
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dpr') ";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dpr','$new_pay_rate') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {
@@ -61,7 +62,7 @@ session_start();
                 
      //deleting previus daily lump rates
     
-    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' AND pay_rate = '$old_pr'";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -72,7 +73,7 @@ session_start();
     for($i=0;$i<count($daily_lump_sum_rate);$i++)
     {
         $dlr = $daily_lump_sum_rate[$i];
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dlr') ";
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dlr','$new_pay_rate') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {
@@ -82,7 +83,7 @@ session_start();
     
  //deleting previous weekly lump payment rates
        
-    $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date',3) AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM weekly_lump_payments_employees WHERE week = week('$date',3) AND employee = '$employee' AND job_function = '$old_jf' AND pay_rate = '$old_pr' ";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -93,7 +94,7 @@ session_start();
     for($i=0;$i<count($weekly_lump_payment);$i++)
     {
         $wlp = $weekly_lump_payment[$i];
-        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$new_job_function','$wlp') ";
+        $query = "INSERT INTO weekly_lump_payments_employees VALUES ('',week('$date',3),'$employee','$new_job_function','$wlp','$new_pay_rate') ";
         $result1 = mysql_query($query);
         if(! $result1 )
         {

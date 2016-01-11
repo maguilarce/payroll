@@ -2,7 +2,7 @@
 require_once('connection.php');
 session_start();
 $date = $_POST['date']; 
-$union = $_POST['union']; 
+//$union = $_POST['union']; 
 $project_name = $_POST['project']; 
 
 $result = mysql_query("SELECT daily_timesheet_id,date,employee_name,employee.union_trade,employee.home_local,job_function,pay_rate,pay_rate_type,total_day_hours,daily_timesheet.status,daily_notes,processed
@@ -150,11 +150,12 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
+                                            $pay_rate = $row['pay_rate'];
                                             
                                         if($row['processed']=='yes')
                                         {   
 
-                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date' AND pay_rate = '$pay_rate';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -182,7 +183,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
-                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date' AND pay_rate = '$pay_rate';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {

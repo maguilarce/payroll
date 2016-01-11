@@ -2,6 +2,23 @@
 require_once('connection.php');
 session_start();
 $iduser=$_SESSION['user_id'];
+
+
+
+function getStartAndEndDate($week, $year)
+{
+
+    $time = strtotime("1 January $year", time());
+    $day = date('w', $time);
+    $time += ((7*$week)+1-$day)*24*3600;
+    $return[0] = date('Y-n-j', $time);
+    $time += 6*24*3600;
+    $return[1] = date('Y-n-j', $time);
+    return $return;
+}
+
+
+
 $counties="";
  if(isset($_POST["project"]))
   {
@@ -149,36 +166,22 @@ $result4 = mysql_query($query4);
                                          <label>Select a week</label>
                                         <select id="week" name="week" class="form-control">
                                             <?php
-                                            $date = new DateTime();
-                                            $today = new DateTime(date('m/d/Y'));
-                                            $week = $today->format("W");
+                                            
+                                            
                                             
                                             for($i=$week,$j=0;$i<=53;$i++,$j++)
                                             {
+                                                $return = getStartAndEndDate($i, date("Y"));
                                                 
-                                                $first = $date->setISODate(date('Y'), date('W')+$j, "1")->format('m/d/Y');
-                                                $last = $date->setISODate(date('Y'),date('W')+$j, "7")->format('m/d/Y'); 
-                                                echo "<option value = '$i'>From ".$first." to ".$last."</option>";
+                                                ?>
+                                            <option value="<?php echo $i; ?>" <?php if ($i == date('W')) { echo 'selected="selected"';} ?>><?php echo "From ".$return[0]." to ".$return[1]; ?></option> <?php
+                                                 
                                             }
+                                            
+                                            
                                             ?>
                                         </select><br/>
-                                         <label>Select union trade</label>
-                                         <select id="union" name="union" class="form-control">
-                                            <?php
-                                            $query = "SELECT union_trade_type FROM union_trade";
-                                            $retval = mysql_query( $query, $dbh );
-                                            if(! $retval )
-                                            {
-                                             die('Could not get data: ' . mysql_error());
-                                            }
-                                             while($row1 = mysql_fetch_array($retval, MYSQL_ASSOC))
-                                            { 
-                                                
-                                             echo "<option>{$row1['union_trade_type']}</option>";
-                     
-                                            }  
-                                            ?>
-                                        </select>
+                                        
                                     </div>
                                 </div><br />
                                 <div class="control-group">
