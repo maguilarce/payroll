@@ -178,7 +178,7 @@ $result4 = mysql_query($query4);
     
                                 <div class="controls">
                                     <button id='create' type="submit" class="submit btn btn-primary">
-                                    Create New Daily Time Sheet
+                                    Create New/Manage Daily Time Sheet
                                 </button>
                                    
                                       

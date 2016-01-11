@@ -167,11 +167,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
-                                            
+                                            $pay_rate = $row['pay_rate'];
                                         if($row['processed']=='yes')
                                         {   
                                             
-                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $query = "SELECT premium_rate FROM daily_premium_rate WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date' AND pay_rate = '$pay_rate';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -200,7 +200,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             $employee = $row['employee_name'];
                                             $job_function =  $row['job_function'];
                                             $date = $row['date'];
-                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date';";
+                                            $query = "SELECT daily_lump_rate FROM daily_lump_rates WHERE employee='$employee' AND job_function = '$job_function' AND date = '$date' AND pay_rate = '$pay_rate';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -246,6 +246,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                                         <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
                                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
+                                        <input type="hidden" name="pay_rate" value="<?php echo $row['pay_rate']; ?>">
                                         <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                        
                                         

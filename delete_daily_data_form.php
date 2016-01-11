@@ -2,6 +2,7 @@
 require_once('connection.php');
 session_start();
     $project_name = $_POST['project'];  
+    $pay_rate = $_POST['pay_rate']; 
     $daily_timesheet_id = $_POST['id'];
     $query = "DELETE FROM daily_timesheet WHERE daily_timesheet_id = '$daily_timesheet_id' ";
     $retval = mysql_query( $query, $dbh );
@@ -19,7 +20,7 @@ session_start();
  //******************************************************************************************************************************************************************  
 //deleting daily premium rates
 
-    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' AND pay_rate = '$pay_rate' ";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -28,7 +29,7 @@ session_start();
    
    //deleting daily lump rates
    
-   $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+   $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' AND pay_rate = '$pay_rate'";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -92,7 +93,7 @@ session_start();
                             </div>
                             <form name="delete_form" action="add_daily_data_table.php" method="post">
                                 <input type="submit" value="Back">
-                                <input type="hidden" name='project' value="<?php echo $project_name;?>"
+                                <input type="hidden" name='project' value="<?php echo $project_name;?>">
                             </form>
                            
                         </div>

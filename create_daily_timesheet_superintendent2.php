@@ -157,23 +157,7 @@ $result4 = mysql_query($query4);
                                             <span class="add-on"><i class="icon-th"></i></span>
                                         
                                      </div><br/>
-                                         <label>Select union trade</label>
-                                         <select id="union" name="union" class="form-control">
-                                            <?php
-                                            $query = "SELECT union_trade_type FROM union_trade";
-                                            $retval = mysql_query( $query, $dbh );
-                                            if(! $retval )
-                                            {
-                                             die('Could not get data: ' . mysql_error());
-                                            }
-                                             while($row1 = mysql_fetch_array($retval, MYSQL_ASSOC))
-                                            { 
-                                                
-                                             echo "<option>{$row1['union_trade_type']}</option>";
-                     
-                                            }  
-                                            ?>
-                                        </select>
+                                        
                                     </div>
                                 </div><br />
                                 <div class="control-group">

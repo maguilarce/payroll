@@ -206,7 +206,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         $job_f = $row['job_function'];
                                         $emp = $row['employee_name'];
                                         $dat=$row['date'];
-                                        
+                                        $pay_rate = $row['pay_rate'];
                                       
                                         $query = mysql_query("SELECT 
                                             daily_premium_rate.premium_rate AS premium ,premium_rate.premium_rate_amount AS amount
@@ -214,7 +214,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_premium_rate
                                             INNER JOIN premium_rate ON daily_premium_rate.premium_rate = premium_rate.premium_rate_type
                                             WHERE
-                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat'");
+                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat' and pay_rate = '$pay_rate'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "{$row1['premium']}"."<br /><br />";
@@ -231,7 +231,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_premium_rate
                                             INNER JOIN premium_rate ON daily_premium_rate.premium_rate = premium_rate.premium_rate_type
                                             WHERE
-                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat'");
+                                            daily_premium_rate.employee = '$emp' and daily_premium_rate.job_function = '$job_f' and week = week(now(),3) and daily_premium_rate.date = '$dat' and pay_rate = '$pay_rate'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "$"."{$row1['amount']}"."<br /><br /><br />";
@@ -247,7 +247,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_lump_rates
                                             INNER JOIN daily_lump_sum_rate ON daily_lump_rates.daily_lump_rate = daily_lump_sum_rate.daily_lump_sum_type
                                             WHERE
-                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat'");
+                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat' and pay_rate = '$pay_rate'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "{$row1['lump']}"."<br /><br />";
@@ -263,7 +263,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             daily_lump_rates
                                             INNER JOIN daily_lump_sum_rate ON daily_lump_rates.daily_lump_rate = daily_lump_sum_rate.daily_lump_sum_type
                                             WHERE
-                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat'");
+                                            daily_lump_rates.employee = '$emp' and daily_lump_rates.job_function = '$job_f' and week = week(now(),3) and daily_lump_rates.date = '$dat' and pay_rate = '$pay_rate'");
                                         while ($row1 = mysql_fetch_array($query, MYSQL_ASSOC))
                                         {
                                             echo "$"."{$row1['amount']}"."<br /><br /><br />";
@@ -278,7 +278,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                        if($row['processed_week']=='yes')
                                         {   
                                            $button = "disabled";
-                                            $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date',3);";
+                                            $query = "SELECT weekly_lump_payment FROM weekly_lump_payments_employees WHERE employee='$employee_name' AND job_function = '$job_function' AND week = week('$date',3) and pay_rate = '$pay_rate';";
                                             $result1 = mysql_query($query);
                                             while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -449,6 +449,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                 <input type="hidden" name="date" value="<?php echo "{$row['date']}"; ?>">
                                 <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                                 <input type="hidden" name="job_function" value="<?php echo $row['job_function']; ?>">
+                                <input type="hidden" name="pay_rate" value="<?php echo $row['pay_rate']; ?>">
                                 </form>
                                 <?php  
 

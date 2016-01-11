@@ -6,6 +6,7 @@ session_start();
     $id = $_POST['id'];
     $new_job_function = $_POST['job_function'];
     $old_jf = $_POST['old_jf'];
+    $old_pr = $_POST['old_pr'];
     $date = $_POST['date'];
     $new_pay_rate = $_POST['pay_rate'];
     $new_pay_rate_type = $_POST['prt2'];
@@ -43,7 +44,7 @@ session_start();
   
     //deleting previus daily premium rates
     
-    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' AND pay_rate = '$old_pr'";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -55,7 +56,7 @@ session_start();
         for($i=0;$i<count($daily_premium_rate);$i++)
         {
             $dpr = $daily_premium_rate[$i];
-            $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dpr') ";
+            $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dpr','$new_pay_rate') ";
             $result1 = mysql_query($query);
             if(! $result1 )
             {
@@ -65,7 +66,7 @@ session_start();
     }
     if($nones==1){    
     //inserting new daily premium rates
-            $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','none') ";
+            $query = "INSERT INTO daily_premium_rate VALUES ('',week('$date',3),'$date','$employee','$new_job_function','none','$new_pay_rate') ";
             $result1 = mysql_query($query);
             if(! $result1 )
             {
@@ -75,7 +76,7 @@ session_start();
     
      //deleting previus daily lump rates
     
-    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' ";
+    $query = "DELETE FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$old_jf' AND pay_rate = '$old_pr'";
     $result1 = mysql_query($query);
     if(! $result1 )
         {
@@ -87,7 +88,7 @@ session_start();
         for($i=0;$i<count($daily_lump_sum_rate);$i++)
         {
             $dlr = $daily_lump_sum_rate[$i];
-            $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dlr') ";
+            $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','$dlr','$new_pay_rate') ";
             $result1 = mysql_query($query);
             if(! $result1 )
             {
@@ -99,7 +100,7 @@ session_start();
     if($nones==1){
     //inserting new daily lump rates
             $dlr = $daily_lump_sum_rate[$i];
-            $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','none') ";
+            $query = "INSERT INTO daily_lump_rates VALUES ('',week('$date',3),'$date','$employee','$new_job_function','none','$new_pay_rate') ";
             $result1 = mysql_query($query);
             if(! $result1 )
             {

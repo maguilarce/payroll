@@ -31,7 +31,7 @@ session_start();
     $count = count($premium_rate);
     for ($i = 0; $i < $count; $i++)
     {
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','$premium_rate[$i]')";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','$premium_rate[$i]','$pay_rate')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
@@ -41,7 +41,7 @@ session_start();
         $count = count($daily_lump_sum_rate);
         for ($i = 0; $i < $count; $i++)
         {
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','$daily_lump_sum_rate[$i]')";
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','$daily_lump_sum_rate[$i]','$pay_rate')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
@@ -55,14 +55,14 @@ session_start();
     }
     if($nones==1)
     {
-        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','none')";
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','none','$pay_rate')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
             die('Could not set data: ' . mysql_error());
         }
         
-        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','none')";
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','none','$pay_rate')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {

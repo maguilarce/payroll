@@ -2,8 +2,23 @@
 require_once('connection.php');
 session_start();
 $week = $_POST['week']; 
-$union = $_POST['union']; 
+
 $project_name = $_POST['project']; 
+
+
+
+function getStartAndEndDate($week, $year)
+{
+
+    $time = strtotime("1 January $year", time());
+    $day = date('w', $time);
+    $time += ((7*$week)+1-$day)*24*3600;
+    $return[0] = date('Y-n-j', $time);
+    $time += 6*24*3600;
+    $return[1] = date('Y-n-j', $time);
+    return $return;
+}
+
 
 $result = mysql_query("SELECT 
 daily_timesheet_id,
@@ -23,7 +38,7 @@ daily_timesheet
 INNER JOIN pay_rate ON daily_timesheet.pay_rate = pay_rate.pay_rate_type
 
 INNER JOIN employee ON daily_timesheet.employee_name = employee.name
-WHERE week_number = week(now(),3) AND associated_project = '$project_name' AND week_number = '$week'
+WHERE associated_project = '$project_name' AND week_number = '$week'
 ORDER BY employee_name");
 
 
@@ -118,9 +133,11 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                             <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
                             <tr><td><strong>Pay Period: </strong><?php
                             $date = new DateTime();
-                            $first = $date->setISODate(date('Y'), $week, "1")->format('m/d/Y');
-                            $last = $date->setISODate(date('Y'),$week, "7")->format('m/d/Y'); 
-                            echo "From ".$first." to ".$last;
+                            $return = getStartAndEndDate($week, date("Y"));
+                            //$first = $date->setISODate(date('Y'), $week, 1)->format('m/d/Y');
+                            //$last = $date->setISODate(date('Y'),$week, 7)->format('m/d/Y'); 
+                           // echo "From ".$first." to ".$last;
+                            echo "From "."<strong>".$return[0]."</strong>"." to "."<strong>".$return[1]."</strong>";
                             ?></td></tr>
                             <tr><td><strong>Project Location(s): </strong><?php
                             $i=1;

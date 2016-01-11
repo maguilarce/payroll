@@ -3,6 +3,7 @@ require_once('connection.php');
 session_start();
 $project_name = $_POST['project']; 
 $id = $_POST['id'];
+$pay_rate = $_POST['pay_rate'];
 $result = mysql_query("SELECT *
                        FROM daily_timesheet
                        WHERE daily_timesheet_id = '$id'");
@@ -194,7 +195,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                                         $values = array();
                                         $selected = array();
                                         
-                                        $query = "SELECT * FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+                                        $query = "SELECT * FROM daily_premium_rate WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' AND pay_rate = '$pay_rate' ";
                                         $result1 = mysql_query($query);
                                         while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -234,7 +235,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                                         //SHOW THE DAILY LUMP SUM RATES SELECTED AND NOT SELECTED
                                         $values1 = array();
                                         $selected1 = array();
-                                        $query = "SELECT * FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' ";
+                                        $query = "SELECT * FROM daily_lump_rates WHERE date = '$date' AND employee = '$employee' AND job_function = '$job_function' AND pay_rate = '$pay_rate'";
                                         $result1 = mysql_query($query);
                                         while($row1 = mysql_fetch_array($result1, MYSQL_ASSOC))
                                             {
@@ -359,6 +360,7 @@ $row = mysql_fetch_array($result, MYSQL_ASSOC);
                         <input type="hidden" name="preview_hours" value="<?php echo $row['total_day_hours']; ?>">
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
+                        <input type="hidden" name="old_pr" value="<?php echo $row['pay_rate']; ?>">
                         <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                     </form>
                     </div>
