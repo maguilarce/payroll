@@ -72,6 +72,7 @@ $project_name = $_POST['project_name'];
                         var los_cboxes = document.getElementsByName("daily_premium_rate[]");
                         var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
                         var elem = document.getElementById("pay_rate_type");
+                        var nones = document.getElementsByName("nones");
                         var elem2 = document.getElementById("payrate").value;
                         var res = elem2.split(" ");
                         var cant = res.length;
@@ -86,7 +87,7 @@ $project_name = $_POST['project_name'];
                              for (var l = 0; l < k; l++) 
                             {ot_cboxes[0].checked = true;
                              ot_cboxes[l].disabled = true;}
-                         
+                             nones.value=1;
                          }
                          if(res[cant-1]=== "ST")
                          {  for (var i = 0; i < j; i++) 
@@ -96,6 +97,7 @@ $project_name = $_POST['project_name'];
                             for (var l = 0; l < k; l++) 
                             {ot_cboxes[0].checked = false;
                              ot_cboxes[l].disabled = false;}
+                            nones.value=0;
                          }
                      }
 
@@ -224,16 +226,26 @@ $project_name = $_POST['project_name'];
           
                             </tbody>
                         </table>
+                        
                         <div class="control-group">
                             <label></label>
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
                                     Save new register
                                 </button>
+                                <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
+                         <input type="hidden" name="nones" value="0">
                             </div>
                         </div>
-                         <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
+                         
                     </form>
+                    <br>
+                    <form action="add_daily_data_table.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
+                        
+                    </form>      
                     </div>
               
                 </div>

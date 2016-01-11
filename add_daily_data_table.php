@@ -249,10 +249,10 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                         <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                                        
                                         
-                                            <button type="submit" formaction="edit_daily_data_form.php">Modify</button>
+                                            <button type="submit" formaction="edit_daily_data_form.php" class="btn btn-primary">Modify</button>
                                         
                                         
-                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php">Delete</button><br/><br/>
+                                        <button onclick="eliminar();" type="submit" formaction="delete_daily_data_form.php" class="btn btn-primary">Delete</button><br/><br/>
                                         
                                         
                                         <button type="submit" formaction="process2.php" class="btn btn-primary" <?php echo $button;?>>Process </button>

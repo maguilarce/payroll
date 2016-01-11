@@ -10,6 +10,14 @@ $starting_date = $_POST['starting_date'];
 $completion_date = $_POST['completion_date'];
 $user_au=$_POST['user_au'];
 
+$query= "SELECT type FROM user WHERE iduser='$user_au'";
+$res = mysql_query($query);
+$row = mysql_fetch_array($res);
+if($row['type']=='admin'){ $level=1;}
+if($row['type']=='superintendent'){ $level=2;}
+if($row['type']=='manager'){ $level=3;}
+if($row['type']=='foreman'){ $level=4;}
+
 //*************************************************************************************
 ?>
 
@@ -93,7 +101,7 @@ $user_au=$_POST['user_au'];
                             ?>
                                 </div>
                                 
-                                <br />
+                                <br />-master/
                                 <button type="submit" class="btn btn-primary" >
                                     Continue to Step 3 >>
                                 </button>
@@ -104,6 +112,7 @@ $user_au=$_POST['user_au'];
                                 <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
                                 <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
                                 <input type="hidden" name="user_aut" value="<?php echo $user_au; ?>">
+                                <input type="hidden" name="level" value="<?php echo $level; ?>">
                         </form>
                        
                         <!--/panel content-->

@@ -13,6 +13,7 @@ session_start();
     $status = $_POST['status'];
     $notes = $_POST['notes'];
     $project_name = $_POST['project_name'];
+    $nones=$_POST['nones'];
     //////////inserting data into daily timesheet
     $query = "INSERT INTO daily_timesheet(date,week_number,employee_name,job_function,total_day_hours,status,pay_rate,pay_rate_type,daily_notes,associated_project,processed) VALUES (now(),week(now(),3),'$employee','$job_function','$total_hours','$status','$pay_rate','$pay_rate_type','$notes','$project_name','yes')";
     $retval = mysql_query( $query, $dbh );
@@ -22,8 +23,10 @@ session_start();
 
     }
     
-    //////////inserting data into daily premium rates
     
+    if($nones==0)
+    {
+//////////inserting data into daily premium rates
     $count = count($premium_rate);
     for ($i = 0; $i < $count; $i++)
     {
@@ -33,20 +36,43 @@ session_start();
         {
             die('Could not set data: ' . mysql_error());
         }
-    }
-    
-    //////////inserting data into daily lump sum rates
-    
-    $count = count($daily_lump_sum_rate);
-    for ($i = 0; $i < $count; $i++)
-    {
+//////////inserting data into daily lump sum rates
+        $count = count($daily_lump_sum_rate);
+        for ($i = 0; $i < $count; $i++)
+        {
         $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','$daily_lump_sum_rate[$i]')";
         $retval = mysql_query( $query, $dbh );
         if(! $retval )
         {
             die('Could not set data: ' . mysql_error());
         }
+        }
+    
     }
+    
+    
+    }
+    if($nones==1)
+    {
+        $query = "INSERT INTO daily_premium_rate VALUES ('',week(now()),now(),'$employee','$job_function','none')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not set data: ' . mysql_error());
+        }
+        
+        $query = "INSERT INTO daily_lump_rates VALUES ('',week(now()),now(),'$employee','$job_function','none')";
+        $retval = mysql_query( $query, $dbh );
+        if(! $retval )
+        {
+            die('Could not set data: ' . mysql_error());
+        }
+    
+        
+        
+    }
+    
+    
     
 
     
@@ -116,7 +142,7 @@ session_start();
                                 <h4>New daily data added successfully</h4>
                             </div>
                             <form action="add_daily_data_table.php" method="post">
-                                <input type="submit" value="Back">
+                                <button type="submit" class="btn btn-primary">Back</button>
                                 <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                             </form>
                            

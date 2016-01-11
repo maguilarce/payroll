@@ -11,8 +11,9 @@ $states = $_POST['states'];
 $starting_date = $_POST['starting_date'];
 $completion_date = $_POST['completion_date'];
 $user_id=$_POST['user_aut'];
+$level=$_POST['level'];
 
-$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of','$starting_date','$completion_date','$user_id')";
+$query = "INSERT INTO project VALUES ('','$project_name','$project_description','$general_contractor','$in_charge_of','$starting_date','$completion_date','$user_id','$level')";
 $result = mysql_query($query);
 if(! $result )
   {

@@ -82,10 +82,10 @@ $result = mysql_query("SELECT *
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-11">
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-14">
+                <div class="col-md-12">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                         <h2>Daily Time Sheet</h2><br />
@@ -314,6 +314,13 @@ $result = mysql_query("SELECT *
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
                         
                     </form>
+                    <br>
+                    <form action="add_daily_data_table.php" method="post">
+                    <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
+                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="nones" value="0">
+                        
+                    </form>      
                     </div>
               
                 </div>
