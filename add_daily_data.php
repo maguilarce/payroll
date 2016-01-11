@@ -23,7 +23,8 @@ session_start();
 
     }
     
-    
+    echo $pay_rate_type;
+    echo $nones;
     if($nones==0)
     {
 //////////inserting data into daily premium rates
