@@ -12,7 +12,18 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/var/www/html/payroll/dashboard2.php</file>
+=======
+            <file>file:/C:/xampp/htdocs/payroll/dbconfig.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/view_daily_data_table.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/view_daily_data_table_print.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/add_daily_data_table.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/edit_daily_data_form.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/create_daily_timesheet3.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/dashboard.php</file>
+            <file>file:/C:/xampp/htdocs/payroll/create_weekly_timesheet_superintendent1.php</file>
+>>>>>>> 1e18240e8ada50e2c448bace2ab920d726b5fbeb
         </group>
     </open-files>
 </project-private>

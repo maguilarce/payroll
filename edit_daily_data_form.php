@@ -6,6 +6,7 @@ $project_name = $_POST['project'];
 $result = mysql_query("SELECT *
                        FROM daily_timesheet
                        WHERE daily_timesheet_id = '$id'");
+$retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$project_name'");
 ?>
 
 <!DOCTYPE html>
@@ -90,8 +91,21 @@ $result = mysql_query("SELECT *
                 <div class="col-md-12">
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
-                        <h2>Daily Time Sheet</h2><br />
-                        <h4>Date: </h4><br />
+                        <h4><strong>Daily Time Sheet - Superintendent</strong></h4>
+                        <table class="table table-striped table-bordered table-hover">
+                            <h4>
+                            <tr><td><strong>Date:</strong> <?php echo date("F j, Y");?></td></tr>
+                            <tr><td><strong>Project Name: </strong><?php echo $project_name;?></td></tr>
+                            <tr><td><strong>Project Location(s): </strong></td></tr><?php
+
+                            $i=1;
+                            while($row2 = mysql_fetch_array($retval2,1))
+                            {
+                               echo "<tr><td>".$i++.")".$row2['county'].", ".$row2['state']." ---> <strong>Operators Local Union #:</strong> ".$row2['operator_local']."<strong> / Teamster Local Union #: </strong>".$row2['teamster_local']." <strong> / Laborer Local Union #: </strong>".$row2['laborer_local']."</td></tr>";
+                            }
+                            ?>
+                            </h4>
+                        </table>
                                 
                     </div>
                     <form action="add_daily_data_form1.php" method="post" name="daily_data">
