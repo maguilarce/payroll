@@ -48,11 +48,13 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         var los_cboxes = document.getElementsByName("daily_premium_rate[]");
                         var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
                         var elem = document.getElementById("pay_rate_type");
+                        var prt2 = document.getElementById("prt2");
                         var elem2 = document.getElementById("payrate").value;
                         var nones = document.getElementsByName("nones");
                         var res = elem2.split(" ");
                         var cant = res.length;
                         elem.value = res[cant-1];
+                        prt2.value = elem.value;
                         //alert("entra");
                         var j = los_cboxes.length
                         var k = ot_cboxes.length;
@@ -185,7 +187,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                                             $result = mysql_query($query);
                                             $row1 = mysql_fetch_array($result, MYSQL_ASSOC);
                                             $prt = $row1['pay_rate_type'];
-                                            echo "<input type='text' id='pay_rate_type' value='$prt' disabled>";    
+                                            echo "<input type='text' id='pay_rate_type' value='$prt' readonly='reandonly'>";    
                                               
                                         ?>
                              
@@ -329,6 +331,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         <input type="hidden" name="date" value="<?php echo $row['date']; ?>">
                         <input type="hidden" name="old_jf" value="<?php echo $row['job_function']; ?>">
                          <input type="hidden" name="nones"  id="nones" value="0">
+                         <input type="hidden" name="prt2"  id="prt2" value="0">
                         
                     </form>
                     <br>

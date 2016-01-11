@@ -6,7 +6,7 @@ session_start();
     $employee = $_POST['employee'];
     $job_function = $_POST['job_function'];
     $pay_rate = $_POST['pay_rate'];
-    $pay_rate_type = $_POST['pay_rate_type'];
+    $pay_rate_type = $_POST['prt2'];
     $premium_rate = $_POST['daily_premium_rate'];//contar y mandar a la bd - es un arreglo, no una variable
     $daily_lump_sum_rate = $_POST['daily_lump_sum_rate'];//contar y mandar a la bd - es un arreglo, no una variable
     $total_hours = $_POST['worked_hours'];
