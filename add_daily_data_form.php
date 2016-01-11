@@ -72,11 +72,13 @@ $project_name = $_POST['project_name'];
                         var los_cboxes = document.getElementsByName("daily_premium_rate[]");
                         var ot_cboxes = document.getElementsByName("daily_lump_sum_rate[]");
                         var elem = document.getElementById("pay_rate_type");
+                        var prt2 = document.getElementById("prt2");
                         var nones = document.getElementById("nones");
                         var elem2 = document.getElementById("payrate").value;
                         var res = elem2.split(" ");
                         var cant = res.length;
                         elem.value = res[cant-1];
+                        prt2.value = elem.value;
                         //alert("entra");
                         var j = los_cboxes.length
                         var k = ot_cboxes.length;
@@ -171,7 +173,7 @@ $project_name = $_POST['project_name'];
                                       
                                     </td>    
                                     <td>
-                                        <input type="text" id="pay_rate_type" disabled>    
+                                        <input type="text" id="pay_rate_type" readonly="readonly">    
                                     </td>    
                                     
                                     <td>
@@ -235,6 +237,7 @@ $project_name = $_POST['project_name'];
                                 </button>
                                 <input type="hidden" name="project_name" value="<?php echo $project_name; ?>">
                          <input type="hidden" name="nones" id="nones" value="0">
+                         <input type="hidden" name="prt2"  id="prt2" value="0">
                             </div>
                         </div>
                          

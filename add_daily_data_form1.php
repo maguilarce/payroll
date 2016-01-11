@@ -8,7 +8,7 @@ session_start();
     $old_jf = $_POST['old_jf'];
     $date = $_POST['date'];
     $new_pay_rate = $_POST['pay_rate'];
-    $new_pay_rate_type = $_POST['pay_rate_type'];
+    $new_pay_rate_type = $_POST['prt2'];
     $new_total_hours = $_POST['worked_hours'];
     $new_status = $_POST['status'];
     $new_notes = $_POST['notes'];
