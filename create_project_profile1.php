@@ -2,7 +2,7 @@
 require_once('connection.php');
 session_start();
 
-$query = "SELECT * from user WHERE login != 'foreman'";
+$query = "SELECT * from user";
 $result = mysql_query($query);
 
 

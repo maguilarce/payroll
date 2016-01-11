@@ -12,7 +12,7 @@ $in_charge_of = $_POST['in_charge_of'];
 $states = $_POST['states'];
 $starting_date = $_POST['starting_date'];
 $completion_date = $_POST['completion_date'];
-
+$user_au=$_POST['user_au'];
 
 //updating project table...
 $query = "UPDATE project
@@ -21,7 +21,8 @@ $query = "UPDATE project
                   general_contractor='$general_contractor',
                   in_charge_of = '$in_charge_of',
                   starting_date='$starting_date',
-                  completion_date='$completion_date'
+                  completion_date='$completion_date',
+                  user_id='$user_au'
               WHERE project_id=' $project_id'";
 
 $result = mysql_query($query);

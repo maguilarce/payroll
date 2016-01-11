@@ -10,6 +10,7 @@ $general_contractor = $_POST['general_contractor'];
 $in_charge_of = $_POST['in_charge_of'];
 $starting_date = $_POST['starting_date'];
 $completion_date = $_POST['completion_date'];
+$user_au=$_POST['user_au'];
 //*************************************************************************************
 
 $selected_states = array();
@@ -124,6 +125,8 @@ while($row = mysql_fetch_array($result,1))
                                 <input type="hidden" name="starting_date" value="<?php echo $starting_date; ?>">
                                 <input type="hidden" name="completion_date" value="<?php echo $completion_date; ?>">
                                 <input type="hidden" name="old_project_name" value="<?php echo $old_project_name; ?>">
+                                <input type="hidden" name="user_au" value="<?php echo $user_au; ?>">
+                                
                                 
                         </form>
                        

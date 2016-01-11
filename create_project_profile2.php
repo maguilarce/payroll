@@ -101,7 +101,7 @@ if($row['type']=='foreman'){ $level=4;}
                             ?>
                                 </div>
                                 
-                                <br />-master/
+                                <br />
                                 <button type="submit" class="btn btn-primary" >
                                     Continue to Step 3 >>
                                 </button>

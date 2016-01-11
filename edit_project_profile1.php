@@ -6,6 +6,9 @@ $query = "SELECT * FROM project WHERE project_id='$id'";
 $result = mysql_query($query);
 $row = mysql_fetch_array($result,1);
 
+$query2 = "SELECT * from user";
+$result2 = mysql_query($query2);
+
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +75,27 @@ $row = mysql_fetch_array($result,1);
                                     <div class="controls">
                                         <input id="in_charge_of" name="in_charge_of" type="text" class="form-control" value="<?php echo $row['in_charge_of']; ?>">
                                     </div><br />
+                                </div> 
+                                <div class="control-group">
+                                    <label>Authorized User Associated to this Project: </label>
+                                    <div class="controls">
+                                        <select name="user_au" class="form-control">
+                                            <option value=""
+                                            <?php
+                                            while($row1 =  mysql_fetch_array($result2,MYSQL_ASSOC))                                            
+                                            { 
+                                                if($row['user_id']==$row1['iduser']){
+                                                echo "<option selected value=".$row1['iduser'].">{$row1['l_name']},{$row1['f_name']}</option>";
+                                                }
+                                                if($row['user_id']!=$row1['iduser']){
+                                                echo "<option value=".$row1['iduser'].">{$row1['l_name']},{$row1['f_name']}</option>";
+                                                }
+                                            }
+                                           ?>
+                                                    
+                                        </select>
+                                        
+                                    </div><br>
                                 </div> 
                                 <div class="control-group">
                                     <label>Project Starting Date: </label>

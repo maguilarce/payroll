@@ -130,7 +130,7 @@ $result4 = mysql_query($query4);
                                 
                     </div>
                                     <div class="panel-body">
-                                        <form id="form" name="form" method="post" action="add_weekly_data_table.php" class="form form-vertical validate">                       
+                             <form id="form" name="form" method="post" action="add_weekly_data_table.php" class="form form-vertical validate">                       
                                 <div class="control-group">
                                     <label>Select Associated Project To Current Weekly Time Sheet</label>
                                     <div class="controls">
@@ -138,11 +138,16 @@ $result4 = mysql_query($query4);
                                             <option selected value="0">Select a project...</option>
                                             <?php
                                             while($row3 = mysql_fetch_array($result3, MYSQL_ASSOC))
-                                             {$value = $row3['project_name']; 
-                                             echo "<option value = '$value'>{$row3['project_name']}</option>";}
+                                             {
+                                                $value = $row3['project_name']; 
+                                                echo "<option value = '$value'>{$row3['project_name']}</option>";
+                                             
+                                             }
                                              while($row4 = mysql_fetch_array($result4, MYSQL_ASSOC))
-                                             {$value = $row4['project_name']; 
-                                             echo "<option value = '$value'>{$row4['project_name']}</option>";}
+                                             {
+                                                $value = $row4['project_name']; 
+                                                echo "<option value = '$value'>{$row4['project_name']}</option>";
+                                             }
                                             
                                             ?>
 
@@ -163,7 +168,7 @@ $result4 = mysql_query($query4);
                                    
                         
                      <br>
-                     <form action="create_weekly_timesheet_superintendent1.php" method="post">
+                    <form action="create_weekly_timesheet_superintendent1.php" method="post">
                     <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
                     <input type="hidden" name="project" value="<?php echo $project_name; ?>">
                     <input type="hidden" name="nones" value="0">

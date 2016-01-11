@@ -70,7 +70,7 @@ WHERE hired = 'y' AND status = 1;");
                     <div class="panel-title">
                         <i class="glyphicon glyphicon-wrench pull-right"></i>
                        
-                        <h2>Dashboard - Daily Superintendent</h2>
+                        <h2>Dashboard - System Administrator</h2>
                         <h4>Today's Date: <?php echo date("F j, Y");?></h4><br/>
                                 
                     </div>
