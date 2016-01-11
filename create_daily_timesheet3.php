@@ -165,7 +165,7 @@ $result4 = mysql_query($query4);
                      <br>
                      <form action="create_weekly_timesheet_superintendent1.php" method="post">
                     <button type="submit" class="btn btn-primary glyphicon glyphicon-backward">Back</button>   
-                    <input type="hidden" name="project" value="<?php echo $project_name; ?>">
+                    <input type="hidden" name="project" value="<?php echo $project; ?>">
                     <input type="hidden" name="nones" value="0">
                         
                     </form>      
