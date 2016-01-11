@@ -250,18 +250,9 @@ $project_name = $_POST['project_name'];
               
                 </div>
                 <!--/col-->
-                
-                            <!--
-			right MENU
-		<!-->
-               
-                <!--/col-span-6-->
-
+          
             </div>
             <!--/row-->
-
-            <hr>
-
            
         </div>
         <!--/col-span-9-->
