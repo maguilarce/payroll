@@ -74,7 +74,7 @@ session_start();
                                  <div class="control-group">
                                     <label>SSN</label>
                                     <div class="controls">
-                                        <input name="social_security_number" tyaaape="text" class="form-control" placeholder="Enter SSN" pattern="[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{4}" required>
+                                        <input name="social_security_number" tyaaape="text" class="form-control" placeholder="Enter SSN (000-00-0000)" pattern="[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{4}" required>
                                     </div>
                                 </div><br />
                                  <div class="control-group">
