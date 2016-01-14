@@ -44,25 +44,25 @@ session_start();
                                 <div class="control-group">
                                     <label>First Name</label>
                                     <div class="controls">
-                                        <input name="first_name" type="text" value="<?php echo $row['f_name']; ?>" class="form-control" placeholder="Enter Name">
+                                        <input name="first_name" type="text" value="<?php echo $row['f_name']; ?>" class="form-control" placeholder="Enter First Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label>Last Name</label>
                                     <div class="controls">
-                                        <input name="last_name" type="text" value="<?php echo $row['l_name']; ?>" class="form-control" placeholder="Enter Name">
+                                        <input name="last_name" type="text" value="<?php echo $row['l_name']; ?>" class="form-control" placeholder="Enter Last Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div>
                                <div class="control-group">
                                     <label>Email</label>
                                     <div class="controls">
-                                        <input name="email" type="text" value="<?php echo "{$row['email']}"; ?>" class="form-control" placeholder="Enter SSN">
+                                        <input name="email" type="email" value="<?php echo "{$row['email']}"; ?>" class="form-control" placeholder="Enter E-Mail" required>
                                     </div>
                                 </div>
                                  <div class="control-group">
                                     <label>Login</label>
                                     <div class="controls">
-                                        <input name="login" type="text" value="<?php echo "{$row['login']}"; ?>" class="form-control" placeholder="Enter Address">
+                                        <input name="login" type="text" value="<?php echo "{$row['login']}"; ?>" class="form-control" placeholder="Enter Login" pattern="[A-Za-z.-]+" required>
                                     </div>
                                 </div> 
                                                                  

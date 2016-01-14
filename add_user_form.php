@@ -48,13 +48,13 @@ session_start();
                                 <div class="control-group">
                                     <label>First Name</label>
                                     <div class="controls">
-                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="Enter First Name">
+                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="Enter First Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div><br />
                                 <div class="control-group">
                                     <label>Last Name</label>
                                     <div class="controls">
-                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Enter Last Name">
+                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Enter Last Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div><br />
                                 
@@ -62,13 +62,13 @@ session_start();
                                  <div class="control-group">
                                     <label>Login</label>
                                     <div class="controls">
-                                        <input name="login" type="text" class="form-control" placeholder="Enter Login">
+                                        <input name="login" type="text" class="form-control" placeholder="Enter Login" pattern="[A-Za-z0-9.-]+" requiredrequired>
                                     </div>
                                 </div><br />
                                 <div class="control-group">
                                     <label>Email</label>
                                     <div class="controls">
-                                        <input name="email" type="text" class="form-control" placeholder="Enter email">
+                                        <input name="email" type="email" class="form-control" placeholder="Enter email" required >
                                     </div><br />
                                 </div>                                  
                                 <div class="control-group">

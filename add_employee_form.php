@@ -60,13 +60,13 @@ session_start();
                                 <div class="control-group">
                                     <label>First Name</label>
                                     <div class="controls">
-                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="Enter First Name">
+                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="Enter First Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div><br />
                                 <div class="control-group">
                                     <label>Last Name</label>
                                     <div class="controls">
-                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Enter Last Name">
+                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Enter Last Name" pattern="[A-Za-z]+" required>
                                     </div>
                                 </div><br />
                                 
@@ -74,25 +74,25 @@ session_start();
                                  <div class="control-group">
                                     <label>SSN</label>
                                     <div class="controls">
-                                        <input name="social_security_number" type="text" class="form-control" placeholder="Enter SSN">
+                                        <input name="social_security_number" tyaaape="text" class="form-control" placeholder="Enter SSN" pattern="[0-9.-]+" required>
                                     </div>
                                 </div><br />
                                  <div class="control-group">
                                     <label>Address</label>
                                     <div class="controls">
-                                        <input name="address" type="text" class="form-control" placeholder="Enter Address">
+                                        <input name="address" type="text" class="form-control" placeholder="Enter Address" pattern="[A-Za-z0-9.-#()]+" required>
                                     </div><br />
                                 </div> 
                                 <div class="control-group">
                                     <label>Phone Number</label>
                                     <div class="controls">
-                                        <input name="phone_number" type="text" class="form-control" placeholder="Enter Phone Number">
+                                        <input name="phone_number" type="text" class="form-control" placeholder="Enter Phone Number" pattern="[0-9()-]+" required>
                                     </div><br />
                                 </div> 
                                 <div class="control-group">
                                     <label>Email</label>
                                     <div class="controls">
-                                        <input name="email" type="text" class="form-control" placeholder="Enter email">
+                                        <input name="email" type="email" class="form-control" placeholder="Enter email">
                                     </div><br />
                                 </div>                                  
                                 <div class="control-group">
@@ -114,7 +114,7 @@ session_start();
                         <div class="control-group">
                                     <label>Home local #</label>
                                     <div class="controls">
-                                        <input id="home_local" name="home_local" type="text" class="form-control" placeholder="Enter Home Local #">
+                                        <input id="home_local" name="home_local" type="text" class="form-control" placeholder="Enter Home Local #" pattern="[0-9.-()]" required>
                                     </div><br />
                                 <div class="control-group">
                                     <label>Crew</label>
