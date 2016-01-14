@@ -74,7 +74,7 @@ session_start();
                                  <div class="control-group">
                                     <label>SSN</label>
                                     <div class="controls">
-                                        <input name="social_security_number" tyaaape="text" class="form-control" placeholder="Enter SSN" pattern="[0-9.-]+" required>
+                                        <input name="social_security_number" tyaaape="text" class="form-control" placeholder="Enter SSN" pattern="[0-9-]{4}[0-9-]{3}[0-9]{4}" required>
                                     </div>
                                 </div><br />
                                  <div class="control-group">
@@ -92,7 +92,7 @@ session_start();
                                 <div class="control-group">
                                     <label>Email</label>
                                     <div class="controls">
-                                        <input name="email" type="email" class="form-control" placeholder="Enter email">
+                                        <input name="email" type="email" class="form-control" placeholder="Enter email" required>
                                     </div><br />
                                 </div>                                  
                                 <div class="control-group">
