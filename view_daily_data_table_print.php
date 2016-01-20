@@ -10,6 +10,12 @@ FROM employee INNER JOIN daily_timesheet
 ON employee.name=daily_timesheet.employee_name
 WHERE date = '$date' AND associated_project = '$project_name';");
 
+$user = $_SESSION['user_id'];
+$sql_n = "SELECT * FROM user where login ='$user'";
+$result_n =  mysql_query($sql_n);
+$row_n = mysql_fetch_array($result_n);
+$signature=$row_n['f_name']." ".$row_n['l_name'];
+
 if(mysql_num_rows($result)==0)
 {
     $message="Alert: You have not yet entered any record.";
@@ -229,7 +235,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                         </table>
                 <br>        
                     <label>______________________</label><br>
-                    <label>&nbsp;&nbsp;Signature </label>
+                    <label>&nbsp;<?php echo $signature; ?></label>
                 </div>
                 </div>
                 <!--/col-->

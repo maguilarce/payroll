@@ -40,6 +40,13 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
 
       $query = mysql_query("SELECT total_week_hours FROM week_hours");
       $row1 = mysql_fetch_array($query, MYSQL_ASSOC);
+      
+$user = $_SESSION['user_id'];
+$sql_n = "SELECT * FROM user where login ='$user'";
+$result_n =  mysql_query($sql_n);
+$row_n = mysql_fetch_array($result_n);
+$signature=$row_n['f_name']." ".$row_n['l_name'];
+
 
 ?>
 
@@ -460,7 +467,7 @@ $retval2 = mysql_query("SELECT * FROM jurisdiction WHERE project_name = '$projec
                 
                 <br>        
                 <label>______________________</label><br>
-                <label>&nbsp;&nbsp;Signature </label>
+                <label>&nbsp;<?php echo $signature; ?></label>
                 </div><br>
                         <input type="hidden" name="id" value="<?php echo "{$row['daily_timesheet_id']}"; ?>">
                     

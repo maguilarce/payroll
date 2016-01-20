@@ -14,14 +14,7 @@
                 <link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
                  <!-- date picker bootstrap -->
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-                 <script language="JavaScript"> 
-                    var device = navigator.userAgent
-                        if (device.match(/Iphone/i)|| device.match(/Ipod/i)|| device.match(/Android/i)|| device.match(/J2ME/i)|| device.match(/BlackBerry/i)|| device.match(/iPhone|iPad|iPod/i)|| device.match(/Opera Mini/i)|| device.match(/IEMobile/i)|| device.match(/Mobile/i)|| device.match(/Windows Phone/i)|| device.match(/windows mobile/i)|| device.match(/windows ce/i)|| device.match(/webOS/i)|| device.match(/palm/i)|| device.match(/bada/i)|| device.match(/series60/i)|| device.match(/nokia/i)|| device.match(/symbian/i)|| device.match(/HTC/i))
-                        { 
-                            window.location = "index_cel.php";
-                        }
-
-                </script>
+                
 	</head>
 	<body>
 <!--login modal-->
@@ -29,12 +22,12 @@
   <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
-          <img src="let-logo.png" /><h4>Payroll Software App</h4>
+          <img src="let-logo.png" /><h5>Payroll Software App - Mobile Version</h5>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h1 class="text-center">Login</h1>
       </div>
       <div class="modal-body">
-          <form method="post" action="login_process.php" class="form col-md-12 center-block">
+          <form method="post" action="login_process_cel.php" class="form col-md-12 center-block">
             <div class="form-group">
               <input name="user" type="text" class="form-control input-lg" placeholder="User">
             </div>
